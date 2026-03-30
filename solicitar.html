@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitar crédito — Crédito Rosa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mg: #E8197A;
+  --mg-dark: #B5105A;
+  --mg-pale: #FDE8F2;
+  --mg-light: #FF6BAE;
+  --dark: #1A1A2E;
+  --mid: #5A4050;
+  --light: #9A7888;
+  --bg: #FAFAFA;
+  --white: #ffffff;
+  --gray: #F7F0F4;
+  --border: rgba(232,25,122,0.15);
+  --radius: 16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  background:rgba(250,250,250,0.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:var(--dark);text-decoration:none;
+}
+.nav-logo span{color:var(--mg);}
+.nav-back{
+  font-size:0.82rem;color:var(--light);
+  text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  transition:color 0.15s;
+}
+.nav-back:hover{color:var(--mg);}
+
+/* ── PROGRESS ── */
+.progress-bar{
+  position:fixed;top:64px;left:0;right:0;z-index:99;
+  height:3px;background:rgba(232,25,122,0.1);
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--mg),var(--mg-light));
+  transition:width 0.4s ease;
+  width:0%;
+}
+
+/* ── MAIN ── */
+main{
+  max-width:640px;
+  margin:0 auto;
+  padding:100px 1.5rem 120px;
+  min-height:100vh;
+}
+
+/* ── STEP ── */
+.step{
+  display:none;
+  animation:slideUp 0.35s ease both;
+}
+.step.active{display:block;}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.step-counter{
+  font-size:0.72rem;font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--mg);margin-bottom:0.6rem;
+}
+.step-q{
+  font-size:clamp(1.4rem,4vw,1.9rem);
+  font-weight:700;line-height:1.2;
+  color:var(--dark);margin-bottom:0.5rem;
+}
+.step-hint{
+  font-size:0.9rem;color:var(--light);
+  line-height:1.6;margin-bottom:1.8rem;
+}
+.step-insight{
+  background:var(--mg-pale);
+  border-left:3px solid var(--mg);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:0.75rem 1rem;
+  font-size:0.82rem;color:var(--mg-dark);
+  line-height:1.55;margin-bottom:1.8rem;
+}
+.step-insight strong{font-weight:600;}
+
+/* ── OPTIONS ── */
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:1rem 1.2rem;
+  background:var(--white);
+  border:1.5px solid rgba(232,25,122,0.15);
+  border-radius:var(--radius);
+  cursor:pointer;
+  transition:all 0.15s;
+  font-size:0.95rem;font-weight:500;color:var(--dark);
+  text-align:left;width:100%;
+}
+.opt:hover{border-color:var(--mg);background:var(--mg-pale);}
+.opt.selected{border-color:var(--mg);background:var(--mg-pale);}
+.opt .opt-check{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid rgba(232,25,122,0.3);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all 0.15s;
+}
+.opt.selected .opt-check{
+  background:var(--mg);border-color:var(--mg);
+}
+.opt.selected .opt-check::after{
+  content:'';width:8px;height:8px;border-radius:50%;background:#fff;
+}
+.opt-label{flex:1;}
+.opt-sub{font-size:0.78rem;color:var(--light);margin-top:2px;}
+
+/* ── INPUT ── */
+.input-wrap{margin-bottom:1.2rem;}
+.input-field{
+  width:100%;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.1rem;font-weight:500;
+  color:var(--dark);
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:1rem 1.2rem;
+  outline:none;
+  transition:border 0.15s;
+}
+.input-field:focus{border-color:var(--mg);}
+.input-field::placeholder{color:rgba(90,64,80,0.35);}
+
+/* ── SLIDER SIM ── */
+.sim-wrap{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  margin-bottom:1.2rem;
+}
+.sim-amount-display{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;font-weight:700;
+  color:var(--mg);letter-spacing:-0.02em;
+  margin-bottom:0.3rem;
+}
+input[type=range]{
+  width:100%;-webkit-appearance:none;appearance:none;
+  height:4px;border-radius:2px;
+  background:rgba(232,25,122,0.15);outline:none;
+  margin:0.6rem 0;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--mg);cursor:pointer;
+  border:3px solid #fff;
+  box-shadow:0 0 0 2px var(--mg);
+}
+.range-labels{
+  display:flex;justify-content:space-between;
+  font-size:0.75rem;color:var(--light);
+  margin-bottom:1rem;
+}
+.sim-divider{
+  border:none;border-top:1px solid var(--border);margin:1rem 0;
+}
+.sim-results{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sim-result-card{
+  background:var(--gray);
+  border-radius:10px;padding:0.75rem 1rem;
+}
+.sim-result-card.highlight{background:var(--mg-pale);}
+.src-label{font-size:0.7rem;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
+.src-value{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.sim-result-card.highlight .src-value{color:var(--mg);font-size:1.25rem;}
+
+/* Garantía alerta */
+.garantia-alert{
+  display:none;
+  background:#FFF8E1;border-left:3px solid #F59E0B;
+  border-radius:0 10px 10px 0;
+  padding:0.75rem 1rem;
+  font-size:0.82rem;color:#92400E;
+  line-height:1.55;margin-top:0.8rem;
+}
+.garantia-alert.show{display:block;}
+
+/* Plazo pills */
+.plazo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;margin-bottom:1rem;
+}
+.plazo-pill{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.85rem;font-weight:600;
+  padding:0.6rem;border-radius:10px;
+  border:1.5px solid var(--border);
+  background:var(--white);color:var(--light);
+  cursor:pointer;transition:all 0.15s;text-align:center;
+}
+.plazo-pill:hover{border-color:var(--mg);color:var(--mg);}
+.plazo-pill.active{
+  background:var(--mg);border-color:var(--mg);color:#fff;
+}
+
+/* Freq toggle */
+.freq-toggle{display:flex;gap:8px;margin-bottom:1rem;}
+.freq-btn{
+  flex:1;font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.85rem;font-weight:600;
+  padding:0.6rem;border-radius:10px;
+  border:1.5px solid var(--border);
+  background:var(--white);color:var(--light);
+  cursor:pointer;transition:all 0.15s;
+}
+.freq-btn.active{background:var(--mg);border-color:var(--mg);color:#fff;}
+
+/* ── NEXT BTN ── */
+.btn-next{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--mg),var(--mg-light));
+  color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1rem;font-weight:700;
+  padding:1rem 2rem;
+  border-radius:99px;border:none;
+  cursor:pointer;transition:opacity 0.15s;
+  margin-top:1.5rem;
+}
+.btn-next:hover{opacity:0.88;}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* ── DESCARTE / ESTADO ── */
+.screen-descarte,.screen-pending,.screen-success{
+  display:none;text-align:center;
+  padding:3rem 1rem;
+}
+.screen-descarte.active,.screen-pending.active,.screen-success.active{display:block;}
+
+.screen-icon{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;
+}
+.screen-icon.soft{background:var(--gray);}
+.screen-icon.pending{background:var(--mg-pale);}
+.screen-icon.success{background:#E1F5EE;}
+.screen-title{
+  font-size:1.6rem;font-weight:700;
+  color:var(--dark);margin-bottom:0.75rem;line-height:1.2;
+}
+.screen-body{
+  font-size:0.95rem;color:var(--mid);
+  line-height:1.7;max-width:420px;margin:0 auto 2rem;
+}
+
+/* ── WHATSAPP BTN ── */
+.btn-wa{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  background:#25D366;color:#fff;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:1.05rem;font-weight:700;
+  padding:1.1rem 2.2rem;
+  border-radius:99px;border:none;
+  cursor:pointer;text-decoration:none;
+  transition:opacity 0.15s;
+  box-shadow:0 4px 20px rgba(37,211,102,0.3);
+  width:100%;max-width:380px;
+}
+.btn-wa:hover{opacity:0.9;}
+.btn-wa svg{width:24px;height:24px;fill:#fff;flex-shrink:0;}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;
+  font-size:0.75rem;color:var(--light);
+  padding:1.5rem;
+  border-top:1px solid var(--border);
+  margin-top:2rem;
+}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  main{padding:90px 1rem 100px;}
+  .plazo-grid{grid-template-columns:repeat(3,1fr);}
+  .sim-results{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="img/CR nombre.svg" alt="Crédito Rosa" height="36" style="display:block;"></a>
+  <a href="index.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Regresar
+  </a>
+</nav>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<main id="mainWrap">
+
+<!-- ══ PASO 1: CP ══ -->
+<div class="step active" id="step1">
+  <div class="step-counter">Paso 1 de 8</div>
+  <div class="step-q">¿Cuál es tu código postal?</div>
+  <div class="step-hint">Verificamos que podemos atenderte en tu zona antes de continuar.</div>
+  <div class="input-wrap">
+    <input class="input-field" type="tel" id="cp" maxlength="5" placeholder="Ej. 54000" inputmode="numeric">
+  </div>
+  <div id="cp-error" style="display:none;font-size:0.82rem;color:#E24B4A;margin-top:-0.5rem;margin-bottom:0.5rem;">
+    Por el momento no tenemos cobertura en esa zona.
+  </div>
+  <button class="btn-next" id="btn1" onclick="checkCP()">Continuar →</button>
+</div>
+
+<!-- ══ PASO 2: NOMBRE + WHATSAPP ══ -->
+<div class="step" id="step2">
+  <div class="step-counter">Paso 2 de 8</div>
+  <div class="step-q">¿Cómo te llamamos?</div>
+  <div class="step-hint">Solo tu nombre y WhatsApp para que un asesor pueda contactarte.</div>
+  <div class="input-wrap">
+    <input class="input-field" type="text" id="nombre" placeholder="Tu nombre completo">
+  </div>
+  <div class="input-wrap">
+    <input class="input-field" type="tel" id="whatsapp" placeholder="WhatsApp (10 dígitos)" inputmode="numeric" maxlength="10">
+  </div>
+  <button class="btn-next" onclick="goStep(3)">Continuar →</button>
+</div>
+
+<!-- ══ PASO 3: ACTIVIDAD ══ -->
+<div class="step" id="step3">
+  <div class="step-counter">Paso 3 de 8</div>
+  <div class="step-q">¿A qué te dedicas?</div>
+  <div class="step-insight"><strong>No necesitas recibo de nómina.</strong> Aceptamos comercio informal, ventas por comisión, negocios propios y más.</div>
+  <div class="options" id="act-options">
+    <button class="opt" onclick="selectOpt(this,'act','empleado')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Empleado formal<div class="opt-sub">Recibos de nómina o carta laboral</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','comercio')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Comercio informal o tianguis<div class="opt-sub">Tickets, fotografías del negocio</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','negocio')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Negocio propio (tienda, taller, estética...)<div class="opt-sub">Notas de proveedor, estados de cuenta</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','ventas')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Ventas o comisiones<div class="opt-sub">Catálogo, multinivel, seguros, Facebook</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','servicios')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Servicios a domicilio o por cuenta propia<div class="opt-sub">Estética, comida, ropa, albañilería, etc.</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','jubilado')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Jubilado o pensionado<div class="opt-sub">Estados de cuenta IMSS/ISSSTE</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'act','otro')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Otra actividad</div>
+    </button>
+  </div>
+  <button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Continuar →</button>
+</div>
+
+<!-- ══ PASO 4: ANTIGÜEDAD ══ -->
+<div class="step" id="step4">
+  <div class="step-counter">Paso 4 de 8</div>
+  <div class="step-q">¿Cuánto tiempo llevas en esa actividad?</div>
+  <div class="step-insight">Mientras más tiempo llevas, más fácil es calificar. Pero si tienes menos de 6 meses no te preocupes — evaluamos tu caso igual.</div>
+  <div class="options">
+    <button class="opt" onclick="selectOpt(this,'ant','menos3'); goStep(5)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Menos de 3 meses</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ant','3a6'); goStep(5)">
+      <div class="opt-check"></div>
+      <div class="opt-label">De 3 a 6 meses</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ant','6a12'); goStep(5)">
+      <div class="opt-check"></div>
+      <div class="opt-label">De 6 meses a un año</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ant','mas1'); goStep(5)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Más de un año</div>
+    </button>
+  </div>
+</div>
+
+<!-- ══ PASO 5: INGRESOS ══ -->
+<div class="step" id="step5">
+  <div class="step-counter">Paso 5 de 8</div>
+  <div class="step-q">¿Tienes forma de comprobar ingresos?</div>
+  <div class="step-insight"><strong>Recibir dinero en efectivo no es un impedimento.</strong> Notas de venta, estados de cuenta con depósitos frecuentes o fotografías de tu negocio también cuentan.</div>
+  <div class="options">
+    <button class="opt" onclick="selectOpt(this,'ing','nomina'); goStep(6)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, recibos de nómina</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ing','cuenta'); goStep(6)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, estados de cuenta con depósitos</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ing','notas'); goStep(6)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, notas, tickets o fotos del negocio</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ing','carta'); goStep(6)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, carta laboral, credenciales o permisos</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'ing','no'); goStep(6)">
+      <div class="opt-check"></div>
+      <div class="opt-label">No tengo ningún comprobante formal</div>
+    </button>
+  </div>
+</div>
+
+<!-- ══ PASO 6: DOMICILIO ══ -->
+<div class="step" id="step6">
+  <div class="step-counter">Paso 6 de 8</div>
+  <div class="step-q">¿Tu domicilio es propio, familiar o rentado?</div>
+  <div class="options">
+    <button class="opt" onclick="selectOpt(this,'dom','familiar'); goStep(7)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Familiar<div class="opt-sub">El inmueble pertenece a un pariente (padres, abuelos, etc.)</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'dom','propio'); goStep(7)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Propio<div class="opt-sub">El inmueble está a mi nombre</div></div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'dom','rentado'); showAvalStep()">
+      <div class="opt-check"></div>
+      <div class="opt-label">Rentado<div class="opt-sub">Requiere aval con domicilio propio o familiar</div></div>
+    </button>
+  </div>
+</div>
+
+<!-- ══ PASO 6b: AVAL (si rentado) ══ -->
+<div class="step" id="step6b">
+  <div class="step-counter">Paso 6 de 8</div>
+  <div class="step-q">¿Cuentas con un aval?</div>
+  <div class="step-insight">
+    <strong>¿Qué es un aval?</strong> Es una persona de confianza — familiar o amigo — que vive en domicilio propio o familiar y puede comprobar ingresos. Su función es respaldar tu crédito.
+  </div>
+  <div class="options">
+    <button class="opt" onclick="selectOpt(this,'aval','si'); goStep(7)">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, tengo alguien que podría ser mi aval</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'aval','no'); showDescarte('aval')">
+      <div class="opt-check"></div>
+      <div class="opt-label">No, no tengo aval disponible</div>
+    </button>
+  </div>
+</div>
+
+<!-- ══ PASO 7: SIMULADOR ══ -->
+<div class="step" id="step7">
+  <div class="step-counter">Paso 7 de 8</div>
+  <div class="step-q">¿Cuánto necesitas y cómo quieres pagarlo?</div>
+  <div class="step-hint">Ajusta el monto y plazo para ver tu pago estimado.</div>
+
+  <div class="sim-wrap">
+    <div class="sim-amount-display" id="simDisplay">$10,000</div>
+    <input type="range" id="simSlider" min="5000" max="80000" step="1000" value="10000">
+    <div class="range-labels"><span>$5,000</span><span>$80,000</span></div>
+
+    <div class="freq-toggle">
+      <button class="freq-btn active" data-freq="QNAL" onclick="setFreq(this)">Quincenal</button>
+      <button class="freq-btn" data-freq="MENS" onclick="setFreq(this)">Mensual</button>
+    </div>
+
+    <div class="plazo-grid">
+      <button class="plazo-pill" data-p="1" onclick="setPlazo(this)">1 mes</button>
+      <button class="plazo-pill" data-p="2" onclick="setPlazo(this)">2 meses</button>
+      <button class="plazo-pill" data-p="3" onclick="setPlazo(this)">3 meses</button>
+      <button class="plazo-pill" data-p="4" onclick="setPlazo(this)">4 meses</button>
+      <button class="plazo-pill" data-p="5" onclick="setPlazo(this)">5 meses</button>
+      <button class="plazo-pill active" data-p="6" onclick="setPlazo(this)">6 meses</button>
+      <button class="plazo-pill" data-p="12" onclick="setPlazo(this)">12 meses</button>
+      <button class="plazo-pill" data-p="18" onclick="setPlazo(this)">18 meses</button>
+      <button class="plazo-pill" data-p="24" onclick="setPlazo(this)">24 meses</button>
+    </div>
+
+    <hr class="sim-divider">
+
+    <div class="sim-results">
+      <div class="sim-result-card highlight">
+        <div class="src-label">Pago por periodo</div>
+        <div class="src-value" id="rCuota">$1,070</div>
+      </div>
+      <div class="sim-result-card">
+        <div class="src-label">Total de pagos</div>
+        <div class="src-value" id="rPagos">12</div>
+      </div>
+      <div class="sim-result-card">
+        <div class="src-label">Total a pagar</div>
+        <div class="src-value" id="rTotal">$12,840</div>
+      </div>
+      <div class="sim-result-card">
+        <div class="src-label">Tasa mensual</div>
+        <div class="src-value">13% + IVA</div>
+      </div>
+    </div>
+
+    <div class="garantia-alert" id="garantiaAlert">
+      <strong>Para créditos mayores a $40,000</strong> necesitaremos que cuentes con un bien como garantía — por ejemplo, un auto con valor mínimo del doble del monto solicitado. Lo revisamos en la videollamada.
+    </div>
+  </div>
+
+  <div style="font-size:0.75rem;color:var(--light);margin-bottom:0.5rem;">
+    * Estimación. Sujeto a evaluación. Clientes nuevos suelen aperturarse con $5,000–$10,000 MXN.
+  </div>
+  <button class="btn-next" onclick="goStep(8)">Así quiero mi crédito →</button>
+</div>
+
+<!-- ══ PASO 8: ESTADO CIVIL + CONFIRMAR ══ -->
+<div class="step" id="step8">
+  <div class="step-counter">Paso 8 de 8</div>
+  <div class="step-q">Un último detalle</div>
+  <div class="step-hint">Esta información nos ayuda a evaluar mejor tu solicitud.</div>
+
+  <div style="margin-bottom:1.2rem;">
+    <div style="font-size:0.82rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">Estado civil</div>
+    <div class="options" id="ec-options">
+      <button class="opt" onclick="selectOpt(this,'ec','casado')"><div class="opt-check"></div><div class="opt-label">Casado(a) o unión libre</div></button>
+      <button class="opt" onclick="selectOpt(this,'ec','soltero')"><div class="opt-check"></div><div class="opt-label">Soltero(a)</div></button>
+      <button class="opt" onclick="selectOpt(this,'ec','otro')"><div class="opt-check"></div><div class="opt-label">Viudo(a) / Separado(a)</div></button>
+    </div>
+  </div>
+
+  <div id="pareja-wrap" style="display:none;margin-bottom:1.2rem;">
+    <div style="font-size:0.82rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">¿Tu pareja tiene ingresos?</div>
+    <div class="options">
+      <button class="opt" onclick="selectOpt(this,'pareja','si')"><div class="opt-check"></div><div class="opt-label">Sí</div></button>
+      <button class="opt" onclick="selectOpt(this,'pareja','no')"><div class="opt-check"></div><div class="opt-label">No</div></button>
+    </div>
+  </div>
+
+  <div class="step-insight" style="margin-top:1rem;">
+    <strong>¿Qué sigue?</strong> Un asesor de Crédito Rosa te contactará por WhatsApp para coordinar una videollamada de ~20 minutos. Ahí revisamos tu caso a detalle y te decimos si puedes avanzar.
+  </div>
+
+  <button class="btn-next" id="btn8" onclick="submitForm()">Enviar mi solicitud →</button>
+</div>
+
+<!-- ══ PANTALLA: DESCARTE SILENCIOSO ══ -->
+<div class="screen-descarte" id="screenDescarte">
+  <div class="screen-icon soft">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 28C22.627 28 28 22.627 28 16S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12z" stroke="#9A7888" stroke-width="1.5"/>
+      <path d="M16 12v5M16 20v1" stroke="#9A7888" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="screen-title">Gracias por tu interés</div>
+  <div class="screen-body" id="descarteMsg">En este momento no podemos continuar con tu solicitud. Te deseamos mucho éxito.</div>
+</div>
+
+<!-- ══ PANTALLA: ENVIADO / PENDIENTE ══ -->
+<div class="screen-pending" id="screenPending">
+  <div class="screen-icon pending">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 28C22.627 28 28 22.627 28 16S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12z" stroke="#E8197A" stroke-width="1.5"/>
+      <path d="M16 10v6l4 2" stroke="#E8197A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="screen-title">Estamos revisando<br>tu solicitud</div>
+  <div class="screen-body">Recibimos tus datos. Un asesor de Crédito Rosa los revisará y se pondrá en contacto contigo por WhatsApp en breve.<br><br>Si quieres hablar con nosotros ahora mismo, escríbenos directamente:</div>
+  <a id="waBtn" href="#" target="_blank" class="btn-wa">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Hablar con un asesor ahora
+  </a>
+</div>
+
+</main>
+
+<footer>
+  Crédito Rosa S.A. de C.V. · CDMX y Zona Metropolitana · <a href="#" style="color:var(--mg);text-decoration:none;">Aviso de privacidad</a>
+</footer>
+
+<script>
+const TASA = 0.13, IVA = 0.16;
+const WA_NUMBER = '525654681806';
+const N8N_WEBHOOK = 'https://creditorosa.app.n8n.cloud/webhook/credito-rosa-solicitud';
+
+// ── ZONAS CDMX + ZM (rangos de CP)
+const CP_CDMX = [
+  [1000,16999],
+];
+const CP_ZM = [
+  [50000,57999], // Atizapán, Naucalpán zona norte
+  [53000,53999], // Naucalpán
+  [54000,54999], // Tlalnepantla norte
+  [52000,52999], // Tlalnepantla sur
+  [55000,55999], // Ecatepec, Cd Azteca
+  [57000,57999], // Nezahualcóyotl
+  [56000,56999], // Los Reyes La Paz, Chimalhuacán
+  [54400,54499], // Cuautitlán
+  [54700,54799], // Tultitlán
+  [54900,54999], // Tultepec
+  [54500,54599], // Coacalco
+  [55700,55799], // Nicolás Romero
+  [54600,54699], // Tlalnepantla Baz
+  [52100,52199], // Naucalpán sur
+  [53200,53299], // Huixquilucan
+];
+
+function cpValido(cp) {
+  const n = parseInt(cp);
+  if (isNaN(n)) return false;
+  for (const [min,max] of CP_CDMX) if (n>=min && n<=max) return true;
+  for (const [min,max] of CP_ZM) if (n>=min && n<=max) return true;
+  return false;
+}
+
+// ── ESTADO
+const data = {};
+let currentStep = 1;
+const TOTAL_STEPS = 8;
+let simMonto = 10000, simPlazo = 6, simFreq = 'QNAL';
+
+function fmt(n){ return '$'+Math.round(n).toLocaleString('es-MX'); }
+
+function calcSim(){
+  const cap = simMonto / simPlazo;
+  let total = 0, s = simMonto;
+  for(let i=0;i<simPlazo;i++){ total += s * TASA; s -= cap; }
+  const intProm = total/simPlazo;
+  const ivaProm = intProm * IVA;
+  const totalPer = cap + intProm + ivaProm;
+  const cuota = simFreq==='QNAL' ? Math.round(totalPer/2) : Math.round(totalPer);
+  const nPagos = simFreq==='QNAL' ? simPlazo*2 : simPlazo;
+  return { cuota, nPagos, total: cuota*nPagos };
+}
+
+function renderSim(){
+  const r = calcSim();
+  document.getElementById('simDisplay').textContent = fmt(simMonto);
+  document.getElementById('rCuota').textContent = fmt(r.cuota);
+  document.getElementById('rPagos').textContent = r.nPagos;
+  document.getElementById('rTotal').textContent = fmt(r.total);
+  const ga = document.getElementById('garantiaAlert');
+  if(simMonto > 40000) ga.classList.add('show');
+  else ga.classList.remove('show');
+  data.monto = simMonto;
+  data.plazo = simPlazo;
+  data.frecuencia = simFreq;
+  data.cuota_estimada = fmt(calcSim().cuota);
+}
+
+document.getElementById('simSlider').addEventListener('input', function(){
+  simMonto = +this.value; renderSim();
+});
+
+function setFreq(btn){
+  document.querySelectorAll('.freq-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  simFreq = btn.dataset.freq;
+  renderSim();
+}
+
+function setPlazo(btn){
+  document.querySelectorAll('.plazo-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  simPlazo = +btn.dataset.p;
+  renderSim();
+}
+
+// ── NAV
+function updateProgress(){
+  const pct = ((currentStep-1)/(TOTAL_STEPS-1))*100;
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+function goStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById('step'+n);
+  if(el){ el.classList.add('active'); currentStep=n; }
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showDescarte(reason){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('progressFill').style.width='100%';
+  const msg = {
+    zona: 'Por el momento no tenemos cobertura en tu área. Si en algún momento expandimos nuestra zona de atención, nos pondremos en contacto. ¡Gracias!',
+    aval: 'Para atenderte con domicilio rentado es necesario contar con un aval. Cuando tengas uno disponible, con gusto retomamos tu solicitud.',
+  }[reason] || 'En este momento no podemos continuar con tu solicitud.';
+  document.getElementById('descarteMsg').textContent = msg;
+  document.getElementById('screenDescarte').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showAvalStep(){
+  selectOpt(event.target.closest('.opt'), 'dom', 'rentado');
+  goStep('6b');
+}
+
+// ── SELECTIONS
+function selectOpt(btn, key, val){
+  const parent = btn.closest('.options') || btn.closest('.step');
+  if(parent){
+    parent.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  }
+  btn.classList.add('selected');
+  data[key] = val;
+  const nextBtn = btn.closest('.step')?.querySelector('.btn-next');
+  if(nextBtn) nextBtn.disabled = false;
+  if(key==='ec'){
+    document.getElementById('pareja-wrap').style.display =
+      (val==='casado') ? 'block' : 'none';
+  }
+}
+
+// ── CP CHECK
+function checkCP(){
+  const cp = document.getElementById('cp').value.trim();
+  const err = document.getElementById('cp-error');
+  if(cp.length < 5){ err.style.display='block'; err.textContent='Ingresa un código postal válido (5 dígitos).'; return; }
+  if(!cpValido(cp)){ err.style.display='block'; err.textContent='Por el momento no tenemos cobertura en esa zona.'; return; }
+  err.style.display='none';
+  data.cp = cp;
+  goStep(2);
+}
+
+document.getElementById('cp').addEventListener('keydown', e => { if(e.key==='Enter') checkCP(); });
+
+// ── SUBMIT
+async function submitForm(){
+  data.nombre = document.getElementById('nombre').value.trim();
+  data.whatsapp = document.getElementById('whatsapp').value.trim();
+  data.timestamp = new Date().toISOString();
+  data.fuente = document.referrer || 'directo';
+
+  const waMsg = encodeURIComponent(
+    `Hola, soy ${data.nombre || 'un prospecto'} y acabo de completar la solicitud de Crédito Rosa.\n` +
+    `Monto: ${fmt(simMonto)} · Plazo: ${simPlazo} meses · Cuota est.: ${data.cuota_estimada || ''}\n` +
+    `Actividad: ${data.act || ''} · CP: ${data.cp || ''}`
+  );
+  document.getElementById('waBtn').href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+
+  // Enviar a n8n (no bloquear si falla)
+  if(N8N_WEBHOOK && N8N_WEBHOOK !== 'TU_WEBHOOK_N8N_AQUI'){
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+    } catch(e){ console.warn('n8n webhook error', e); }
+  }
+
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('screenPending').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── INIT
+renderSim();
+updateProgress();
+</script>
+</body>
+</html>
