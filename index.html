@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crédito Rosa — El crédito que te mereces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #F7F3F0;
+    --green: #E8197A;
+    --green-light: #C4155F;
+    --mint: #1A1A2E;
+    --mint-dim: #E8197A;
+    --warm-white: #1A1A2E;
+    --warm-gray: #E2D8DC;
+    --amber: #FF6BAE;
+    --body-dark: #F0E8ED;
+    --text-muted: #7A5A6A;
+    --magenta: #E8197A;
+    --magenta-light: #FF6BAE;
+    --magenta-dark: #B5105A;
+    --bg-white: #FAFAFA;
+    --bg-section: #F7F0F4;
+    --text-dark: #1A1A2E;
+    --text-mid: #5A4050;
+    --text-light: #9A7888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(250,250,250,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,25,122,0.12);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 1.3rem;
+    color: var(--text-dark); letter-spacing: 0.01em;
+  }
+  .logo span { color: var(--magenta); font-weight: 800; }
+  .nav-cta {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-light));
+    color: #fff;
+    border: none; padding: 0.6rem 1.4rem;
+    border-radius: 99px; cursor: pointer;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 7rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #fff 0%, #FDE8F2 50%, #FFF0F7 100%);
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(232,25,122,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 10% 80%, rgba(255,107,174,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.03;
+    background-image: linear-gradient(rgba(232,25,122,0.8) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(232,25,122,0.8) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--magenta); background: rgba(232,25,122,0.07);
+    border: 1px solid rgba(232,25,122,0.2);
+    padding: 0.35rem 0.9rem; border-radius: 99px; margin-bottom: 1.8rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--magenta); animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 800; line-height: 1.07; letter-spacing: -0.03em;
+    color: var(--text-dark);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  h1 em { background: linear-gradient(135deg, var(--magenta), var(--magenta-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: normal; }
+
+  .hero-sub {
+    font-size: 1.1rem; line-height: 1.65; color: var(--text-mid);
+    margin-top: 1.4rem; max-width: 520px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 1rem; margin-top: 2.2rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+    background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-light) 100%);
+    color: #fff;
+    border: none; padding: 0.85rem 2rem; border-radius: 99px;
+    cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-ghost {
+    font-size: 0.9rem; color: var(--text-mid);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--text-dark); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.4s ease both;
+    border-top: 1px solid rgba(232,25,122,0.15); padding-top: 2rem;
+  }
+  .stat-item .num {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--text-dark);
+  }
+  .stat-item .label { font-size: 0.78rem; color: var(--text-mid); margin-top: 2px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PERFILES */
+  .section { padding: 5rem 2.5rem; }
+  .section-light { background: #fff; color: var(--text-dark); }
+  .section-mid { background: var(--bg-section); color: var(--text-dark); }
+
+  .section-label {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--magenta); margin-bottom: 0.8rem;
+  }
+  .section-light .section-label { color: var(--magenta); }
+
+  h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+    max-width: 560px; color: var(--text-dark);
+  }
+  .section-light h2 { color: var(--text-dark); }
+
+  .section-intro {
+    font-size: 1rem; color: var(--text-mid); margin-top: 0.8rem;
+    max-width: 480px; line-height: 1.7;
+  }
+  .section-light .section-intro { color: var(--text-mid); }
+
+  .profiles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 2.5rem;
+    border: 1px solid rgba(232,25,122,0.12);
+    border-radius: 16px; overflow: hidden;
+  }
+  @media(max-width:640px){ .profiles-grid { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:400px){ .profiles-grid { grid-template-columns: 1fr; } }
+  .profile-card {
+    background: #fff; padding: 1.6rem 1.4rem;
+    transition: background 0.2s;
+  }
+  .profile-card:hover { background: rgba(232,25,122,0.04); }
+  .profile-icon { width: 36px; height: 36px; margin-bottom: 0.8rem; }
+  .profile-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-dark); }
+  .profile-card p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.55; }
+  .profile-note {
+    margin-top: 2rem; font-size: 0.88rem; color: var(--text-mid);
+    border-left: 2px solid var(--magenta); padding-left: 1rem; max-width: 540px;
+  }
+
+  /* SIMULADOR */
+  .simulator-wrap {
+    max-width: 760px; margin: 2.5rem auto 0;
+    background: #fff;
+    border: 1px solid rgba(232,25,122,0.15);
+    border-radius: 20px; padding: 2.5rem;
+    box-shadow: 0 4px 40px rgba(232,25,122,0.08);
+  }
+  .section-light .simulator-wrap {
+    background: #fff; border: 1px solid rgba(232,25,122,0.15);
+    box-shadow: 0 4px 40px rgba(232,25,122,0.08);
+  }
+
+  .sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  @media(max-width:600px){ .sim-row { grid-template-columns: 1fr; } }
+
+  .sim-field label {
+    display: block; font-size: 0.78rem; font-weight: 500;
+    color: var(--text-light); margin-bottom: 0.5rem; letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .section-light .sim-field label { color: var(--text-light); }
+
+  .monto-display {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-light));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.6rem;
+  }
+  .section-light .monto-display { color: var(--text-dark); }
+
+  input[type=range] {
+    width: 100%; -webkit-appearance: none; appearance: none;
+    height: 4px; border-radius: 2px;
+    background: rgba(232,25,122,0.15); outline: none;
+  }
+  .section-light input[type=range] { background: rgba(232,25,122,0.15); }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--magenta); cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--magenta);
+  }
+  .section-light input[type=range]::-webkit-slider-thumb {
+    border-color: #fff;
+    background: var(--magenta);
+    box-shadow: 0 0 0 2px var(--magenta);
+  }
+  .range-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .range-labels span { font-size: 0.72rem; color: var(--text-light); }
+
+  .plazo-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .plazo-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+    padding: 0.5rem 0; border-radius: 8px; cursor: pointer;
+    border: 1px solid rgba(232,25,122,0.2);
+    background: transparent; color: var(--text-light);
+    transition: all 0.15s;
+  }
+  .section-light .plazo-btn { border-color: rgba(232,25,122,0.2); color: var(--text-light); }
+  .plazo-btn:hover { border-color: var(--magenta); color: var(--magenta); }
+  .section-light .plazo-btn:hover { color: var(--magenta); border-color: var(--magenta); }
+  .plazo-btn.active {
+    background: linear-gradient(135deg, var(--magenta), var(--magenta-light));
+    border-color: var(--magenta); color: #fff;
+  }
+  .section-light .plazo-btn.active { color: #fff; }
+
+  .freq-toggle {
+    display: flex; gap: 6px; margin-top: 0.5rem;
+  }
+  .freq-btn {
+    flex: 1; font-size: 0.82rem; font-weight: 500; padding: 0.6rem;
+    border-radius: 8px; cursor: pointer;
+    border: 1px solid rgba(232,25,122,0.2);
+    background: transparent; color: var(--text-light); transition: all 0.15s;
+  }
+  .freq-btn.active { background: linear-gradient(135deg, var(--magenta), var(--magenta-light)); border-color: var(--magenta); color: #fff; }
+  .section-light .freq-btn { border-color: rgba(232,25,122,0.2); color: var(--text-light); }
+  .section-light .freq-btn.active { color: #fff; }
+
+  .sim-divider { border: none; border-top: 1px solid rgba(232,25,122,0.1); margin: 1.5rem 0; }
+  .section-light .sim-divider { border-color: rgba(232,25,122,0.1); }
+
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  @media(max-width:500px){ .results-grid { grid-template-columns: 1fr 1fr; } }
+
+  .result-card {
+    background: #FAF0F5; border: 1px solid rgba(232,25,122,0.12);
+    border-radius: 12px; padding: 1rem;
+  }
+  .section-light .result-card { background: #FAF0F5; border-color: rgba(232,25,122,0.12); }
+  .result-card .r-label { font-size: 0.72rem; color: var(--text-light); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .section-light .result-card .r-label { color: var(--text-light); }
+  .result-card .r-value {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 700;
+    color: var(--text-dark);
+  }
+  .section-light .result-card .r-value { color: var(--text-dark); }
+  .result-card.highlight { background: linear-gradient(135deg, var(--magenta), var(--magenta-light)); border-color: var(--magenta); }
+  .result-card.highlight .r-label { color: rgba(255,255,255,0.75); }
+  .result-card.highlight .r-value { color: #fff; font-size: 1.5rem; }
+
+  .sim-disclaimer {
+    font-size: 0.75rem; color: var(--text-light); line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+  .sim-cta {
+    width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 600;
+    background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-light) 100%);
+    color: #fff; border: none;
+    padding: 1rem; border-radius: 12px; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.01em;
+  }
+  .sim-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* PROCESO */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0; margin-top: 2.5rem; }
+  .step {
+    padding: 1.8rem 1.5rem; position: relative;
+    border-right: 1px solid rgba(232,25,122,0.1);
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.5rem; font-weight: 800;
+    color: rgba(232,25,122,0.15); line-height: 1; margin-bottom: 0.8rem;
+  }
+  .step h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-dark); }
+  .step p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* TRANSPARENCIA */
+  .req-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  @media(max-width:720px){ .req-grid { grid-template-columns: 1fr 1fr; } }
+  @media(max-width:480px){ .req-grid { grid-template-columns: 1fr; } }
+  .req-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: #fff; border: 1px solid rgba(232,25,122,0.12);
+    border-radius: 12px; padding: 1rem 1.1rem;
+  }
+  .req-icon { width: 28px; height: 28px; flex-shrink: 0; margin-top: 1px; }
+  .req-item h4 { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+  .req-item p { font-size: 0.78rem; color: var(--text-mid); line-height: 1.5; }
+  .req-note {
+    margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-mid);
+    border-left: 2px solid var(--magenta); padding-left: 1rem;
+  }
+
+  /* FORMULARIO */
+  .form-wrap {
+    max-width: 540px; margin: 2.5rem auto 0;
+    background: #fff;
+    border: 1px solid rgba(232,25,122,0.15);
+    border-radius: 20px; padding: 2rem 2.2rem;
+    box-shadow: 0 4px 32px rgba(232,25,122,0.07);
+  }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-group label {
+    display: block; font-size: 0.78rem; font-weight: 600;
+    color: var(--text-light); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem;
+    background: #FAFAFA; color: var(--text-dark);
+    border: 1px solid rgba(232,25,122,0.18); border-radius: 10px;
+    padding: 0.75rem 1rem; outline: none; transition: border 0.15s;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--magenta);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-submit {
+    width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 600;
+    background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-light) 100%);
+    color: #fff; border: none;
+    padding: 1rem; border-radius: 12px; cursor: pointer;
+    transition: all 0.2s; margin-top: 0.5rem;
+  }
+  .form-submit:hover { opacity: 0.88; }
+  .form-micro { font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 0.7rem; }
+
+  /* FOOTER */
+  footer {
+    background: #1A1A2E; padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    border-top: 1px solid rgba(232,25,122,0.15);
+  }
+  footer .logo { font-size: 1.1rem; color: #fff; }
+  footer .logo span { color: var(--magenta-light); }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #25D366; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35); cursor: pointer;
+    transition: transform 0.2s; text-decoration: none;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  .wa-float svg { width: 26px; height: 26px; fill: white; }
+
+  /* MOBILE */
+  @media(max-width:768px){
+    nav { padding: 1rem 1.2rem; }
+    .hero { padding: 6rem 1.2rem 3rem; }
+    .section { padding: 3.5rem 1.2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .sim-row { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step { border-right: none; border-bottom: 1px solid rgba(168,240,212,0.1); }
+    .step:last-child { border-bottom: none; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media(max-width:480px){
+    .plazo-grid { grid-template-columns: repeat(3,1fr); }
+    .results-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img src="img/CR nombre.svg" alt="Crédito Rosa" class="logo" height="40">
+  <a href="https://wa.me/525654681806?text=Hola%2C%20me%20interesa%20solicitar%20un%20cr%C3%A9dito%20con%20Cr%C3%A9dito%20Rosa.%20%C2%BFMe%20pueden%20orientar%3F" target="_blank" class="nav-cta">Solicitar crédito</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">CDMX y Zona Metropolitana · Más de 300 familias apoyadas</div>
+    <h1>El crédito que te mereces.<br>Sin importar tu <em>historial.</em></h1>
+    <p class="hero-sub">
+      Si tienes un negocio o trabajas por tu cuenta, tenemos crédito para ti.
+      Aunque el banco te haya dicho que no. De $5,000 a $80,000 MXN.
+    </p>
+    <div class="hero-actions">
+      <a href="#simulador" class="btn-primary">Simula tu crédito →</a>
+      <a href="#como-funciona" class="btn-ghost">¿Cómo funciona? ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="num">+300</div><div class="label">familias apoyadas</div></div>
+      <div class="stat-item"><div class="num">$5k–$80k</div><div class="label">monto disponible</div></div>
+      <div class="stat-item"><div class="num">13%</div><div class="label">tasa mensual</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="section section-mid">
+  <p class="section-label">Para quién es</p>
+  <h2>Aquí no te preguntamos si tienes recibo de nómina.</h2>
+  <p class="section-intro">Si tienes un negocio o trabajas por tu cuenta, hay opciones para ti. Aunque otros te hayan dicho que no.</p>
+  <div class="profiles-grid">
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#4ECFA0" stroke-width="1.2"/>
+          <path d="M9 18c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="#4ECFA0" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="14" cy="10" r="2.5" stroke="#4ECFA0" stroke-width="1.4"/>
+          <path d="M18.5 12.5c1.5.8 2.5 2.4 2.5 4.2" stroke="#A8F0D4" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <path d="M9.5 12.5C8 13.3 7 14.9 7 16.7" stroke="#A8F0D4" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+        </svg>
+      </div>
+      <h3>Tienda de abarrotes o miscelánea</h3>
+      <p>Llevas años surtiendo a tu colonia. Tus proveedores y tus clientes hablan por ti.</p>
+    </div>
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="5" width="20" height="15" rx="2" stroke="#4ECFA0" stroke-width="1.4"/>
+          <path d="M9 20v3M19 20v3M7 23h14" stroke="#4ECFA0" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="14" cy="12.5" r="3" stroke="#A8F0D4" stroke-width="1.2"/>
+          <path d="M11.5 12.5l1.5 1.5 2.5-2.5" stroke="#4ECFA0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Carnicero, dulcería o negocio de mercado</h3>
+      <p>Tu local en el mercado o en la colonia es tu garantía más real. Lo verificamos nosotros.</p>
+    </div>
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 22V8l9-4 9 4v14" stroke="#4ECFA0" stroke-width="1.4" stroke-linejoin="round"/>
+          <rect x="10" y="14" width="8" height="8" rx="1" stroke="#A8F0D4" stroke-width="1.2"/>
+          <path d="M12 14v-3a2 2 0 014 0v3" stroke="#4ECFA0" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Taller, estética o negocio de servicios</h3>
+      <p>Albañil, plomero, estilista, costurera. Tu oficio es tu mejor comprobante de ingresos.</p>
+    </div>
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="7" width="14" height="10" rx="1.5" stroke="#4ECFA0" stroke-width="1.4"/>
+          <path d="M18 11l6-3v12l-6-3" stroke="#4ECFA0" stroke-width="1.4" stroke-linejoin="round"/>
+          <circle cx="11" cy="12" r="2" stroke="#A8F0D4" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <h3>Tienda de ropa o calzado</h3>
+      <p>Venta en local, en casa o por catálogo. Si tienes clientes regulares, tienes historial.</p>
+    </div>
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="20" height="14" rx="2" stroke="#4ECFA0" stroke-width="1.4"/>
+          <path d="M8 10h12M8 14h8" stroke="#A8F0D4" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="21" cy="20" r="4" fill="#0f2921" stroke="#4ECFA0" stroke-width="1.2"/>
+          <path d="M19.5 20l1 1 2-2" stroke="#4ECFA0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Revendedor o distribuidor</h3>
+      <p>Multinivel, catálogo, mercado o tianguis. Tus notas de compra-venta son tu comprobante.</p>
+    </div>
+    <div class="profile-card">
+      <div class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="#4ECFA0" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="14" cy="9" r="3" stroke="#4ECFA0" stroke-width="1.4"/>
+          <path d="M22 14c1.5.9 2.5 2.3 2.5 4" stroke="#A8F0D4" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+          <path d="M6 14C4.5 14.9 3.5 16.3 3.5 18" stroke="#A8F0D4" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+          <circle cx="21" cy="11" r="2" stroke="#A8F0D4" stroke-width="1.1" opacity=".7"/>
+          <circle cx="7" cy="11" r="2" stroke="#A8F0D4" stroke-width="1.1" opacity=".7"/>
+        </svg>
+      </div>
+      <h3>Taquería, fonda o negocio de comida</h3>
+      <p>Si tu negocio de comida lleva meses abierto, eso nos dice más que cualquier estado de cuenta.</p>
+    </div>
+  </div>
+  <p class="profile-note">
+    Llevamos más de 3 años apoyando a familias y negocios en CDMX y Zona Metropolitana que los bancos ignoran. Tu negocio merece crecer.
+  </p>
+</section>
+
+<!-- SIMULADOR -->
+<section class="section section-light" id="simulador">
+  <p class="section-label">Simulador de crédito</p>
+  <h2>¿Cuánto necesitas y cuánto pagarías?</h2>
+  <p class="section-intro">Ajusta el monto y plazo. Los resultados son una estimación basada en nuestras condiciones reales.</p>
+
+  <div class="simulator-wrap">
+    <div class="sim-row">
+      <div class="sim-field">
+        <label>Monto del crédito</label>
+        <div class="monto-display" id="montoDisplay">$20,000</div>
+        <input type="range" id="montoSlider" min="5000" max="80000" step="1000" value="10000">
+        <div class="range-labels"><span>$5,000</span><span>$80,000</span></div>
+      </div>
+      <div class="sim-field">
+        <label>Frecuencia de pago</label>
+        <div class="freq-toggle">
+          <button class="freq-btn active" data-freq="QNAL">Quincenal</button>
+          <button class="freq-btn" data-freq="MENS">Mensual</button>
+        </div>
+        <div style="margin-top:1rem;">
+          <label style="font-size:0.78rem;font-weight:500;color:#6a8a7e;text-transform:uppercase;letter-spacing:0.03em;display:block;margin-bottom:0.5rem;">Plazo (meses)</label>
+          <div class="plazo-grid">
+            <button class="plazo-btn" data-p="1">1</button>
+            <button class="plazo-btn" data-p="2">2</button>
+            <button class="plazo-btn" data-p="3">3</button>
+            <button class="plazo-btn" data-p="4">4</button>
+            <button class="plazo-btn" data-p="5">5</button>
+            <button class="plazo-btn active" data-p="6">6</button>
+            <button class="plazo-btn" data-p="12">12</button>
+            <button class="plazo-btn" data-p="18">18</button>
+            <button class="plazo-btn" data-p="24">24</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sim-divider">
+
+    <div class="results-grid">
+      <div class="result-card highlight">
+        <div class="r-label">Pago por periodo</div>
+        <div class="r-value" id="cuotaDisplay">$2,139</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">Capital por periodo</div>
+        <div class="r-value" id="capDisplay">$1,667</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">Interés + IVA promedio</div>
+        <div class="r-value" id="intDisplay">$473</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">Total de pagos</div>
+        <div class="r-value" id="totalPagosDisplay">12</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">Total a pagar</div>
+        <div class="r-value" id="totalPagarDisplay">$25,668</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">Tasa mensual</div>
+        <div class="r-value">13%</div>
+      </div>
+    </div>
+
+    <p class="sim-disclaimer">Los clientes nuevos suelen aperturarse con montos entre $5,000 y $10,000 MXN. Cada caso se evalúa de forma individual para determinar el monto aprobado. Estimación basada en tasa del 13% mensual + IVA (16%). Comisión de apertura del 4% descontada del depósito.</p>
+    <button class="sim-cta" onclick="document.getElementById('solicitar').scrollIntoView({behavior:'smooth'})">Quiero este crédito →</button>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section" id="como-funciona">
+  <p class="section-label">El proceso</p>
+  <h2>Transparente de principio a fin.<br>Sin sorpresas.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Simulas y nos escribes</h3>
+      <p>Usa el simulador, define tu monto y deja tus datos. Sin compromiso, sin costo.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Videollamada con un asesor</h3>
+      <p>Nos cuentas cómo trabajas y revisamos tu caso. Sin robots, sin formularios imposibles.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Visita de verificación</h3>
+      <p>Un asesor visita tu negocio o domicilio en CDMX o Zona Metropolitana. No es un obstáculo — es lo que nos permite decir sí cuando otros dicen no.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Firma y depósito</h3>
+      <p>Formalizamos con contrato y pagaré. Si todo cuadra, el dinero llega en pocos días.</p>
+    </div>
+  </div>
+  <p style="margin-top:1.8rem;font-size:0.85rem;color:var(--text-muted);border-left:2px solid rgba(232,25,122,0.4);padding-left:1rem;max-width:520px;">
+    El proceso completo toma entre 3 y 7 días hábiles dependiendo de tu ubicación y disponibilidad. No prometemos velocidad a costa de seguridad — para ti ni para nosotros.
+  </p>
+</section>
+
+<!-- TRANSPARENCIA -->
+<section class="section section-light">
+  <p class="section-label">Lo que pedimos</p>
+  <h2>No pedimos tu historial. Sí pedimos que tu trabajo sea real.</h2>
+  <p class="section-intro">Sin papeleo kafkiano. Sin requisitos imposibles. Solo lo necesario para conocerte.</p>
+  <div class="req-grid">
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="7" r="3.5" stroke="#E8197A" stroke-width="1.4"/>
+          <path d="M4 19c0-3.866 3.134-7 7-7h.5" stroke="#E8197A" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M15 14l1.5 1.5L19 13" stroke="#E8197A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Referencias personales y profesionales</h4>
+        <p>Personas que puedan hablar de ti — familia, amigos, clientes, colegas. Dos referencias bastan.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="4" width="16" height="14" rx="2" stroke="#E8197A" stroke-width="1.4"/>
+          <path d="M7 9h8M7 13h5" stroke="#E8197A" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="17" cy="16" r="3" fill="#FFF0F7" stroke="#E8197A" stroke-width="1.2"/>
+          <path d="M15.8 16l.8.8 1.6-1.6" stroke="#E8197A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Evidencia de tu actividad</h4>
+        <p>Capturas, contratos, notas de proveedor, transferencias. Lo que tengas.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="5" width="13" height="10" rx="1.5" stroke="#E8197A" stroke-width="1.4"/>
+          <path d="M15 9l5-3v10l-5-3" stroke="#E8197A" stroke-width="1.4" stroke-linejoin="round"/>
+          <circle cx="8.5" cy="10" r="2" stroke="#E8197A" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Videollamada de conocimiento</h4>
+        <p>~20 minutos para que nos cuentes cómo funciona tu negocio o actividad.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 18V8l7-4 7 4v10" stroke="#E8197A" stroke-width="1.4" stroke-linejoin="round"/>
+          <rect x="8" y="11" width="6" height="7" rx="1" stroke="#E8197A" stroke-width="1.3"/>
+          <circle cx="11" cy="8" r="1.2" fill="#E8197A"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Visita a tu negocio o domicilio</h4>
+        <p>Un asesor te visita para verificar tu actividad. Es parte de lo que nos permite aprobar donde otros rechazan.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 3C7.686 3 5 5.686 5 9c0 4.5 6 10 6 10s6-5.5 6-10c0-3.314-2.686-6-6-6z" stroke="#E8197A" stroke-width="1.4"/>
+          <circle cx="11" cy="9" r="2" stroke="#E8197A" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Respaldo adicional en algunos casos</h4>
+        <p>Dependiendo del monto y tu perfil, podríamos pedirte un contacto de confianza que complemente tu solicitud. Lo evaluamos caso por caso.</p>
+      </div>
+    </div>
+    <div class="req-item">
+      <div class="req-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="8" width="18" height="10" rx="2" stroke="#E8197A" stroke-width="1.4"/>
+          <path d="M6 8V6a5 5 0 0110 0v2" stroke="#E8197A" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.5" fill="#E8197A"/>
+          <path d="M11 14.5v1.5" stroke="#E8197A" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h4>Documentación de respaldo para montos mayores</h4>
+        <p>Para créditos más grandes evaluamos opciones adicionales contigo. Siempre hay una solución — lo definimos en la videollamada.</p>
+      </div>
+    </div>
+  </div>
+  <p class="req-note">Evaluamos tu situación real, no solo tus papeles. Si los bancos te han dicho que no, cuéntanos tu caso — en la mayoría de las situaciones encontramos la forma de ayudarte.</p>
+</section>
+
+<!-- FORMULARIO -->
+<section class="section" id="solicitar">
+  <p class="section-label">Pre-solicitud</p>
+  <h2>Cuéntanos tu caso.<br>Sin compromiso.</h2>
+  <div class="form-wrap">
+    <div class="form-group">
+      <label>Nombre completo</label>
+      <input type="text" placeholder="Tu nombre">
+    </div>
+    <div class="form-group">
+      <label>WhatsApp</label>
+      <input type="tel" placeholder="55 1234 5678">
+    </div>
+    <div class="form-group">
+      <label>¿Cuánto necesitas?</label>
+      <input type="text" placeholder="Ej. $20,000 MXN" id="formMonto">
+    </div>
+    <div class="form-group">
+      <label>¿A qué te dedicas?</label>
+      <textarea placeholder="Cuéntanos brevemente tu actividad o negocio..."></textarea>
+    </div>
+    <button class="form-submit" id="formBtn">Quiero que me contacten →</button>
+    <p class="form-micro">Al enviar aceptas nuestro <a href="#aviso-privacidad" style="color:var(--mint-dim);text-decoration:underline;">aviso de privacidad</a>. Un asesor te escribe pronto. Sin spam ni llamadas no deseadas.</p>
+  </div>
+</section>
+
+<!-- AVISO DE PRIVACIDAD -->
+<section class="section" id="aviso-privacidad" style="background:#1A1A2E;" style="padding:3rem 2.5rem;">
+  <p class="section-label">Protección de datos</p>
+  <h2 style="font-size:1.6rem;">Aviso de Privacidad</h2>
+  <div style="max-width:680px;margin-top:1.2rem;font-size:0.82rem;color:var(--text-muted);line-height:1.8;">
+    <p style="margin-bottom:0.8rem;"><strong style="color:#FFB3DE;">Responsable:</strong> Crédito Rosa S.A. de C.V., con domicilio en Ciudad de México y Zona Metropolitana.</p>
+    <p style="margin-bottom:0.8rem;"><strong style="color:#FFB3DE;">Datos que recabamos:</strong> nombre, teléfono, actividad económica, y la información adicional que compartas durante el proceso de solicitud (identificación oficial, comprobantes de domicilio e ingresos, referencias personales y profesionales).</p>
+    <p style="margin-bottom:0.8rem;"><strong style="color:#FFB3DE;">Finalidad:</strong> Evaluar tu solicitud de crédito, contactarte para darle seguimiento, y en caso de aprobación, formalizar el contrato correspondiente. Tus datos no serán vendidos, cedidos ni transferidos a terceros, salvo obligación legal.</p>
+    <p style="margin-bottom:0.8rem;"><strong style="color:#FFB3DE;">Derechos ARCO:</strong> Puedes ejercer tus derechos de Acceso, Rectificación, Cancelación u Oposición escribiéndonos por WhatsApp al número de contacto indicado en esta página.</p>
+    <p><strong style="color:#FFB3DE;">Cambios al aviso:</strong> Cualquier modificación será notificada a través de esta misma página.</p>
+  </div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="img/CR nombre blanco.svg" alt="Crédito Rosa" class="logo" height="40">
+  <p style="color:rgba(255,255,255,0.5);">CDMX y Zona Metropolitana · creditrosa.mx</p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+    <a href="#aviso-privacidad" style="font-size:0.72rem;color:var(--text-muted);text-decoration:underline;">Aviso de privacidad</a>
+    <p style="font-size:0.72rem;">© 2026 Crédito Rosa S.A. de C.V. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a class="wa-float" id="waFloat" href="https://wa.me/525654681806?text=Hola%2C%20me%20interesa%20solicitar%20un%20cr%C3%A9dito%20con%20Cr%C3%A9dito%20Rosa.%20%C2%BFMe%20pueden%20orientar%3F" target="_blank" title="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+// ─── LÓGICA DEL SIMULADOR (misma fórmula que Crédito Rosa MVP) ───
+const TASA = 0.13; // 13% mensual
+const IVA  = 0.16;
+
+let monto  = 10000;
+let plazo  = 6;      // meses
+let freq   = 'QNAL'; // QNAL | MENS
+
+function calcular() {
+  // Amortización constante de capital
+  const capitalMensual = monto / plazo;
+
+  // Interés promedio sobre saldos decrecientes (fórmula validada en producción)
+  let saldo = monto;
+  let totalInteres = 0;
+  for (let i = 0; i < plazo; i++) {
+    totalInteres += saldo * TASA;
+    saldo -= capitalMensual;
+  }
+  const interesMensual  = totalInteres / plazo;
+  const ivaMensual      = interesMensual * IVA;
+  const totalPorPeriodo = capitalMensual + interesMensual + ivaMensual;
+
+  // Ajuste por frecuencia
+  const totalPagos = freq === 'QNAL' ? plazo * 2 : plazo;
+  const cuotaFija  = freq === 'QNAL'
+    ? Math.round(totalPorPeriodo / 2)
+    : Math.round(totalPorPeriodo);
+  const capPeriodo = freq === 'QNAL'
+    ? Math.round(capitalMensual / 2)
+    : Math.round(capitalMensual);
+  const intPeriodo = freq === 'QNAL'
+    ? Math.round((interesMensual + ivaMensual) / 2)
+    : Math.round(interesMensual + ivaMensual);
+
+  return { cuotaFija, capPeriodo, intPeriodo, totalPagos, totalPagar: cuotaFija * totalPagos };
+}
+
+function fmt(n) {
+  return '$' + n.toLocaleString('es-MX');
+}
+
+function render() {
+  const r = calcular();
+  document.getElementById('cuotaDisplay').textContent   = fmt(r.cuotaFija);
+  document.getElementById('capDisplay').textContent     = fmt(r.capPeriodo);
+  document.getElementById('intDisplay').textContent     = fmt(r.intPeriodo);
+  document.getElementById('totalPagosDisplay').textContent = r.totalPagos;
+  document.getElementById('totalPagarDisplay').textContent = fmt(r.totalPagar);
+  document.getElementById('montoDisplay').textContent   = fmt(monto);
+
+  // Sync monto en formulario
+  const fi = document.getElementById('formMonto');
+  if (fi && !fi.dataset.touched) fi.placeholder = fmt(monto) + ' MXN';
+}
+
+// Slider monto
+document.getElementById('montoSlider').addEventListener('input', function() {
+  monto = +this.value;
+  render();
+});
+
+// Plazo buttons
+document.querySelectorAll('.plazo-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.plazo-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    plazo = +this.dataset.p;
+    render();
+  });
+});
+
+// Frecuencia
+document.querySelectorAll('.freq-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    freq = this.dataset.freq;
+    render();
+  });
+});
+
+// Marcar form monto como tocado si el usuario escribe
+const fi = document.getElementById('formMonto');
+if (fi) fi.addEventListener('input', () => fi.dataset.touched = '1');
+
+// Formulario → WhatsApp
+document.getElementById('formBtn').addEventListener('click', function() {
+  const nombre = document.querySelector('input[type=text]').value.trim();
+  const tel    = document.querySelector('input[type=tel]').value.trim();
+  const monto  = document.getElementById('formMonto').value.trim();
+  const activ  = document.querySelector('textarea').value.trim();
+  if (!nombre || !tel) {
+    alert('Por favor ingresa tu nombre y WhatsApp para continuar.');
+    return;
+  }
+  const msg = `Hola, me interesa solicitar un crédito con Crédito Rosa.\n\n*Nombre:* ${nombre}\n*WhatsApp:* ${tel}${monto ? '\n*Monto:* ' + monto : ''}${activ ? '\n*Actividad:* ' + activ : ''}`;
+  window.open('https://wa.me/525654681806?text=' + encodeURIComponent(msg), '_blank');
+});
+
+render();
+</script>
+</body>
+</html>
