@@ -90,15 +90,18 @@ main{
   color:var(--mg);margin-bottom:0.6rem;
 }
 .step-q{
+  font-family:'Plus Jakarta Sans',sans-serif;
   font-size:clamp(1.4rem,4vw,1.9rem);
   font-weight:700;line-height:1.2;
   color:var(--dark);margin-bottom:0.5rem;
 }
 .step-hint{
+  font-family:'Plus Jakarta Sans',sans-serif;
   font-size:0.9rem;color:var(--light);
   line-height:1.6;margin-bottom:1.8rem;
 }
 .step-insight{
+  font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--mg-pale);
   border-left:3px solid var(--mg);
   border-radius:0 var(--radius) var(--radius) 0;
@@ -164,7 +167,7 @@ main{
   margin-bottom:1.2rem;
 }
 .sim-amount-display{
-  font-family:'Playfair Display',serif;
+  font-family:'Plus Jakarta Sans',sans-serif;
   font-size:2.8rem;font-weight:700;
   color:var(--mg);letter-spacing:-0.02em;
   margin-bottom:0.3rem;
@@ -196,8 +199,8 @@ input[type=range]::-webkit-slider-thumb{
   border-radius:10px;padding:0.75rem 1rem;
 }
 .sim-result-card.highlight{background:var(--mg-pale);}
-.src-label{font-size:0.7rem;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
-.src-value{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.src-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.7rem;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
+.src-value{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);}
 .sim-result-card.highlight .src-value{color:var(--mg);font-size:1.25rem;}
 
 /* Garantía alerta */
@@ -340,6 +343,36 @@ footer{
   </div>
   <div id="cp-error" style="display:none;font-size:0.82rem;color:#E24B4A;margin-top:-0.5rem;margin-bottom:0.5rem;">
     Por el momento no tenemos cobertura en esa zona.
+  </div>
+  <div id="cp-result" style="display:none;margin-top:0.8rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+      <div style="background:var(--gray);border-radius:10px;padding:0.7rem 0.9rem;">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--light);
+             text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">
+          Alcaldía / Municipio
+        </div>
+        <div id="cp-municipio"
+             style="font-size:0.9rem;font-weight:600;color:var(--dark);">
+        </div>
+      </div>
+      <div style="background:var(--gray);border-radius:10px;padding:0.7rem 0.9rem;">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--light);
+             text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">
+          Estado
+        </div>
+        <div id="cp-estado"
+             style="font-size:0.9rem;font-weight:600;color:var(--dark);">
+        </div>
+      </div>
+    </div>
+    <div id="colonia-wrap" style="display:none;margin-bottom:8px;">
+      <div style="font-size:0.7rem;font-weight:600;color:var(--light);
+           text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">
+        Colonia
+      </div>
+      <select id="cp-colonia" class="input-field"
+              style="font-size:0.9rem;cursor:pointer;"></select>
+    </div>
   </div>
   <button class="btn-next" id="btn1" onclick="checkCP()">Continuar →</button>
 </div>
@@ -605,7 +638,7 @@ footer{
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
-    Hablar con un asesor ahora
+    Escribir a <span id="waAsesorNombre">un asesor</span> →
   </a>
 </div>
 
@@ -616,6 +649,44 @@ footer{
 </footer>
 
 <script>
+const CODIGOS_ZIP_KEY = 'zp_f5480bf459fb5d5aa8a177c981f4ff8112c694ef6e68ca90';
+
+async function lookupCP(cp) {
+  const resultDiv = document.getElementById('cp-result');
+  try {
+    const res = await fetch(
+      'https://api.codigos.zip/api/zip/' + cp + '?pais=MX',
+      { headers: { 'X-API-Key': CODIGOS_ZIP_KEY } }
+    );
+    if (!res.ok) { resultDiv.style.display='none'; return; }
+    const json = await res.json();
+    if (!json || json.error) { resultDiv.style.display='none'; return; }
+
+    document.getElementById('cp-municipio').textContent = json.municipio || '';
+    document.getElementById('cp-estado').textContent = json.estado || '';
+
+    const select = document.getElementById('cp-colonia');
+    select.innerHTML = '';
+    const colonias = Array.isArray(json.colonias) ? json.colonias : [];
+    colonias.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      select.appendChild(opt);
+    });
+    document.getElementById('colonia-wrap').style.display =
+      colonias.length > 0 ? 'block' : 'none';
+    resultDiv.style.display = 'block';
+
+    data.municipio = json.municipio || '';
+    data.estado    = json.estado    || '';
+    data.colonia   = select.value   || '';
+    select.addEventListener('change', () => { data.colonia = select.value; });
+  } catch(e) {
+    resultDiv.style.display = 'none';
+    console.warn('CP lookup error:', e);
+  }
+}
+
 const TASA = 0.13, IVA = 0.16;
 const WA_NUMBER = '525654681806';
 const N8N_WEBHOOK = 'https://creditorosa.app.n8n.cloud/webhook/credito-rosa-solicitud';
@@ -758,45 +829,69 @@ function checkCP(){
   if(!cpValido(cp)){ err.style.display='block'; err.textContent='Por el momento no tenemos cobertura en esa zona.'; return; }
   err.style.display='none';
   data.cp = cp;
+  const coloniaSelect = document.getElementById('cp-colonia');
+  if (coloniaSelect && coloniaSelect.value) data.colonia = coloniaSelect.value;
   goStep(2);
 }
 
 document.getElementById('cp').addEventListener('keydown', e => { if(e.key==='Enter') checkCP(); });
 
 // ── SUBMIT
-async function submitForm(){
+async function submitForm() {
   data.nombre = document.getElementById('nombre').value.trim();
   data.whatsapp = document.getElementById('whatsapp').value.trim();
   data.timestamp = new Date().toISOString();
   data.fuente = document.referrer || 'directo';
+  data.monto = simMonto;
+  data.plazo = simPlazo;
+  data.frecuencia = simFreq;
+  data.cuota_estimada = fmt(calcSim().cuota);
 
-  const waMsg = encodeURIComponent(
-    `Hola, soy ${data.nombre || 'un prospecto'} y acabo de completar la solicitud de Crédito Rosa.\n` +
-    `Monto: ${fmt(simMonto)} · Plazo: ${simPlazo} meses · Cuota est.: ${data.cuota_estimada || ''}\n` +
-    `Actividad: ${data.act || ''} · CP: ${data.cp || ''}`
-  );
-  document.getElementById('waBtn').href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+  // Mostrar pantalla de espera primero
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('screenPending').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Enviar a n8n (no bloquear si falla)
-  if(N8N_WEBHOOK && N8N_WEBHOOK !== 'TU_WEBHOOK_N8N_AQUI'){
+  // Número de fallback mientras n8n responde
+  let asesorNumero = '525654681806';
+  let asesorNombre = 'un asesor';
+
+  if (N8N_WEBHOOK && N8N_WEBHOOK !== 'TU_WEBHOOK_N8N_AQUI') {
     try {
-      await fetch(N8N_WEBHOOK, {
+      const res = await fetch(N8N_WEBHOOK, {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-    } catch(e){ console.warn('n8n webhook error', e); }
+      const json = await res.json();
+      if (json.asesor_numero) asesorNumero = json.asesor_numero;
+      if (json.asesor_nombre) asesorNombre = json.asesor_nombre;
+    } catch (e) {
+      console.warn('n8n error', e);
+    }
   }
 
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('progressFill').style.width='100%';
-  document.getElementById('screenPending').classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  // Construir botón WhatsApp con asesor real
+  const waMsg = encodeURIComponent(
+    'Hola ' + asesorNombre + ', acabo de llenar la solicitud de Crédito Rosa.\n' +
+    'Nombre: ' + (data.nombre || '') + '\n' +
+    'Monto: ' + fmt(simMonto) + ' · Plazo: ' + simPlazo + ' meses\n' +
+    'Actividad: ' + (data.act || '') + ' · CP: '+(data.cp||'')+' · '+(data.colonia||'')+' · '+(data.municipio||'')
+  );
+  const waBtn = document.getElementById('waBtn');
+  waBtn.href = 'https://wa.me/' + asesorNumero + '?text=' + waMsg;
+  const waSpan = document.getElementById('waAsesorNombre');
+  if (waSpan) waSpan.textContent = asesorNombre;
 }
 
 // ── INIT
 renderSim();
 updateProgress();
+document.getElementById('cp').addEventListener('input', function() {
+  if (this.value.length === 5) lookupCP(this.value);
+  else document.getElementById('cp-result').style.display = 'none';
+});
 </script>
 </body>
 </html>
