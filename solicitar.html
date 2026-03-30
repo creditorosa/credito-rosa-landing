@@ -383,12 +383,21 @@ footer{
   <div class="step-q">¿Cómo te llamamos?</div>
   <div class="step-hint">Solo tu nombre y WhatsApp para que un asesor pueda contactarte.</div>
   <div class="input-wrap">
-    <input class="input-field" type="text" id="nombre" placeholder="Tu nombre completo">
+    <input class="input-field" type="text" id="nombres"
+           placeholder="Nombre(s)" autocomplete="given-name">
+  </div>
+  <div class="input-wrap">
+    <input class="input-field" type="text" id="apellido1"
+           placeholder="Primer apellido" autocomplete="family-name">
+  </div>
+  <div class="input-wrap">
+    <input class="input-field" type="text" id="apellido2"
+           placeholder="Segundo apellido (opcional)">
   </div>
   <div class="input-wrap">
     <input class="input-field" type="tel" id="whatsapp" placeholder="WhatsApp (10 dígitos)" inputmode="numeric" maxlength="10">
   </div>
-  <button class="btn-next" onclick="goStep(3)">Continuar →</button>
+  <button class="btn-next" onclick="if(validarPaso2()) goStep(3)">Continuar →</button>
 </div>
 
 <!-- ══ PASO 3: ACTIVIDAD ══ -->
@@ -660,30 +669,43 @@ async function lookupCP(cp) {
     );
     if (!res.ok) { resultDiv.style.display='none'; return; }
     const json = await res.json();
-    if (!json || json.error) { resultDiv.style.display='none'; return; }
+    console.log('CP API response:', JSON.stringify(json));
 
-    document.getElementById('cp-municipio').textContent = json.municipio || '';
-    document.getElementById('cp-estado').textContent = json.estado || '';
+    if (!json) { resultDiv.style.display='none'; return; }
+
+    const municipio = json.municipio || json.ciudad || json.alcaldia || '';
+    const estado    = json.estado || json.state || '';
+
+    document.getElementById('cp-municipio').textContent = municipio;
+    document.getElementById('cp-estado').textContent    = estado;
+
+    const rawColonias = json.colonias || json.neighborhoods || json.asentamientos || [];
+    const colonias = rawColonias.map(c =>
+      typeof c === 'string' ? c :
+      (c.nombre || c.colonia || c.name || c.asentamiento || '')
+    ).filter(Boolean);
 
     const select = document.getElementById('cp-colonia');
     select.innerHTML = '';
-    const colonias = Array.isArray(json.colonias) ? json.colonias : [];
     colonias.forEach(c => {
       const opt = document.createElement('option');
       opt.value = c; opt.textContent = c;
       select.appendChild(opt);
     });
+
     document.getElementById('colonia-wrap').style.display =
       colonias.length > 0 ? 'block' : 'none';
-    resultDiv.style.display = 'block';
+    resultDiv.style.display =
+      (colonias.length > 0 || municipio) ? 'block' : 'none';
 
-    data.municipio = json.municipio || '';
-    data.estado    = json.estado    || '';
-    data.colonia   = select.value   || '';
-    select.addEventListener('change', () => { data.colonia = select.value; });
+    data.municipio = municipio;
+    data.estado    = estado;
+    data.colonia   = select.value || '';
+    select.onchange = () => { data.colonia = select.value; };
+
   } catch(e) {
+    console.error('CP lookup error:', e);
     resultDiv.style.display = 'none';
-    console.warn('CP lookup error:', e);
   }
 }
 
@@ -836,9 +858,29 @@ function checkCP(){
 
 document.getElementById('cp').addEventListener('keydown', e => { if(e.key==='Enter') checkCP(); });
 
+// ── VALIDACIÓN PASO 2
+function validarPaso2() {
+  const n  = document.getElementById('nombres').value.trim();
+  const a1 = document.getElementById('apellido1').value.trim();
+  const wa = document.getElementById('whatsapp').value.trim();
+  if (!n || !a1) {
+    alert('Por favor ingresa tu nombre y primer apellido.');
+    return false;
+  }
+  if (!wa || wa.length < 10) {
+    alert('Por favor ingresa tu WhatsApp de 10 dígitos.');
+    return false;
+  }
+  return true;
+}
+
 // ── SUBMIT
 async function submitForm() {
-  data.nombre = document.getElementById('nombre').value.trim();
+  data.nombre = [
+    document.getElementById('nombres').value.trim(),
+    document.getElementById('apellido1').value.trim(),
+    document.getElementById('apellido2').value.trim()
+  ].filter(Boolean).join(' ');
   data.whatsapp = document.getElementById('whatsapp').value.trim();
   data.timestamp = new Date().toISOString();
   data.fuente = document.referrer || 'directo';
