@@ -388,17 +388,6 @@
   footer .logo span { color: var(--magenta-light); }
   footer p { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
 
-  /* WHATSAPP FLOAT */
-  .wa-float {
-    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
-    width: 52px; height: 52px; border-radius: 50%;
-    background: #25D366; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.35); cursor: pointer;
-    transition: transform 0.2s; text-decoration: none;
-  }
-  .wa-float:hover { transform: scale(1.08); }
-  .wa-float svg { width: 26px; height: 26px; fill: white; }
-
   /* MOBILE */
   @media(max-width:768px){
     nav { padding: 1rem 1.2rem; }
@@ -726,30 +715,28 @@
   <p class="req-note">Evaluamos tu situación real, no solo tus papeles. Si los bancos te han dicho que no, cuéntanos tu caso — en la mayoría de las situaciones encontramos la forma de ayudarte.</p>
 </section>
 
-<!-- FORMULARIO -->
-<section class="section" id="solicitar">
-  <p class="section-label">Pre-solicitud</p>
-  <h2>Cuéntanos tu caso.<br>Sin compromiso.</h2>
-  <div class="form-wrap">
-    <div class="form-group">
-      <label>Nombre completo</label>
-      <input type="text" placeholder="Tu nombre">
-    </div>
-    <div class="form-group">
-      <label>WhatsApp</label>
-      <input type="tel" placeholder="55 1234 5678">
-    </div>
-    <div class="form-group">
-      <label>¿Cuánto necesitas?</label>
-      <input type="text" placeholder="Ej. $20,000 MXN" id="formMonto">
-    </div>
-    <div class="form-group">
-      <label>¿A qué te dedicas?</label>
-      <textarea placeholder="Cuéntanos brevemente tu actividad o negocio..."></textarea>
-    </div>
-    <button class="form-submit" id="formBtn">Quiero que me contacten →</button>
-    <p class="form-micro">Al enviar aceptas nuestro <a href="#aviso-privacidad" style="color:var(--mint-dim);text-decoration:underline;">aviso de privacidad</a>. Un asesor te escribe pronto. Sin spam ni llamadas no deseadas.</p>
-  </div>
+<!-- CTA SOLICITAR -->
+<section class="section" id="solicitar" style="text-align:center; padding:4rem 2.5rem;">
+  <p class="section-label">¿Lista para empezar?</p>
+  <h2 style="max-width:480px;margin:0 auto 1rem;">
+    Da el primer paso.<br>Sin compromiso.
+  </h2>
+  <p style="font-size:1rem;color:var(--text-mid);max-width:420px;
+     margin:0 auto 2rem;line-height:1.7;">
+    Llena nuestra solicitud en menos de 3 minutos y un asesor
+    te contactará para revisar tu caso.
+  </p>
+  <a href="solicitar.html"
+     style="display:inline-flex;align-items:center;gap:10px;
+            background:linear-gradient(135deg,var(--magenta),var(--magenta-light));
+            color:#fff;font-family:'Plus Jakarta Sans',sans-serif;
+            font-size:1.05rem;font-weight:700;padding:1.1rem 2.4rem;
+            border-radius:99px;text-decoration:none;transition:opacity 0.15s;">
+    Iniciar mi solicitud →
+  </a>
+  <p style="font-size:0.78rem;color:var(--text-light);margin-top:1rem;">
+    Sin recibo de nómina · Sin buró perfecto · CDMX y Zona Metropolitana
+  </p>
 </section>
 
 <!-- AVISO DE PRIVACIDAD -->
@@ -773,13 +760,6 @@
     <p style="font-size:0.72rem;">© 2026 Crédito Rosa S.A. de C.V. Todos los derechos reservados.</p>
   </div>
 </footer>
-
-<!-- WHATSAPP FLOTANTE -->
-<a class="wa-float" id="waFloat" href="https://wa.me/525654681806?text=Hola%2C%20me%20interesa%20solicitar%20un%20cr%C3%A9dito%20con%20Cr%C3%A9dito%20Rosa.%20%C2%BFMe%20pueden%20orientar%3F" target="_blank" title="Escríbenos por WhatsApp">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-</a>
 
 <script>
 // ─── LÓGICA DEL SIMULADOR (misma fórmula que Crédito Rosa MVP) ───
