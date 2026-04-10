@@ -385,6 +385,8 @@ footer{
 .progress-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,25,122,0.18);transition:all 0.3s ease;flex-shrink:0;display:block;}
 .progress-dot.done{background:var(--mg);opacity:0.6;}
 .progress-dot.current{background:var(--mg);width:24px;border-radius:4px;opacity:1;}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+
 </style>
 </head>
 <body>
@@ -758,6 +760,7 @@ footer{
   <div style="font-size:0.75rem;color:var(--light);margin-bottom:0.5rem;text-align:center;">
     * Estimación. El monto final se confirma en la videollamada con tu asesor.
   </div>
+  <div id="sentinel-step6" style="height:1px;"></div>
   <button class="btn-next full" onclick="goStep(7)">Así quiero mi crédito →</button>
 </div>
 
@@ -842,6 +845,7 @@ footer{
   <div class="alert alert-amber" style="margin-top:1rem;">
     <strong>Antes de enviar:</strong> La información que proporcionas será verificada por tu asesor durante la videollamada. Datos incorrectos o inconsistentes pueden resultar en el rechazo de la solicitud.
   </div>
+  <div id="sentinel-step8" style="height:1px;"></div>
   <button class="btn-next full" id="btn8" onclick="submitForm()">Enviar mi solicitud →</button>
 </div>
 
@@ -1073,7 +1077,11 @@ async function onCpInput(val) {
   document.getElementById('cp-result').style.display = 'none';
   document.getElementById('cp-error').style.display = 'none';
   // zona-tag solo uso interno
-  if (val.length === 5) await lookupCP(val);
+  if (val.length === 5) {
+    await lookupCP(val);
+  } else {
+    setFloatBtn('Continuar →', false, checkCP);
+  }
 }
 
 async function lookupCP(cp) {
@@ -1164,9 +1172,18 @@ function checkCP() {
     err.textContent='Por el momento no tenemos cobertura en esa zona. Solo atendemos CDMX y Zona Metropolitana.';
     return;
   }
+  // Validar que haya seleccionado colonia si el selector está visible
+  const coloniaSelect = document.getElementById('cp-colonia');
+  const coloniaWrap = document.getElementById('colonia-wrap');
+  if (coloniaWrap && coloniaWrap.style.display !== 'none') {
+    if (!coloniaSelect.value || coloniaSelect.value === '') {
+      err.style.display='block';
+      err.textContent='Por favor selecciona tu colonia para continuar.';
+      return;
+    }
+  }
   err.style.display='none';
   data.cp = cp;
-  const coloniaSelect = document.getElementById('cp-colonia');
   if (coloniaSelect && coloniaSelect.value) data.colonia = coloniaSelect.value;
 
   // Descarte si zona lejana (>25km) — pasa pero marcado
@@ -1942,12 +1959,19 @@ function trackWaClick() {
   if (waClicRegistrado) return;
   waClicRegistrado = true;
   data.clic_whatsapp = 'si';
-  // Enviar actualización a n8n
-  if (N8N_WEBHOOK) {
-    fetch(N8N_WEBHOOK + '-wa-click', {
+  // Actualizar columna Clic Whatsapp en Sheets via n8n
+  // Usamos el mismo webhook principal con flag de actualización
+  if (N8N_WEBHOOK && data.whatsapp) {
+    fetch(N8N_WEBHOOK, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ whatsapp: data.whatsapp, clic_whatsapp:'si', timestamp: new Date().toISOString() })
+      body: JSON.stringify({
+        _tipo: 'clic_whatsapp',
+        whatsapp: data.whatsapp,
+        nombre: data.nombre,
+        clic_whatsapp: 'si',
+        timestamp: new Date().toISOString()
+      })
     }).catch(()=>{});
   }
 }
@@ -1970,8 +1994,103 @@ function setFloatBtn(text, enabled, onclickFn, isLoading) {
 
 function floatBtnClick() {
   const btn = document.getElementById('floatBtnEl');
-  if (!btn || btn.disabled || btn.className === 'loading') return;
+  if (!btn || btn.className === 'loading') return;
+  if (btn.disabled) {
+    mostrarMensajeFaltante();
+    return;
+  }
   if (btn._action) btn._action();
+}
+
+function mostrarMensajeFaltante() {
+  const step = document.querySelector('.step.active');
+  if (!step) return;
+  const id = step.id;
+  let msg = '';
+
+  if (id === 'step1') {
+    const coloniaWrap = document.getElementById('colonia-wrap');
+    const coloniaVal = document.getElementById('cp-colonia')?.value;
+    if (!document.getElementById('cp').value || document.getElementById('cp').value.length < 5) {
+      msg = 'Ingresa tu código postal de 5 dígitos.';
+    } else if (coloniaWrap && coloniaWrap.style.display !== 'none' && !coloniaVal) {
+      msg = 'Selecciona tu colonia para continuar.';
+    } else {
+      msg = 'Espera mientras verificamos tu zona.';
+    }
+  } else if (id === 'step2') {
+    if (!document.getElementById('nombres').value.trim()) msg = 'Ingresa tu nombre.';
+    else if (!document.getElementById('apellido1').value.trim()) msg = 'Ingresa tu primer apellido.';
+    else if (!document.getElementById('whatsapp').value.trim() || document.getElementById('whatsapp').value.trim().length < 10) msg = 'Ingresa tu número de WhatsApp de 10 dígitos.';
+    else if (!document.getElementById('edad').value.trim()) msg = 'Ingresa tu edad.';
+    else if (!data.recibe_llamadas) msg = 'Indica si tu número recibe llamadas o solo WhatsApp.';
+    else if (data.recibe_llamadas === 'no' && (!document.getElementById('telefono_alt')?.value.trim())) msg = 'Ingresa un número alterno para llamadas.';
+    else msg = 'Completa todos los campos para continuar.';
+  } else if (id === 'step3') {
+    msg = 'Selecciona tu actividad principal para continuar.';
+  } else if (id === 'step3b') {
+    if (!ingFreqActual) msg = 'Indica con qué frecuencia recibes ingresos.';
+    else if (!ingMontoVal) msg = 'Indica cuánto recibes aproximadamente.';
+    else if (!ingConstancia) msg = 'Indica si tu ingreso es constante o variable.';
+    else if (actividadSeleccionada === 'empleado_nomina' && !data.sector) msg = 'Selecciona el sector en que trabajas.';
+    else if (actividadSeleccionada === 'freelance' && !data.sector) msg = 'Selecciona tu área de trabajo.';
+    else if ((actividadSeleccionada === 'comercio_local' || actividadSeleccionada === 'comercio_ambulante') && !data.giro) msg = 'Selecciona el giro de tu negocio.';
+    else if (actividadSeleccionada === 'comercio_ambulante' && !data.lugar_trabajo) msg = 'Indica dónde realizas tu actividad.';
+    else if (actividadSeleccionada === 'servicios_domicilio' && !data.tipo_servicio) msg = 'Indica qué tipo de servicio ofreces.';
+    else if (actividadSeleccionada === 'ventas_comisiones' && !data.tipo_venta) msg = 'Indica qué tipo de ventas realizas.';
+    else if (actividadSeleccionada === 'ventas_internet' && !data.tipo_venta_internet) msg = 'Indica cómo describes tu actividad en línea.';
+    else if (actividadSeleccionada === 'jubilado' && !data.inst_jubilado) msg = 'Indica de qué institución es tu pensión.';
+    else msg = 'Completa todos los campos de esta sección.';
+  } else if (id === 'step4') {
+    msg = 'Selecciona cómo puedes comprobar tus ingresos.';
+  } else if (id === 'step5') {
+    if (!data.dom) msg = 'Indica el tipo de domicilio donde vives.';
+    else msg = 'Indica si cuentas con un aval para continuar.';
+  } else if (id === 'step6') {
+    msg = 'Desplázate hacia abajo para ver el resumen completo antes de continuar.';
+  } else if (id === 'step7') {
+    msg = 'Selecciona tu estado civil para continuar.';
+  } else if (id === 'step8') {
+    msg = 'Lee todos los requisitos desplazándote hacia abajo antes de enviar.';
+  }
+
+  if (msg) mostrarToast(msg);
+}
+
+function mostrarToast(msg) {
+  // Quitar toast anterior si existe
+  const prev = document.getElementById('toast-msg');
+  if (prev) prev.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'toast-msg';
+  toast.textContent = msg;
+  toast.style.cssText = [
+    'position:fixed',
+    'bottom:90px',
+    'left:50%',
+    'transform:translateX(-50%)',
+    'background:rgba(26,26,46,0.92)',
+    'color:#fff',
+    'padding:0.65rem 1.25rem',
+    'border-radius:99px',
+    'font-size:0.85rem',
+    'font-weight:500',
+    'z-index:300',
+    'max-width:88vw',
+    'text-align:center',
+    'pointer-events:none',
+    'animation:toastIn 0.2s ease',
+    'font-family:Plus Jakarta Sans,sans-serif'
+  ].join(';');
+  document.body.appendChild(toast);
+
+  // Auto-remover después de 3 segundos
+  setTimeout(function() {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(function() { if (toast.parentNode) toast.remove(); }, 300);
+  }, 3000);
 }
 
 function syncFloatBtn() {
@@ -1981,8 +2100,15 @@ function syncFloatBtn() {
   const id = step.id;
   if (id === 'step1') {
     const loading = document.getElementById('cp-loading').style.display !== 'none';
-    if (loading) { setFloatBtn('Verificando tu zona...', false, null, true); }
-    else { setFloatBtn('Continuar →', true, checkCP); }
+    const cpVal = document.getElementById('cp')?.value.trim();
+    const tieneMunicipio = !!document.getElementById('cp-municipio')?.textContent.trim();
+    if (loading) {
+      setFloatBtn('Verificando tu zona...', false, null, true);
+    } else if (!cpVal || cpVal.length < 5) {
+      setFloatBtn('Continuar →', false, checkCP);
+    } else {
+      setFloatBtn('Continuar →', true, checkCP);
+    }
   } else if (id === 'step2') {
     setFloatBtn('Continuar →', true, validarPaso2);
   } else if (id === 'step3') {
@@ -2001,11 +2127,19 @@ function syncFloatBtn() {
       if (slider) slider.value = simMonto;
       renderSim();
     }
-    setFloatBtn('Así quiero mi crédito →', true, function(){ goStep(7); });
+    // Empezar deshabilitado — se habilita al hacer scroll hasta el fondo
+    setFloatBtn('Desplázate para ver el resumen →', false, null);
+    iniciarScrollObserver('sentinel-step6', function(){
+      setFloatBtn('Así quiero mi crédito →', true, function(){ goStep(7); });
+    });
   } else if (id === 'step7') {
     setFloatBtn('Continuar →', !document.getElementById('btn7')?.disabled, function(){ goStep(8); });
   } else if (id === 'step8') {
-    setFloatBtn('Enviar mi solicitud →', true, submitForm);
+    // Empezar deshabilitado — se habilita al leer los requisitos
+    setFloatBtn('Lee los requisitos para continuar →', false, null);
+    iniciarScrollObserver('sentinel-step8', function(){
+      setFloatBtn('Enviar mi solicitud →', true, submitForm);
+    });
   } else {
     document.getElementById('floatingBtn').style.display = 'none';
   }
@@ -2014,6 +2148,24 @@ function syncFloatBtn() {
 const _mutObs = new MutationObserver(function() {
   syncFloatBtn();
 });
+
+
+// ── SCROLL OBSERVER para pasos que requieren lectura
+function iniciarScrollObserver(sentinelId, onVisible) {
+  // Limpiar observer anterior si existe
+  if (window._scrollObs) window._scrollObs.disconnect();
+  const sentinel = document.getElementById(sentinelId);
+  if (!sentinel) { onVisible(); return; } // fallback: habilitar directo
+  window._scrollObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        onVisible();
+        window._scrollObs.disconnect();
+      }
+    });
+  }, { threshold: 0.1 });
+  window._scrollObs.observe(sentinel);
+}
 
 renderSim();
 updateProgress();
