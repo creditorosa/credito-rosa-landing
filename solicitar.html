@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Solicitar crédito — Crédito Rosa</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "w4h2d6tp2i");
+</script>
 <style>
 :root {
   --mg: #E8197A;
@@ -19,6 +26,9 @@
   --gray: #F7F0F4;
   --border: rgba(232,25,122,0.15);
   --radius: 16px;
+  --green: #1DAF5A;
+  --amber: #F59E0B;
+  --red: #E24B4A;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -35,7 +45,7 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:1rem 2rem;
-  background:rgba(250,250,250,0.95);
+  background:rgba(250,250,250,0.97);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
 }
@@ -47,9 +57,9 @@ nav{
 .nav-logo span{color:var(--mg);}
 .nav-back{
   font-size:0.82rem;color:var(--light);
-  text-decoration:none;
+  background:none;border:none;cursor:pointer;
   display:flex;align-items:center;gap:6px;
-  transition:color 0.15s;
+  transition:color 0.15s;font-family:'Plus Jakarta Sans',sans-serif;
 }
 .nav-back:hover{color:var(--mg);}
 
@@ -69,21 +79,17 @@ nav{
 main{
   max-width:640px;
   margin:0 auto;
-  padding:100px 1.5rem 120px;
+  padding:100px 1.5rem 140px;
   min-height:100vh;
 }
 
 /* ── STEP ── */
-.step{
-  display:none;
-  animation:slideUp 0.35s ease both;
-}
+.step{display:none;animation:slideUp 0.35s ease both;}
 .step.active{display:block;}
 @keyframes slideUp{
   from{opacity:0;transform:translateY(24px);}
   to{opacity:1;transform:translateY(0);}
 }
-
 .step-counter{
   font-size:0.72rem;font-weight:600;
   letter-spacing:0.1em;text-transform:uppercase;
@@ -96,12 +102,10 @@ main{
   color:var(--dark);margin-bottom:0.5rem;
 }
 .step-hint{
-  font-family:'Plus Jakarta Sans',sans-serif;
   font-size:0.9rem;color:var(--light);
   line-height:1.6;margin-bottom:1.8rem;
 }
 .step-insight{
-  font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--mg-pale);
   border-left:3px solid var(--mg);
   border-radius:0 var(--radius) var(--radius) 0;
@@ -109,7 +113,7 @@ main{
   font-size:0.82rem;color:var(--mg-dark);
   line-height:1.55;margin-bottom:1.8rem;
 }
-.step-insight strong{font-weight:600;}
+.step-insight strong{font-weight:700;}
 
 /* ── OPTIONS ── */
 .options{display:flex;flex-direction:column;gap:10px;}
@@ -132,21 +136,22 @@ main{
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;transition:all 0.15s;
 }
-.opt.selected .opt-check{
-  background:var(--mg);border-color:var(--mg);
-}
-.opt.selected .opt-check::after{
-  content:'';width:8px;height:8px;border-radius:50%;background:#fff;
-}
+.opt.selected .opt-check{background:var(--mg);border-color:var(--mg);}
+.opt.selected .opt-check::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;}
 .opt-label{flex:1;}
 .opt-sub{font-size:0.78rem;color:var(--light);margin-top:2px;}
 
 /* ── INPUT ── */
 .input-wrap{margin-bottom:1.2rem;}
+.field-label{
+  font-size:0.75rem;font-weight:600;
+  color:var(--light);text-transform:uppercase;
+  letter-spacing:0.06em;margin-bottom:0.4rem;
+}
 .input-field{
   width:100%;
   font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:1.1rem;font-weight:500;
+  font-size:1.05rem;font-weight:500;
   color:var(--dark);
   background:var(--white);
   border:1.5px solid var(--border);
@@ -157,8 +162,27 @@ main{
 }
 .input-field:focus{border-color:var(--mg);}
 .input-field::placeholder{color:rgba(90,64,80,0.35);}
+select.input-field{cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A7888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
 
-/* ── SLIDER SIM ── */
+/* ── GRID BOTONES ── */
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
+.btn-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem;}
+.grid-btn{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:0.82rem;font-weight:600;
+  padding:0.65rem 0.5rem;
+  border-radius:10px;
+  border:1.5px solid var(--border);
+  background:var(--white);color:var(--light);
+  cursor:pointer;transition:all 0.15s;text-align:center;
+  line-height:1.3;
+}
+.grid-btn:hover{border-color:var(--mg);color:var(--mg);}
+.grid-btn.active{background:var(--mg);border-color:var(--mg);color:#fff;}
+
+/* ── SIMULADOR ── */
 .sim-wrap{
   background:var(--white);
   border:1.5px solid var(--border);
@@ -167,7 +191,6 @@ main{
   margin-bottom:1.2rem;
 }
 .sim-amount-display{
-  font-family:'Plus Jakarta Sans',sans-serif;
   font-size:2.8rem;font-weight:700;
   color:var(--mg);letter-spacing:-0.02em;
   margin-bottom:0.3rem;
@@ -190,83 +213,85 @@ input[type=range]::-webkit-slider-thumb{
   font-size:0.75rem;color:var(--light);
   margin-bottom:1rem;
 }
-.sim-divider{
-  border:none;border-top:1px solid var(--border);margin:1rem 0;
-}
+.sim-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
 .sim-results{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.sim-result-card{
-  background:var(--gray);
-  border-radius:10px;padding:0.75rem 1rem;
-}
+.sim-result-card{background:var(--gray);border-radius:10px;padding:0.75rem 1rem;}
 .sim-result-card.highlight{background:var(--mg-pale);}
-.src-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.7rem;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
-.src-value{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);}
+.src-label{font-size:0.7rem;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
+.src-value{font-size:1.1rem;font-weight:700;color:var(--dark);}
 .sim-result-card.highlight .src-value{color:var(--mg);font-size:1.25rem;}
+.cat-note{
+  font-size:0.72rem;color:var(--light);
+  text-align:center;margin-top:0.75rem;
+  line-height:1.5;
+}
+.cat-note strong{color:var(--mid);}
 
-/* Garantía alerta */
-.garantia-alert{
-  display:none;
-  background:#FFF8E1;border-left:3px solid #F59E0B;
-  border-radius:0 10px 10px 0;
-  padding:0.75rem 1rem;
-  font-size:0.82rem;color:#92400E;
-  line-height:1.55;margin-top:0.8rem;
-}
-.garantia-alert.show{display:block;}
-
-/* Plazo pills */
-.plazo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;margin-bottom:1rem;
-}
-.plazo-pill{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  padding:0.6rem;border-radius:10px;
-  border:1.5px solid var(--border);
-  background:var(--white);color:var(--light);
-  cursor:pointer;transition:all 0.15s;text-align:center;
-}
-.plazo-pill:hover{border-color:var(--mg);color:var(--mg);}
-.plazo-pill.active{
-  background:var(--mg);border-color:var(--mg);color:#fff;
-}
-
-/* Freq toggle */
-.freq-toggle{display:flex;gap:8px;margin-bottom:1rem;}
-.freq-btn{
-  flex:1;font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:0.85rem;font-weight:600;
-  padding:0.6rem;border-radius:10px;
-  border:1.5px solid var(--border);
-  background:var(--white);color:var(--light);
-  cursor:pointer;transition:all 0.15s;
-}
-.freq-btn.active{background:var(--mg);border-color:var(--mg);color:#fff;}
-
-/* ── NEXT BTN ── */
+/* ── BOTÓN PRINCIPAL (inline — oculto cuando existe el flotante) ── */
 .btn-next{
-  display:inline-flex;align-items:center;gap:10px;
+  display:none; /* siempre oculto — reemplazado por el flotante */
+}
+.btn-next.full{width:100%;justify-content:center;}
+
+/* ── BOTÓN FLOTANTE FIJO ── */
+#floatingBtn{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:200;
+  padding:0.875rem 1.5rem 1.25rem;
+  background:linear-gradient(to top, rgba(250,250,250,1) 60%, rgba(250,250,250,0));
+  pointer-events:none;
+}
+#floatingBtn button{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;max-width:640px;
+  margin:0 auto;
   background:linear-gradient(135deg,var(--mg),var(--mg-light));
   color:#fff;
   font-family:'Plus Jakarta Sans',sans-serif;
   font-size:1rem;font-weight:700;
   padding:1rem 2rem;
   border-radius:99px;border:none;
-  cursor:pointer;transition:opacity 0.15s;
-  margin-top:1.5rem;
+  cursor:pointer;transition:opacity 0.2s,transform 0.15s;
+  pointer-events:auto;
+  box-shadow:0 4px 24px rgba(232,25,122,0.35);
 }
-.btn-next:hover{opacity:0.88;}
-.btn-next:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* ── DESCARTE / ESTADO ── */
-.screen-descarte,.screen-pending,.screen-success{
-  display:none;text-align:center;
-  padding:3rem 1rem;
+#floatingBtn button:hover{opacity:0.9;transform:translateY(-1px);}
+#floatingBtn button:disabled{
+  opacity:0.45;cursor:not-allowed;
+  box-shadow:none;transform:none;
 }
-.screen-descarte.active,.screen-pending.active,.screen-success.active{display:block;}
+#floatingBtn button.loading{opacity:0.7;cursor:wait;}
 
+/* ── ALERTAS ── */
+.alert{
+  padding:0.75rem 1rem;
+  border-radius:0 var(--radius) var(--radius) 0;
+  font-size:0.82rem;line-height:1.55;
+  margin-bottom:1rem;
+}
+.alert-amber{background:#FFF8E1;border-left:3px solid var(--amber);color:#92400E;}
+.alert-red{background:#FEE2E2;border-left:3px solid var(--red);color:#991B1B;}
+.alert-green{background:#D1FAE5;border-left:3px solid var(--green);color:#065F46;}
+.alert strong{font-weight:700;}
+
+/* ── ZONA TAG ── */
+.zona-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.75rem;font-weight:600;
+  padding:4px 10px;border-radius:99px;
+  margin-top:0.5rem;
+}
+.zona-pref{background:#D1FAE5;color:#065F46;}
+.zona-acep{background:#FEF3C7;color:#92400E;}
+.zona-lej{background:#FEE2E2;color:#991B1B;}
+.zona-desc{background:#F3F4F6;color:#6B7280;}
+
+/* ── PANTALLAS FINALES ── */
+.screen-descarte,.screen-pending,.screen-riesgo{
+  display:none;text-align:center;padding:3rem 1rem;
+}
+.screen-descarte.active,.screen-pending.active,.screen-riesgo.active{display:block;}
 .screen-icon{
   width:72px;height:72px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
@@ -274,15 +299,8 @@ input[type=range]::-webkit-slider-thumb{
 }
 .screen-icon.soft{background:var(--gray);}
 .screen-icon.pending{background:var(--mg-pale);}
-.screen-icon.success{background:#E1F5EE;}
-.screen-title{
-  font-size:1.6rem;font-weight:700;
-  color:var(--dark);margin-bottom:0.75rem;line-height:1.2;
-}
-.screen-body{
-  font-size:0.95rem;color:var(--mid);
-  line-height:1.7;max-width:420px;margin:0 auto 2rem;
-}
+.screen-title{font-size:1.6rem;font-weight:700;color:var(--dark);margin-bottom:0.75rem;line-height:1.2;}
+.screen-body{font-size:0.95rem;color:var(--mid);line-height:1.7;max-width:420px;margin:0 auto 2rem;}
 
 /* ── WHATSAPP BTN ── */
 .btn-wa{
@@ -294,341 +312,542 @@ input[type=range]::-webkit-slider-thumb{
   border-radius:99px;border:none;
   cursor:pointer;text-decoration:none;
   transition:opacity 0.15s;
-  box-shadow:0 4px 20px rgba(37,211,102,0.3);
   width:100%;max-width:380px;
 }
 .btn-wa:hover{opacity:0.9;}
 .btn-wa svg{width:24px;height:24px;fill:#fff;flex-shrink:0;}
+.wa-loading{opacity:0.6;pointer-events:none;}
+
+/* ── LOADER ── */
+.loader-dots{display:inline-flex;gap:4px;align-items:center;}
+.loader-dots span{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--mg-light);
+  animation:bounce 1.2s infinite ease-in-out;
+}
+.loader-dots span:nth-child(2){animation-delay:0.2s;}
+.loader-dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
+
+/* ── REQUISITOS ── */
+.req-list{text-align:left;margin:1.5rem 0;}
+.req-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:0.75rem 0;
+  border-bottom:1px solid var(--border);
+  font-size:0.9rem;color:var(--dark);line-height:1.5;
+}
+.req-item:last-child{border-bottom:none;}
+.req-num{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--mg-pale);color:var(--mg);
+  font-size:0.75rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
 
 /* ── FOOTER ── */
 footer{
-  text-align:center;
-  font-size:0.75rem;color:var(--light);
-  padding:1.5rem;
-  border-top:1px solid var(--border);
-  margin-top:2rem;
+  text-align:center;font-size:0.75rem;color:var(--light);
+  padding:1.5rem;border-top:1px solid var(--border);margin-top:2rem;
 }
 
 /* ── MOBILE ── */
 @media(max-width:480px){
-  main{padding:90px 1rem 100px;}
-  .plazo-grid{grid-template-columns:repeat(3,1fr);}
+  main{padding:90px 1rem 120px;}
+  nav{padding:1rem;}
   .sim-results{grid-template-columns:1fr;}
+  .btn-grid{grid-template-columns:1fr 1fr;}
+  /* btn-next inline oculto en mobile también */
 }
+
+/* ── SUGERENCIA INGRESO CLIENTE ── */
+.sug-box{background:#EAF3DE;border-left:3px solid #3B6D11;border-radius:0 var(--radius) var(--radius) 0;padding:0.75rem 1rem;margin-top:0.75rem;display:none;}
+.sug-box.show{display:block;}
+.sug-box.warn{background:#FEF3C7;border-color:#F59E0B;}
+.sug-tag{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.35rem;display:flex;align-items:center;gap:5px;color:#27500A;}
+.sug-box.warn .sug-tag{color:#854F0B;}
+.sug-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.sug-monto{font-size:1.05rem;font-weight:700;color:#27500A;margin-bottom:3px;}
+.sug-box.warn .sug-monto{color:#854F0B;}
+.sug-texto{font-size:0.8rem;color:#3B6D11;line-height:1.5;}
+.sug-box.warn .sug-texto{color:#92400E;}
+.sug-algoritmo{font-size:0.7rem;color:#3B6D11;margin-top:4px;opacity:0.8;font-style:italic;}
+.sug-box.warn .sug-algoritmo{color:#92400E;}
+.ing-resumen{background:var(--mg-pale);border-left:3px solid var(--mg);border-radius:0 var(--radius) var(--radius) 0;padding:0.75rem 1rem;margin-top:0.75rem;display:none;}
+.ing-resumen.show{display:block;}
+.ing-resumen-title{font-size:0.7rem;font-weight:700;color:var(--mg-dark);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.3rem;}
+.ing-resumen-valor{font-size:1.1rem;font-weight:700;color:var(--mg);}
+.ing-resumen-sub{font-size:0.78rem;color:var(--mg-dark);margin-top:3px;line-height:1.5;}
+.section-sep{border:none;border-top:1px solid var(--border);margin:1.2rem 0 0.5rem;}
+
+.progress-dots{display:flex;align-items:center;gap:5px;margin-bottom:1.4rem;min-height:12px;}
+.progress-dot{width:8px;height:8px;border-radius:50%;background:rgba(232,25,122,0.18);transition:all 0.3s ease;flex-shrink:0;display:block;}
+.progress-dot.done{background:var(--mg);opacity:0.6;}
+.progress-dot.current{background:var(--mg);width:24px;border-radius:4px;opacity:1;}
 </style>
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "w4h2d6tp2i");
-</script>
 </head>
 <body>
 
+<!-- ── BOTÓN FLOTANTE FIJO ── -->
+<div id="floatingBtn">
+  <button id="floatBtnEl" onclick="floatBtnClick()" disabled>Continuar →</button>
+</div>
+
 <nav>
-  <a href="index.html" class="nav-logo"><img src="img/CR nombre.svg" alt="Crédito Rosa" height="36" style="display:block;"></a>
-  <a href="index.html" class="nav-back">
+  <a href="index.html" class="nav-logo">
+    <img src="img/CR nombre.svg" alt="Crédito Rosa" height="36" style="display:block;"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <span style="display:none;">Crédito <span>Rosa</span></span>
+  </a>
+  <button class="nav-back" onclick="navBack()" id="navBackBtn">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    Regresar
-  </a>
+    ← Pregunta anterior
+  </button>
 </nav>
 
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <main id="mainWrap">
 
-<!-- ══ PASO 1: CP ══ -->
+<!-- ══════════════════════════════════
+     PASO 1 — CÓDIGO POSTAL
+══════════════════════════════════ -->
 <div class="step active" id="step1">
-  <div class="step-counter">Paso 1 de 8</div>
+  <div class="step-counter">Paso 1 de 8 — 5 a 8 minutos para completar</div>
+  <div class="progress-dots"></div>
   <div class="step-q">¿Cuál es tu código postal?</div>
-  <div class="step-hint">Verificamos que podemos atenderte en tu zona antes de continuar.</div>
+  <div class="step-hint">Verificamos que podemos atenderte en tu zona. Solo operamos en CDMX y Zona Metropolitana.</div>
+
   <div class="input-wrap">
-    <input class="input-field" type="tel" id="cp" maxlength="5" placeholder="Ej. 54000" inputmode="numeric">
+    <input class="input-field" type="tel" id="cp" maxlength="5"
+           placeholder="Ej. 54000" inputmode="numeric"
+           oninput="onCpInput(this.value)"
+           onkeydown="if(event.key==='Enter') checkCP()">
   </div>
-  <div id="cp-error" style="display:none;font-size:0.82rem;color:#E24B4A;margin-top:-0.5rem;margin-bottom:0.5rem;">
-    Por el momento no tenemos cobertura en esa zona.
+
+  <div id="cp-error" style="display:none;font-size:0.82rem;color:var(--red);margin-top:-0.5rem;margin-bottom:0.8rem;"></div>
+
+  <div id="cp-loading" style="display:none;font-size:0.85rem;color:var(--light);margin-bottom:0.8rem;">
+    Buscando tu zona <span class="loader-dots"><span></span><span></span><span></span></span>
   </div>
-  <div id="cp-result" style="display:none;margin-top:0.8rem;">
+
+  <div id="cp-result" style="display:none;margin-bottom:1rem;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
       <div style="background:var(--gray);border-radius:10px;padding:0.7rem 0.9rem;">
-        <div style="font-size:0.7rem;font-weight:600;color:var(--light);
-             text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">
-          Alcaldía / Municipio
-        </div>
-        <div id="cp-municipio"
-             style="font-size:0.9rem;font-weight:600;color:var(--dark);">
-        </div>
+        <div class="field-label">Alcaldía / Municipio</div>
+        <div id="cp-municipio" style="font-size:0.9rem;font-weight:600;color:var(--dark);"></div>
       </div>
       <div style="background:var(--gray);border-radius:10px;padding:0.7rem 0.9rem;">
-        <div style="font-size:0.7rem;font-weight:600;color:var(--light);
-             text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;">
-          Estado
-        </div>
-        <div id="cp-estado"
-             style="font-size:0.9rem;font-weight:600;color:var(--dark);">
-        </div>
+        <div class="field-label">Estado</div>
+        <div id="cp-estado" style="font-size:0.9rem;font-weight:600;color:var(--dark);"></div>
       </div>
     </div>
     <div id="colonia-wrap" style="display:none;margin-bottom:8px;">
-      <div style="font-size:0.7rem;font-weight:600;color:var(--light);
-           text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">
-        Colonia
-      </div>
-      <select id="cp-colonia" class="input-field"
-              style="font-size:0.9rem;cursor:pointer;"></select>
+      <div class="field-label" style="margin-bottom:6px;">Colonia</div>
+      <select id="cp-colonia" class="input-field" style="font-size:0.9rem;" onchange="data.colonia=this.value"></select>
     </div>
   </div>
-  <button class="btn-next" id="btn1" onclick="checkCP()">Continuar →</button>
+
+  <button class="btn-next full" id="btn1" onclick="checkCP()">Continuar →</button>
 </div>
 
-<!-- ══ PASO 2: NOMBRE + WHATSAPP ══ -->
+<!-- ══════════════════════════════════
+     PASO 2 — NOMBRE + CONTACTO
+══════════════════════════════════ -->
 <div class="step" id="step2">
   <div class="step-counter">Paso 2 de 8</div>
+  <div class="progress-dots"></div>
   <div class="step-q">¿Cómo te llamamos?</div>
-  <div class="step-hint">Solo tu nombre y WhatsApp para que un asesor pueda contactarte.</div>
+  <div class="step-hint">Tu nombre y WhatsApp para que un asesor pueda contactarte.</div>
+
   <div class="input-wrap">
     <input class="input-field" type="text" id="nombres"
-           placeholder="Nombre(s)" autocomplete="given-name">
+           placeholder="Nombre(s)" autocomplete="given-name" minlength="2">
   </div>
   <div class="input-wrap">
     <input class="input-field" type="text" id="apellido1"
-           placeholder="Primer apellido" autocomplete="family-name">
+           placeholder="Primer apellido" autocomplete="family-name" minlength="2">
   </div>
   <div class="input-wrap">
     <input class="input-field" type="text" id="apellido2"
            placeholder="Segundo apellido (opcional)">
   </div>
+
   <div class="input-wrap">
-    <input class="input-field" type="tel" id="whatsapp" placeholder="WhatsApp (10 dígitos)" inputmode="numeric" maxlength="10">
+    <div class="field-label">Edad</div>
+    <input class="input-field" type="tel" id="edad"
+           placeholder="Tu edad en años" inputmode="numeric" maxlength="2">
   </div>
-  <button class="btn-next" onclick="if(validarPaso2()) goStep(3)">Continuar →</button>
+
+  <div class="input-wrap">
+    <input class="input-field" type="tel" id="whatsapp"
+           placeholder="WhatsApp (10 dígitos)" inputmode="numeric" maxlength="10">
+  </div>
+
+  <div id="wa-dup-warning" style="display:none;" class="alert alert-amber">
+    <strong>Ya tienes una solicitud registrada</strong> con este número. Un asesor te contactará pronto. Si tienes dudas, puedes escribirnos directamente.
+  </div>
+
+  <div class="step-insight" style="margin-top:0.5rem;">
+    <strong>¿Tu número recibe llamadas?</strong> Además de WhatsApp, nuestros asesores pueden contactarte por llamada para agilizar tu solicitud.
+  </div>
+
+  <div class="options" id="llamadas-options" style="margin-bottom:0.5rem;">
+    <button class="opt" onclick="selectOpt(this,'recibe_llamadas','si')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Sí, este número recibe llamadas</div>
+    </button>
+    <button class="opt" onclick="selectOpt(this,'recibe_llamadas','no'); showAltPhone()">
+      <div class="opt-check"></div>
+      <div class="opt-label">No, solo WhatsApp</div>
+    </button>
+  </div>
+
+  <div id="alt-phone-wrap" style="display:none;margin-top:0.75rem;">
+    <div class="step-insight">
+      <strong>Necesitamos un número donde podamos llamarte.</strong> Tu asesor confirmará tu identidad por teléfono en algún momento del proceso. Es un paso estándar de seguridad — ese número solo se usará para eso.
+    </div>
+    <div class="input-wrap">
+      <div class="field-label">Número para recibir llamadas <span style="color:var(--mg);">*</span></div>
+      <input class="input-field" type="tel" id="telefono_alt"
+             placeholder="10 dígitos" inputmode="numeric" maxlength="10">
+    </div>
+  </div>
+
+  <button class="btn-next full" onclick="validarPaso2()">Continuar →</button>
 </div>
 
-<!-- ══ PASO 3: ACTIVIDAD ══ -->
+<!-- ══════════════════════════════════
+     PASO 3 — ACTIVIDAD PRINCIPAL
+══════════════════════════════════ -->
 <div class="step" id="step3">
   <div class="step-counter">Paso 3 de 8</div>
-  <div class="step-q">¿A qué te dedicas?</div>
-  <div class="step-insight"><strong>No necesitas recibo de nómina.</strong> Aceptamos comercio informal, ventas por comisión, negocios propios y más.</div>
+  <div class="progress-dots"></div>
+  <div class="step-q">¿Cuál es tu actividad principal?</div>
+  <div class="step-insight">
+    <strong>Atendemos perfiles que otras financieras ignoran.</strong> No importa si trabajas en la economía informal o no tienes recibo de nómina — hay muchas formas de demostrar ingresos.
+  </div>
   <div class="options" id="act-options">
-    <button class="opt" onclick="selectOpt(this,'act','empleado')">
+    <button class="opt" onclick="selectActOpt(this,'empleado_nomina')">
       <div class="opt-check"></div>
-      <div class="opt-label">Empleado formal<div class="opt-sub">Recibos de nómina o carta laboral</div></div>
+      <div class="opt-label">Empleado con nómina
+        <div class="opt-sub">Trabajo formal con patrón — recibo de nómina, carta laboral o credencial</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','comercio')">
+    <button class="opt" onclick="selectActOpt(this,'comercio_local')">
       <div class="opt-check"></div>
-      <div class="opt-label">Comercio informal o tianguis<div class="opt-sub">Tickets, fotografías del negocio</div></div>
+      <div class="opt-label">Negocio o comercio con local fijo
+        <div class="opt-sub">Tienda, taller, fonda, estética — tienes un establecimiento físico</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','negocio')">
+    <button class="opt" onclick="selectActOpt(this,'comercio_ambulante')">
       <div class="opt-check"></div>
-      <div class="opt-label">Negocio propio (tienda, taller, estética...)<div class="opt-sub">Notas de proveedor, estados de cuenta</div></div>
+      <div class="opt-label">Comercio sin local fijo
+        <div class="opt-sub">Tianguis, puesto en calle o afuera de tu casa, mercado ambulante</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','ventas')">
+    <button class="opt" onclick="selectActOpt(this,'servicios_domicilio')">
       <div class="opt-check"></div>
-      <div class="opt-label">Ventas o comisiones<div class="opt-sub">Catálogo, multinivel, seguros, Facebook</div></div>
+      <div class="opt-label">Servicios a domicilio u oficios
+        <div class="opt-sub">Plomero, albañil, estilista, costurera, comida, limpieza, cuidados</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','servicios')">
+    <button class="opt" onclick="selectActOpt(this,'ventas_comisiones')">
       <div class="opt-check"></div>
-      <div class="opt-label">Servicios a domicilio o por cuenta propia<div class="opt-sub">Estética, comida, ropa, albañilería, etc.</div></div>
+      <div class="opt-label">Ventas por comisión o agente independiente
+        <div class="opt-sub">Seguros, bienes raíces, multinivel, catálogo, comisionista</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','jubilado')">
+    <button class="opt" onclick="selectActOpt(this,'ventas_internet')">
       <div class="opt-check"></div>
-      <div class="opt-label">Jubilado o pensionado<div class="opt-sub">Estados de cuenta IMSS/ISSSTE</div></div>
+      <div class="opt-label">Ventas por internet o redes sociales
+        <div class="opt-sub">Mercado Libre, tienda en línea, redes sociales, WhatsApp Business</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'act','otro')">
+    <button class="opt" onclick="selectActOpt(this,'freelance')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Freelance o profesionista independiente
+        <div class="opt-sub">Contador, diseñador, programador, consultor, médico, etc.</div>
+      </div>
+    </button>
+    <button class="opt" onclick="selectActOpt(this,'jubilado')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Jubilado o pensionado
+        <div class="opt-sub">IMSS, ISSSTE, Pemex, CFE u otra institución</div>
+      </div>
+    </button>
+    <button class="opt" onclick="selectActOpt(this,'otro')">
       <div class="opt-check"></div>
       <div class="opt-label">Otra actividad</div>
     </button>
   </div>
-  <button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Continuar →</button>
+  <div id="otro-detalle-wrap" style="display:none;margin-top:0.8rem;">
+    <input class="input-field" type="text" id="otro-detalle" placeholder="Describe brevemente tu actividad">
+  </div>
+  <button class="btn-next full" id="btn3" onclick="irPaso3b()" disabled>Continuar →</button>
 </div>
 
-<!-- ══ PASO 4: ANTIGÜEDAD ══ -->
+<!-- ══════════════════════════════════
+     PASO 3b — DETALLE DE ACTIVIDAD
+══════════════════════════════════ -->
+<div class="step" id="step3b">
+  <div class="step-counter">Paso 3b de 8</div>
+  <div class="progress-dots"></div>
+  <div class="step-q" id="step3b-titulo">Cuéntanos más</div>
+  <div class="step-hint" id="step3b-hint"></div>
+  <div id="step3b-content"></div>
+  <button class="btn-next full" id="btn3b" onclick="validarPaso3b()" disabled>Continuar →</button>
+</div>
+
+<!-- ══════════════════════════════════
+     PASO 4 — COMPROBANTE DE INGRESOS
+══════════════════════════════════ -->
 <div class="step" id="step4">
   <div class="step-counter">Paso 4 de 8</div>
-  <div class="step-q">¿Cuánto tiempo llevas en esa actividad?</div>
-  <div class="step-insight">Mientras más tiempo llevas, más fácil es calificar. Pero si tienes menos de 6 meses no te preocupes — evaluamos tu caso igual.</div>
-  <div class="options">
-    <button class="opt" onclick="selectOpt(this,'ant','menos3'); goStep(5)">
+  <div class="progress-dots"></div>
+  <div class="step-q">¿Puedes comprobar tus ingresos?</div>
+  <div class="step-insight">
+    <strong>Aceptamos mucho más que una nómina.</strong> Notas de venta, estados de cuenta, fotos de tu negocio, carta laboral — lo que tengas. Lo que importa es que puedas mostrar que tienes ingresos.
+  </div>
+  <div class="options" id="ing-options">
+    <button class="opt" onclick="selectIngreso(this,'nomina')">
       <div class="opt-check"></div>
-      <div class="opt-label">Menos de 3 meses</div>
+      <div class="opt-label">Sí — recibos de nómina o carta laboral</div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'ant','3a6'); goStep(5)">
+    <button class="opt" onclick="selectIngreso(this,'cuenta')">
       <div class="opt-check"></div>
-      <div class="opt-label">De 3 a 6 meses</div>
+      <div class="opt-label">Sí — estados de cuenta con depósitos frecuentes</div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'ant','6a12'); goStep(5)">
+    <button class="opt" onclick="selectIngreso(this,'notas')">
       <div class="opt-check"></div>
-      <div class="opt-label">De 6 meses a un año</div>
+      <div class="opt-label">Sí — notas de venta, tickets o fotos del negocio</div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'ant','mas1'); goStep(5)">
+    <button class="opt" onclick="selectIngreso(this,'carta')">
       <div class="opt-check"></div>
-      <div class="opt-label">Más de un año</div>
+      <div class="opt-label">Sí — carta laboral o credencial de trabajo</div>
     </button>
+    <button class="opt" onclick="selectIngreso(this,'no_formal')">
+      <div class="opt-check"></div>
+      <div class="opt-label">No tengo un comprobante formal, pero podría mostrar algo
+        <div class="opt-sub">Visita al negocio, historial de ventas, referencia del patrón</div>
+      </div>
+    </button>
+    <button class="opt" onclick="selectIngreso(this,'no_nada')">
+      <div class="opt-check"></div>
+      <div class="opt-label">No puedo comprobar mis ingresos de ninguna forma</div>
+    </button>
+  </div>
+
+  <div id="ing-no-confirm" style="display:none;margin-top:1rem;">
+    <div class="alert alert-amber">
+      <strong>Antes de continuar:</strong> Comprobamos ingresos de muchas formas — incluso una visita a tu negocio o una referencia de tu patrón cuenta. ¿Estás seguro de que no hay ninguna opción?
+    </div>
+    <div class="options" style="margin-top:0.75rem;">
+      <button class="opt" onclick="selectIngreso(document.querySelector('#ing-options .opt:nth-child(5)'),'no_formal'); document.getElementById('ing-no-confirm').style.display='none'">
+        <div class="opt-check"></div>
+        <div class="opt-label">Pensándolo bien, sí podría mostrar algo</div>
+      </button>
+      <button class="opt" onclick="confirmarSinIngreso()">
+        <div class="opt-check"></div>
+        <div class="opt-label">No, definitivamente no puedo comprobar nada</div>
+      </button>
+    </div>
   </div>
 </div>
 
-<!-- ══ PASO 5: INGRESOS ══ -->
+<!-- ══════════════════════════════════
+     PASO 5 — DOMICILIO
+══════════════════════════════════ -->
 <div class="step" id="step5">
   <div class="step-counter">Paso 5 de 8</div>
-  <div class="step-q">¿Tienes forma de comprobar ingresos?</div>
-  <div class="step-insight"><strong>Recibir dinero en efectivo no es un impedimento.</strong> Notas de venta, estados de cuenta con depósitos frecuentes o fotografías de tu negocio también cuentan.</div>
-  <div class="options">
-    <button class="opt" onclick="selectOpt(this,'ing','nomina'); goStep(6)">
+  <div class="progress-dots"></div>
+  <div class="step-q">¿Tu domicilio es propio, familiar o rentado?</div>
+  <div class="step-hint">El tipo de domicilio nos ayuda a conocer tu arraigo en la zona.</div>
+  <div class="options" id="dom-options">
+    <button class="opt" onclick="selectDom(this,'propio')">
       <div class="opt-check"></div>
-      <div class="opt-label">Sí, recibos de nómina</div>
+      <div class="opt-label">Propio
+        <div class="opt-sub">El inmueble está a mi nombre o de mi pareja</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'ing','cuenta'); goStep(6)">
+    <button class="opt" onclick="selectDom(this,'familiar')">
       <div class="opt-check"></div>
-      <div class="opt-label">Sí, estados de cuenta con depósitos</div>
+      <div class="opt-label">Familiar
+        <div class="opt-sub">El inmueble pertenece a padres, abuelos u otro familiar</div>
+      </div>
     </button>
-    <button class="opt" onclick="selectOpt(this,'ing','notas'); goStep(6)">
+    <button class="opt" onclick="selectDom(this,'rentado')">
       <div class="opt-check"></div>
-      <div class="opt-label">Sí, notas, tickets o fotos del negocio</div>
-    </button>
-    <button class="opt" onclick="selectOpt(this,'ing','carta'); goStep(6)">
-      <div class="opt-check"></div>
-      <div class="opt-label">Sí, carta laboral, credenciales o permisos</div>
-    </button>
-    <button class="opt" onclick="selectOpt(this,'ing','no'); goStep(6)">
-      <div class="opt-check"></div>
-      <div class="opt-label">No tengo ningún comprobante formal</div>
+      <div class="opt-label">Rentado
+        <div class="opt-sub">Pago renta mensual</div>
+      </div>
     </button>
   </div>
+
+  <div id="aval-wrap" style="display:none;margin-top:1.2rem;">
+    <div class="step-insight">
+      <strong>Una pregunta más:</strong> Para créditos con domicilio rentado, normalmente pedimos que el solicitante cuente con alguien de confianza que tenga domicilio propio o familiar y pueda respaldar el crédito. ¿Tendrías esa posibilidad?
+    </div>
+    <div class="options" id="aval-options">
+      <button class="opt" onclick="selectOpt(this,'aval','si'); habilitarSiguiente5()">
+        <div class="opt-check"></div>
+        <div class="opt-label">Sí, podría conseguir a alguien</div>
+      </button>
+      <button class="opt" onclick="selectOpt(this,'aval','no'); habilitarSiguiente5()">
+        <div class="opt-check"></div>
+        <div class="opt-label">No, por el momento no tengo esa opción</div>
+      </button>
+    </div>
+  </div>
+
+  <button class="btn-next full" id="btn5" onclick="goStep(6)" disabled>Continuar →</button>
 </div>
 
-<!-- ══ PASO 6: DOMICILIO ══ -->
+<!-- ══════════════════════════════════
+     PASO 6 — SIMULADOR
+══════════════════════════════════ -->
 <div class="step" id="step6">
   <div class="step-counter">Paso 6 de 8</div>
-  <div class="step-q">¿Tu domicilio es propio, familiar o rentado?</div>
-  <div class="options">
-    <button class="opt" onclick="selectOpt(this,'dom','familiar'); goStep(7)">
-      <div class="opt-check"></div>
-      <div class="opt-label">Familiar<div class="opt-sub">El inmueble pertenece a un pariente (padres, abuelos, etc.)</div></div>
-    </button>
-    <button class="opt" onclick="selectOpt(this,'dom','propio'); goStep(7)">
-      <div class="opt-check"></div>
-      <div class="opt-label">Propio<div class="opt-sub">El inmueble está a mi nombre</div></div>
-    </button>
-    <button class="opt" onclick="selectOpt(this,'dom','rentado'); showAvalStep()">
-      <div class="opt-check"></div>
-      <div class="opt-label">Rentado<div class="opt-sub">Requiere aval con domicilio propio o familiar</div></div>
-    </button>
-  </div>
-</div>
+  <div class="progress-dots"></div>
+  <div class="step-q">¿Cuánto necesitas?</div>
+  <div class="step-hint">Ajusta el monto para ver tu pago quincenal estimado. Los créditos iniciales van de $5,000 a $15,000 a 6 meses.</div>
 
-<!-- ══ PASO 6b: AVAL (si rentado) ══ -->
-<div class="step" id="step6b">
-  <div class="step-counter">Paso 6 de 8</div>
-  <div class="step-q">¿Cuentas con un aval?</div>
-  <div class="step-insight">
-    <strong>¿Qué es un aval?</strong> Es una persona de confianza — familiar o amigo — que vive en domicilio propio o familiar y puede comprobar ingresos. Su función es respaldar tu crédito.
+  <div id="sim-sug-wrap" style="display:none;" class="sug-box" style="margin-bottom:1rem;">
+    <div class="sug-tag">Basado en tus ingresos declarados</div>
+    <div class="sug-monto" id="sim-sug-monto"></div>
+    <div class="sug-texto" id="sim-sug-texto"></div>
+    <div class="sug-algoritmo">Calculado con base en el perfil de nuestros clientes con ingresos similares.</div>
   </div>
-  <div class="options">
-    <button class="opt" onclick="selectOpt(this,'aval','si'); goStep(7)">
-      <div class="opt-check"></div>
-      <div class="opt-label">Sí, tengo alguien que podría ser mi aval</div>
-    </button>
-    <button class="opt" onclick="selectOpt(this,'aval','no'); showDescarte('aval')">
-      <div class="opt-check"></div>
-      <div class="opt-label">No, no tengo aval disponible</div>
-    </button>
-  </div>
-</div>
-
-<!-- ══ PASO 7: SIMULADOR ══ -->
-<div class="step" id="step7">
-  <div class="step-counter">Paso 7 de 8</div>
-  <div class="step-q">¿Cuánto necesitas y cómo quieres pagarlo?</div>
-  <div class="step-hint">Ajusta el monto y plazo para ver tu pago estimado.</div>
 
   <div class="sim-wrap">
     <div class="sim-amount-display" id="simDisplay">$10,000</div>
-    <input type="range" id="simSlider" min="5000" max="80000" step="1000" value="10000">
-    <div class="range-labels"><span>$5,000</span><span>$80,000</span></div>
-
-    <div class="freq-toggle">
-      <button class="freq-btn active" data-freq="QNAL" onclick="setFreq(this)">Quincenal</button>
-      <button class="freq-btn" data-freq="MENS" onclick="setFreq(this)">Mensual</button>
-    </div>
-
-    <div class="plazo-grid">
-      <button class="plazo-pill" data-p="1" onclick="setPlazo(this)">1 mes</button>
-      <button class="plazo-pill" data-p="2" onclick="setPlazo(this)">2 meses</button>
-      <button class="plazo-pill" data-p="3" onclick="setPlazo(this)">3 meses</button>
-      <button class="plazo-pill" data-p="4" onclick="setPlazo(this)">4 meses</button>
-      <button class="plazo-pill" data-p="5" onclick="setPlazo(this)">5 meses</button>
-      <button class="plazo-pill active" data-p="6" onclick="setPlazo(this)">6 meses</button>
-      <button class="plazo-pill" data-p="12" onclick="setPlazo(this)">12 meses</button>
-      <button class="plazo-pill" data-p="18" onclick="setPlazo(this)">18 meses</button>
-      <button class="plazo-pill" data-p="24" onclick="setPlazo(this)">24 meses</button>
-    </div>
+    <input type="range" id="simSlider" min="5000" max="15000" step="1000" value="10000"
+           oninput="simMonto=+this.value; renderSim()">
+    <div class="range-labels"><span>$5,000</span><span>$15,000</span></div>
 
     <hr class="sim-divider">
 
     <div class="sim-results">
       <div class="sim-result-card highlight">
-        <div class="src-label">Pago por periodo</div>
-        <div class="src-value" id="rCuota">$1,070</div>
+        <div class="src-label">Pago por quincena</div>
+        <div class="src-value" id="rCuota">$1,273</div>
       </div>
       <div class="sim-result-card">
-        <div class="src-label">Total de pagos</div>
+        <div class="src-label">Total de pagos quincenales</div>
         <div class="src-value" id="rPagos">12</div>
       </div>
       <div class="sim-result-card">
         <div class="src-label">Total a pagar</div>
-        <div class="src-value" id="rTotal">$12,840</div>
+        <div class="src-value" id="rTotal">$15,276</div>
       </div>
       <div class="sim-result-card">
-        <div class="src-label">Tasa mensual</div>
-        <div class="src-value">13% + IVA</div>
+        <div class="src-label">Plazo</div>
+        <div class="src-value">6 meses</div>
       </div>
     </div>
 
-    <div class="garantia-alert" id="garantiaAlert">
-      <strong>Para créditos mayores a $40,000</strong> necesitaremos que cuentes con un bien como garantía — por ejemplo, un auto con valor mínimo del doble del monto solicitado. Lo revisamos en la videollamada.
+    <div class="cat-note" style="margin-top:1rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+      Tasa: <strong>13% mensual + IVA</strong> sobre saldo insoluto &nbsp;·&nbsp; Comisión por apertura: <strong>4%</strong> del monto (se descuenta al momento del desembolso).<br>
+      <span style="font-size:0.68rem;">Con buen historial en Crédito Rosa, futuros créditos pueden ser mayores. Sujeto a evaluación.</span>
     </div>
   </div>
 
-  <div style="font-size:0.75rem;color:var(--light);margin-bottom:0.5rem;">
-    * Estimación. Sujeto a evaluación. Clientes nuevos suelen aperturarse con $5,000–$10,000 MXN.
+  <div style="font-size:0.75rem;color:var(--light);margin-bottom:0.5rem;text-align:center;">
+    * Estimación. El monto final se confirma en la videollamada con tu asesor.
   </div>
-  <button class="btn-next" onclick="goStep(8)">Así quiero mi crédito →</button>
+  <button class="btn-next full" onclick="goStep(7)">Así quiero mi crédito →</button>
 </div>
 
-<!-- ══ PASO 8: ESTADO CIVIL + CONFIRMAR ══ -->
-<div class="step" id="step8">
-  <div class="step-counter">Paso 8 de 8</div>
-  <div class="step-q">Un último detalle</div>
+<!-- ══════════════════════════════════
+     PASO 7 — ESTADO CIVIL
+══════════════════════════════════ -->
+<div class="step" id="step7">
+  <div class="step-counter">Paso 7 de 8</div>
+  <div class="progress-dots"></div>
+  <div class="step-q">Un dato más sobre ti</div>
   <div class="step-hint">Esta información nos ayuda a evaluar mejor tu solicitud.</div>
 
   <div style="margin-bottom:1.2rem;">
-    <div style="font-size:0.82rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">Estado civil</div>
+    <div class="field-label" style="margin-bottom:0.5rem;">Estado civil</div>
     <div class="options" id="ec-options">
-      <button class="opt" onclick="selectOpt(this,'ec','casado')"><div class="opt-check"></div><div class="opt-label">Casado(a) o unión libre</div></button>
-      <button class="opt" onclick="selectOpt(this,'ec','soltero')"><div class="opt-check"></div><div class="opt-label">Soltero(a)</div></button>
-      <button class="opt" onclick="selectOpt(this,'ec','otro')"><div class="opt-check"></div><div class="opt-label">Viudo(a) / Separado(a)</div></button>
+      <button class="opt" onclick="selectOpt(this,'ec','casado'); mostrarPareja(true)">
+        <div class="opt-check"></div>
+        <div class="opt-label">Casado(a) o unión libre</div>
+      </button>
+      <button class="opt" onclick="selectOpt(this,'ec','soltero'); mostrarPareja(false)">
+        <div class="opt-check"></div>
+        <div class="opt-label">Soltero(a)</div>
+      </button>
+      <button class="opt" onclick="selectOpt(this,'ec','otro'); mostrarPareja(false)">
+        <div class="opt-check"></div>
+        <div class="opt-label">Viudo(a) / Separado(a) / Divorciado(a)</div>
+      </button>
     </div>
   </div>
 
   <div id="pareja-wrap" style="display:none;margin-bottom:1.2rem;">
-    <div style="font-size:0.82rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.5rem;">¿Tu pareja tiene ingresos?</div>
+    <div class="field-label" style="margin-bottom:0.5rem;">¿Tu pareja tiene ingresos?</div>
     <div class="options">
-      <button class="opt" onclick="selectOpt(this,'pareja','si')"><div class="opt-check"></div><div class="opt-label">Sí</div></button>
-      <button class="opt" onclick="selectOpt(this,'pareja','no')"><div class="opt-check"></div><div class="opt-label">No</div></button>
+      <button class="opt" onclick="selectOpt(this,'pareja','si')">
+        <div class="opt-check"></div><div class="opt-label">Sí</div>
+      </button>
+      <button class="opt" onclick="selectOpt(this,'pareja','no')">
+        <div class="opt-check"></div><div class="opt-label">No</div>
+      </button>
     </div>
   </div>
 
-  <div class="step-insight" style="margin-top:1rem;">
-    <strong>¿Qué sigue?</strong> Un asesor de Crédito Rosa te contactará por WhatsApp para coordinar una videollamada de ~20 minutos. Ahí revisamos tu caso a detalle y te decimos si puedes avanzar.
-  </div>
-
-  <button class="btn-next" id="btn8" onclick="submitForm()">Enviar mi solicitud →</button>
+  <button class="btn-next full" onclick="goStep(8)" id="btn7" disabled>Continuar →</button>
 </div>
 
-<!-- ══ PANTALLA: DESCARTE SILENCIOSO ══ -->
+<!-- ══════════════════════════════════
+     PASO 8 — REQUISITOS + CONFIRMAR
+══════════════════════════════════ -->
+<div class="step" id="step8">
+  <div class="step-counter">Paso 8 de 8</div>
+  <div class="progress-dots"></div>
+  <div class="step-q">¿Qué documentos necesitarás?</div>
+  <div class="step-hint">Estos son los documentos que revisamos en la videollamada con tu asesor. No necesitas tenerlos todos listos hoy.</div>
+
+  <div class="req-list">
+    <div class="req-item">
+      <div class="req-num">1</div>
+      <div><strong>INE vigente</strong> — identificación oficial con fotografía</div>
+    </div>
+    <div class="req-item">
+      <div class="req-num">2</div>
+      <div><strong>Comprobante de domicilio</strong> — predial, luz, gas, agua o telefonía fija. <em>No mayor a 3 meses de antigüedad.</em></div>
+    </div>
+    <div class="req-item">
+      <div class="req-num">3</div>
+      <div><strong>Comprobante de ingresos</strong> — de los últimos 3 meses. Nómina, estados de cuenta, notas de venta, fotos del negocio u otro según tu actividad</div>
+    </div>
+    <div class="req-item">
+      <div class="req-num">4</div>
+      <div><strong>Buró de crédito</strong> — no determina la aprobación, pero lo revisamos juntos en la llamada</div>
+    </div>
+    <div class="req-item">
+      <div class="req-num">5</div>
+      <div><strong>Referencias</strong> — 3 familiares y 2 personales. Para cada una: nombre, parentesco o relación y teléfono. Preferentemente de CDMX o Zona Metropolitana.</div>
+    </div>
+  </div>
+
+  <div class="step-insight">
+    <strong>¿Qué sigue?</strong> Un asesor te contactará por WhatsApp para coordinar una videollamada de ~20 minutos. Ahí revisamos tu caso, confirmamos los documentos y te decimos si puedes avanzar. El proceso está sujeto a aprobación del crédito.
+  </div>
+
+  <div class="alert alert-amber" style="margin-top:1rem;">
+    <strong>Antes de enviar:</strong> La información que proporcionas será verificada por tu asesor durante la videollamada. Datos incorrectos o inconsistentes pueden resultar en el rechazo de la solicitud.
+  </div>
+  <button class="btn-next full" id="btn8" onclick="submitForm()">Enviar mi solicitud →</button>
+</div>
+
+<!-- ══════════════════════════════════
+     PANTALLA: DESCARTE NORMAL
+══════════════════════════════════ -->
 <div class="screen-descarte" id="screenDescarte">
   <div class="screen-icon soft">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -640,7 +859,23 @@ footer{
   <div class="screen-body" id="descarteMsg">En este momento no podemos continuar con tu solicitud. Te deseamos mucho éxito.</div>
 </div>
 
-<!-- ══ PANTALLA: ENVIADO / PENDIENTE ══ -->
+<!-- ══════════════════════════════════
+     PANTALLA: DESCARTE RIESGO (invisible)
+══════════════════════════════════ -->
+<div class="screen-riesgo" id="screenRiesgo">
+  <div class="screen-icon soft">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 28C22.627 28 28 22.627 28 16S22.627 4 16 4 4 9.373 4 16s5.373 12 12 12z" stroke="#9A7888" stroke-width="1.5"/>
+      <path d="M16 12v5M16 20v1" stroke="#9A7888" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="screen-title">Revisamos tu información</div>
+  <div class="screen-body">En este momento no encontramos un producto disponible para tu perfil. Si tu situación cambia o tienes otra actividad económica, puedes volver a solicitar cuando gustes. ¡Gracias por tu interés en Crédito Rosa!</div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANTALLA: ENVIADO / PENDIENTE
+══════════════════════════════════ -->
 <div class="screen-pending" id="screenPending">
   <div class="screen-icon pending">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -648,299 +883,1171 @@ footer{
       <path d="M16 10v6l4 2" stroke="#E8197A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
-  <div class="screen-title">Estamos revisando<br>tu solicitud</div>
-  <div class="screen-body">Recibimos tus datos. Un asesor de Crédito Rosa los revisará y se pondrá en contacto contigo por WhatsApp en breve.<br><br>Si quieres hablar con nosotros ahora mismo, escríbenos directamente:</div>
-  <a id="waBtn" href="#" target="_blank" class="btn-wa">
+  <div class="screen-title">¡Listo, <span id="pendingNombre"></span>!</div>
+  <div class="screen-body">
+    Recibimos tu solicitud. Un asesor de Crédito Rosa te contactará por WhatsApp en breve para coordinar la videollamada.<br><br>
+    Si quieres hablar ahora mismo, escríbenos directamente:
+  </div>
+
+  <div id="wa-loading-msg" style="margin-bottom:1.5rem;color:var(--light);font-size:0.9rem;">
+    Asignando tu asesor <span class="loader-dots"><span></span><span></span><span></span></span>
+  </div>
+
+  <a id="waBtn" href="#" target="_blank" class="btn-wa wa-loading" onclick="trackWaClick()">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
-    Escribir a <span id="waAsesorNombre">un asesor</span> →
+    Escribir a <span id="waAsesorNombre">tu asesor</span> →
   </a>
+
+  <div style="font-size:0.75rem;color:var(--light);margin-top:1.5rem;line-height:1.6;">
+    Al enviar tu solicitud aceptas nuestro <a href="#" style="color:var(--mg);">aviso de privacidad</a>.
+  </div>
 </div>
 
 </main>
 
 <footer>
-  Crédito Rosa S.A. de C.V. · CDMX y Zona Metropolitana · <a href="#" style="color:var(--mg);text-decoration:none;">Aviso de privacidad</a>
+  Crédito Rosa · CDMX y Zona Metropolitana ·
+  <a href="#" style="color:var(--mg);text-decoration:none;">Aviso de privacidad</a>
 </footer>
 
 <script>
-const CODIGOS_ZIP_KEY = 'zp_f5480bf459fb5d5aa8a177c981f4ff8112c694ef6e68ca90';
+// ══════════════════════════════════════════════
+// CONSTANTES
+// ══════════════════════════════════════════════
+const N8N_WEBHOOK   = 'https://creditorosa.app.n8n.cloud/webhook/credito-rosa-solicitud';
+const MEXICO_API    = 'https://mexico-api.devaleff.com/api/codigo-postal/';
+const TASA = 0.13, IVA_TASA = 0.16;
+const PLAZO_FIJO = 6, FREQ_FIJA = 'QNAL';
+
+// Coordenadas de referencia: Unitec Atizapán
+const REF_LAT = 19.5731, REF_LNG = -99.2647;
+
+// Zonas válidas por rango de CP (validación local)
+const CP_VALIDOS = [
+  [1000,16999],   // CDMX
+  [50000,57999],[53000,53999],[54000,54999],[52000,52999],
+  [55000,55999],[57000,57999],[56000,56999],[54400,54499],
+  [54700,54799],[54900,54999],[54500,54599],[55700,55799],
+  [54600,54699],[52100,52199],[53200,53299],
+];
+
+// Actividades de alto riesgo (descarte invisible)
+const SECTORES_RIESGO = ['seguridad_publica','seguridad_privada','servicios_legales'];
+
+// ══════════════════════════════════════════════
+// ESTADO GLOBAL
+// ══════════════════════════════════════════════
+const data = {};
+let currentStep = 1;
+const TOTAL_STEPS = 8;
+let simMonto = 10000;
+let step4Ready = false;
+let stepHistory = [1];
+let actividadSeleccionada = null;
+let waClicRegistrado = false;
+
+// ══════════════════════════════════════════════
+// UTILIDADES
+// ══════════════════════════════════════════════
+function fmt(n){ return '$' + Math.round(n).toLocaleString('es-MX'); }
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLng = (lng2-lng1) * Math.PI/180;
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
+            Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function zonaDesdeKm(km) {
+  if (km <= 15) return 'PREFERENTE';
+  if (km <= 25) return 'ACEPTABLE';
+  return 'LEJANA';
+}
+
+function scoreZona(zona) {
+  return {PREFERENTE:30, ACEPTABLE:15, LEJANA:0}[zona] ?? 0;
+}
+
+function calcScore() {
+  let pts = 0;
+  pts += scoreZona(data.zona || 'LEJANA');
+  const domPts = {propio:25, familiar:15, rentado:0}[data.dom] ?? 0;
+  const avalBonus = (data.dom === 'rentado' && data.aval === 'si') ? 8 : 0;
+  pts += domPts + avalBonus;
+  // Ingresos: usar key del rango dinámico
+  const ingKey = data.ingreso_monto || '';
+  pts += {alto:25, medio:18, bajo:10, menos:3}[ingKey] ?? 3;
+  // Bonus por capacidad holgada
+  if (data.capacidad_pago === 'HOLGADA') pts += 5;
+  const compPts = {nomina:20, cuenta:20, notas:12, carta:12, no_formal:5, no_nada:0}[data.ing] ?? 5;
+  pts += compPts;
+  return Math.min(pts, 100);
+}
+
+function etiquetaScore(pts) {
+  if (pts >= 70) return 'ALTA';
+  if (pts >= 40) return 'MEDIA';
+  return 'REVISAR';
+}
+
+function cpValido(cp) {
+  const n = parseInt(cp);
+  if (isNaN(n)) return false;
+  for (const [min,max] of CP_VALIDOS) if (n>=min && n<=max) return true;
+  return false;
+}
+
+// ══════════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════════
+function updateProgress() {
+  const pct = ((currentStep-1)/(TOTAL_STEPS-1))*100;
+  document.getElementById('progressFill').style.width = Math.min(pct,95)+'%';
+}
+
+function goStep(n) {
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+    .forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('step'+n);
+  if (el) {
+    el.classList.add('active');
+    if (!stepHistory.includes(n)) stepHistory.push(n);
+    currentStep = typeof n === 'number' ? n : parseInt(n) || currentStep;
+    updateProgress();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+function navBack() {
+  // Si estamos en pantalla final, no hacer nada
+  if (document.getElementById('screenPending').classList.contains('active') ||
+      document.getElementById('screenDescarte').classList.contains('active') ||
+      document.getElementById('screenRiesgo').classList.contains('active')) return;
+
+  // Remover paso actual del historial y ir al anterior
+  stepHistory.pop();
+  const prev = stepHistory[stepHistory.length - 1];
+  if (prev) {
+    document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+      .forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('step'+prev);
+    if (el) {
+      el.classList.add('active');
+      currentStep = typeof prev === 'number' ? prev : parseInt(prev) || currentStep;
+      updateProgress();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  } else {
+    window.location.href = 'index.html';
+  }
+}
+
+function showDescarte(msg) {
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+    .forEach(s => s.classList.remove('active'));
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('descarteMsg').textContent = msg ||
+    'En este momento no podemos continuar con tu solicitud. Te deseamos mucho éxito.';
+  document.getElementById('screenDescarte').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showRiesgo() {
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+    .forEach(s => s.classList.remove('active'));
+  document.getElementById('progressFill').style.width='100%';
+  document.getElementById('screenRiesgo').classList.add('active');
+  data.prioridad = 'DESCARTADO_RIESGO';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════
+// PASO 1 — CÓDIGO POSTAL
+// ══════════════════════════════════════════════
+async function onCpInput(val) {
+  document.getElementById('cp-result').style.display = 'none';
+  document.getElementById('cp-error').style.display = 'none';
+  // zona-tag solo uso interno
+  if (val.length === 5) await lookupCP(val);
+}
 
 async function lookupCP(cp) {
+  const loadingEl = document.getElementById('cp-loading');
   const resultDiv = document.getElementById('cp-result');
+  loadingEl.style.display = 'block';
+  setFloatBtn('Verificando tu zona...', false, null, true);
+
   try {
-    const res = await fetch(
-      'https://api.codigos.zip/api/zip/' + cp + '?pais=MX',
-      { headers: { 'X-API-Key': CODIGOS_ZIP_KEY } }
-    );
+    const res = await fetch(MEXICO_API + cp);
+    loadingEl.style.display = 'none';
+
     if (!res.ok) { resultDiv.style.display='none'; return; }
     const json = await res.json();
-    console.log('CP API response:', JSON.stringify(json));
+    if (!json || !json.data || json.data.length === 0) { resultDiv.style.display='none'; return; }
 
-    if (!json) { resultDiv.style.display='none'; return; }
-
-    const municipio = json.municipio || json.ciudad || json.alcaldia || '';
-    const estado    = json.estado || json.state || '';
+    const primer = json.data[0];
+    const municipio = primer.D_mnpio || primer.d_ciudad || '';
+    const estado    = primer.d_estado || '';
+    const colonias  = [...new Set(json.data.map(d => d.d_asenta).filter(Boolean))];
 
     document.getElementById('cp-municipio').textContent = municipio;
     document.getElementById('cp-estado').textContent    = estado;
 
-    const rawColonias = json.colonias || json.neighborhoods || json.asentamientos || [];
-    const colonias = rawColonias.map(c =>
-      typeof c === 'string' ? c :
-      (c.nombre || c.colonia || c.name || c.asentamiento || '')
-    ).filter(Boolean);
+    data.municipio = municipio;
+    data.estado    = estado;
 
+    // Habilitar botón provisionalmente mientras carga la distancia
+    setFloatBtn('Continuar →', true, checkCP);
+
+    // Selector de colonias
     const select = document.getElementById('cp-colonia');
-    select.innerHTML = '';
+    select.innerHTML = '<option value="">Selecciona tu colonia...</option>';
     colonias.forEach(c => {
       const opt = document.createElement('option');
       opt.value = c; opt.textContent = c;
       select.appendChild(opt);
     });
-
-    document.getElementById('colonia-wrap').style.display =
-      colonias.length > 0 ? 'block' : 'none';
-    resultDiv.style.display =
-      (colonias.length > 0 || municipio) ? 'block' : 'none';
-
-    data.municipio = municipio;
-    data.estado    = estado;
-    data.colonia   = select.value || '';
+    document.getElementById('colonia-wrap').style.display = colonias.length > 0 ? 'block' : 'none';
     select.onchange = () => { data.colonia = select.value; };
+    resultDiv.style.display = 'block';
+
+    // Calcular distancia con coordenadas aproximadas por municipio
+    // Usamos geocodificación por nombre de municipio via nominatim (gratuito, sin key)
+    calcularDistancia(municipio + ', Estado de Mexico, Mexico');
 
   } catch(e) {
+    loadingEl.style.display = 'none';
+    setFloatBtn('Continuar →', true, checkCP);
     console.error('CP lookup error:', e);
-    resultDiv.style.display = 'none';
   }
 }
 
-const TASA = 0.13, IVA = 0.16;
-const WA_NUMBER = '525654681806';
-const N8N_WEBHOOK = 'https://creditorosa.app.n8n.cloud/webhook/credito-rosa-solicitud';
+async function calcularDistancia(lugarStr) {
+  try {
+    const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' +
+                encodeURIComponent(lugarStr);
+    const res = await fetch(url, { headers:{'Accept-Language':'es'} });
+    const json = await res.json();
+    if (!json || json.length === 0) return;
+    const lat = parseFloat(json[0].lat);
+    const lng = parseFloat(json[0].lon);
+    const km  = haversineKm(REF_LAT, REF_LNG, lat, lng);
+    const zona = zonaDesdeKm(km);
+    data.distancia_km = Math.round(km * 10) / 10;
+    data.zona = zona;
 
-// ── ZONAS CDMX + ZM (rangos de CP)
-const CP_CDMX = [
-  [1000,16999],
-];
-const CP_ZM = [
-  [50000,57999], // Atizapán, Naucalpán zona norte
-  [53000,53999], // Naucalpán
-  [54000,54999], // Tlalnepantla norte
-  [52000,52999], // Tlalnepantla sur
-  [55000,55999], // Ecatepec, Cd Azteca
-  [57000,57999], // Nezahualcóyotl
-  [56000,56999], // Los Reyes La Paz, Chimalhuacán
-  [54400,54499], // Cuautitlán
-  [54700,54799], // Tultitlán
-  [54900,54999], // Tultepec
-  [54500,54599], // Coacalco
-  [55700,55799], // Nicolás Romero
-  [54600,54699], // Tlalnepantla Baz
-  [52100,52199], // Naucalpán sur
-  [53200,53299], // Huixquilucan
-];
-
-function cpValido(cp) {
-  const n = parseInt(cp);
-  if (isNaN(n)) return false;
-  for (const [min,max] of CP_CDMX) if (n>=min && n<=max) return true;
-  for (const [min,max] of CP_ZM) if (n>=min && n<=max) return true;
-  return false;
-}
-
-// ── ESTADO
-const data = {};
-let currentStep = 1;
-const TOTAL_STEPS = 8;
-let simMonto = 10000, simPlazo = 6, simFreq = 'QNAL';
-
-function fmt(n){ return '$'+Math.round(n).toLocaleString('es-MX'); }
-
-function calcSim(){
-  const cap = simMonto / simPlazo;
-  let total = 0, s = simMonto;
-  for(let i=0;i<simPlazo;i++){ total += s * TASA; s -= cap; }
-  const intProm = total/simPlazo;
-  const ivaProm = intProm * IVA;
-  const totalPer = cap + intProm + ivaProm;
-  const cuota = simFreq==='QNAL' ? Math.round(totalPer/2) : Math.round(totalPer);
-  const nPagos = simFreq==='QNAL' ? simPlazo*2 : simPlazo;
-  return { cuota, nPagos, total: cuota*nPagos };
-}
-
-function renderSim(){
-  const r = calcSim();
-  document.getElementById('simDisplay').textContent = fmt(simMonto);
-  document.getElementById('rCuota').textContent = fmt(r.cuota);
-  document.getElementById('rPagos').textContent = r.nPagos;
-  document.getElementById('rTotal').textContent = fmt(r.total);
-  const ga = document.getElementById('garantiaAlert');
-  if(simMonto > 40000) ga.classList.add('show');
-  else ga.classList.remove('show');
-  data.monto = simMonto;
-  data.plazo = simPlazo;
-  data.frecuencia = simFreq;
-  data.cuota_estimada = fmt(calcSim().cuota);
-}
-
-document.getElementById('simSlider').addEventListener('input', function(){
-  simMonto = +this.value; renderSim();
-});
-
-function setFreq(btn){
-  document.querySelectorAll('.freq-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  simFreq = btn.dataset.freq;
-  renderSim();
-}
-
-function setPlazo(btn){
-  document.querySelectorAll('.plazo-pill').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  simPlazo = +btn.dataset.p;
-  renderSim();
-}
-
-// ── NAV
-function updateProgress(){
-  const pct = ((currentStep-1)/(TOTAL_STEPS-1))*100;
-  document.getElementById('progressFill').style.width = pct+'%';
-}
-
-function goStep(n){
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  const el = document.getElementById('step'+n);
-  if(el){ el.classList.add('active'); currentStep=n; }
-  updateProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function showDescarte(reason){
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('progressFill').style.width='100%';
-  const msg = {
-    zona: 'Por el momento no tenemos cobertura en tu área. Si en algún momento expandimos nuestra zona de atención, nos pondremos en contacto. ¡Gracias!',
-    aval: 'Para atenderte con domicilio rentado es necesario contar con un aval. Cuando tengas uno disponible, con gusto retomamos tu solicitud.',
-  }[reason] || 'En este momento no podemos continuar con tu solicitud.';
-  document.getElementById('descarteMsg').textContent = msg;
-  document.getElementById('screenDescarte').classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function showAvalStep(){
-  selectOpt(event.target.closest('.opt'), 'dom', 'rentado');
-  goStep('6b');
-}
-
-// ── SELECTIONS
-function selectOpt(btn, key, val){
-  const parent = btn.closest('.options') || btn.closest('.step');
-  if(parent){
-    parent.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+    // Zona calculada internamente para Sheets — no visible al usuario
+  } catch(e) {
+    console.warn('Distancia no calculada:', e);
   }
-  btn.classList.add('selected');
-  data[key] = val;
-  const nextBtn = btn.closest('.step')?.querySelector('.btn-next');
-  if(nextBtn) nextBtn.disabled = false;
-  if(key==='ec'){
-    document.getElementById('pareja-wrap').style.display =
-      (val==='casado') ? 'block' : 'none';
-  }
+  // Lookup terminó — habilitar botón flotante
+  document.getElementById('cp-loading').style.display = 'none';
+  setFloatBtn('Continuar →', true, checkCP);
 }
 
-// ── CP CHECK
-function checkCP(){
-  const cp = document.getElementById('cp').value.trim();
+function checkCP() {
+  const cp  = document.getElementById('cp').value.trim();
   const err = document.getElementById('cp-error');
-  if(cp.length < 5){ err.style.display='block'; err.textContent='Ingresa un código postal válido (5 dígitos).'; return; }
-  if(!cpValido(cp)){ err.style.display='block'; err.textContent='Por el momento no tenemos cobertura en esa zona.'; return; }
+
+  if (cp.length < 5) {
+    err.style.display='block';
+    err.textContent='Ingresa un código postal válido de 5 dígitos.';
+    return;
+  }
+  if (!cpValido(cp)) {
+    err.style.display='block';
+    err.textContent='Por el momento no tenemos cobertura en esa zona. Solo atendemos CDMX y Zona Metropolitana.';
+    return;
+  }
   err.style.display='none';
   data.cp = cp;
   const coloniaSelect = document.getElementById('cp-colonia');
   if (coloniaSelect && coloniaSelect.value) data.colonia = coloniaSelect.value;
+
+  // Descarte si zona lejana (>25km) — pasa pero marcado
+  if (data.zona === 'LEJANA') {
+    data.prioridad_zona = 'LEJANA';
+  }
+  stepHistory.push(2);
   goStep(2);
 }
 
-document.getElementById('cp').addEventListener('keydown', e => { if(e.key==='Enter') checkCP(); });
+// ══════════════════════════════════════════════
+// PASO 2 — NOMBRE Y CONTACTO
+// ══════════════════════════════════════════════
+function showAltPhone() {
+  document.getElementById('alt-phone-wrap').style.display = 'block';
+}
 
-// ── VALIDACIÓN PASO 2
 function validarPaso2() {
   const n  = document.getElementById('nombres').value.trim();
   const a1 = document.getElementById('apellido1').value.trim();
   const wa = document.getElementById('whatsapp').value.trim();
-  if (!n || !a1) {
-    alert('Por favor ingresa tu nombre y primer apellido.');
-    return false;
+  const edadVal = document.getElementById('edad').value.trim();
+
+  if (!n || n.length < 2) { alert('Por favor ingresa tu nombre (mínimo 2 caracteres).'); return; }
+  if (!a1 || a1.length < 2) { alert('Por favor ingresa tu primer apellido.'); return; }
+  if (!wa || wa.length < 10) { alert('Por favor ingresa un WhatsApp válido de 10 dígitos.'); return; }
+
+  // Validar edad
+  const edad = parseInt(edadVal);
+  if (!edadVal || isNaN(edad)) { alert('Por favor ingresa tu edad.'); return; }
+  if (edad < 21 || edad > 80) {
+    alert('Por el momento nuestros créditos están disponibles para personas entre 21 y 80 años.');
+    return;
   }
-  if (!wa || wa.length < 10) {
-    alert('Por favor ingresa tu WhatsApp de 10 dígitos.');
-    return false;
+
+  // Anti-duplicado por WhatsApp en sesión
+  const prevWa = sessionStorage.getItem('cr_wa');
+  if (prevWa && prevWa === wa) {
+    document.getElementById('wa-dup-warning').style.display = 'block';
+    return;
   }
-  return true;
+  sessionStorage.setItem('cr_wa', wa);
+
+  // Validar que haya respondido si su número recibe llamadas
+  if (!data.recibe_llamadas) {
+    alert('Por favor indica si tu número recibe llamadas o solo WhatsApp.');
+    return;
+  }
+
+  // Validar teléfono alterno — obligatorio si solo WhatsApp
+  if (data.recibe_llamadas === 'no') {
+    const altTelVal = document.getElementById('telefono_alt')?.value.trim();
+    if (!altTelVal || altTelVal.length < 10) {
+      alert('Por favor ingresa un número donde podamos llamarte (10 dígitos). Es necesario para validar tu identidad durante el proceso.');
+      return;
+    }
+    data.telefono_alt = altTelVal;
+  }
+
+  data.nombre   = [n, a1, document.getElementById('apellido2').value.trim()].filter(Boolean).join(' ');
+  data.whatsapp = wa;
+  data.edad     = edad;
+
+  stepHistory.push(3);
+  goStep(3);
 }
 
-// ── SUBMIT
-async function submitForm() {
-  data.nombre = [
-    document.getElementById('nombres').value.trim(),
-    document.getElementById('apellido1').value.trim(),
-    document.getElementById('apellido2').value.trim()
-  ].filter(Boolean).join(' ');
-  data.whatsapp = document.getElementById('whatsapp').value.trim();
-  data.timestamp = new Date().toISOString();
-  data.fuente = document.referrer || 'directo';
-  data.monto = simMonto;
-  data.plazo = simPlazo;
-  data.frecuencia = simFreq;
-  data.cuota_estimada = fmt(calcSim().cuota);
+// ══════════════════════════════════════════════
+// PASO 3 — ACTIVIDAD
+// ══════════════════════════════════════════════
+function selectActOpt(btn, actVal) {
+  document.querySelectorAll('#act-options .opt').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  actividadSeleccionada = actVal;
+  data.act = actVal;
 
-  // Mostrar pantalla de espera primero
+  const otroWrap = document.getElementById('otro-detalle-wrap');
+  otroWrap.style.display = actVal === 'otro' ? 'block' : 'none';
+  document.getElementById('btn3').disabled = false;
+  syncFloatBtn();
+}
+
+function irPaso3b() {
+  if (!actividadSeleccionada) { alert('Por favor selecciona tu actividad.'); return; }
+  if (actividadSeleccionada === 'otro') {
+    const det = document.getElementById('otro-detalle').value.trim();
+    if (!det) { alert('Por favor describe tu actividad.'); return; }
+    data.otro_detalle = det;
+  }
+  construirPaso3b(actividadSeleccionada);
+  stepHistory.push('3b');
+  goStep('3b');
+}
+
+function construirPaso3b(act) {
+  // Resetear estado de ingresos al entrar
+  ingFreqActual = null; ingMontoVal = null; ingMontoKey = null; ingConstancia = null;
+  data.frec_ingreso = null; data.ingreso_monto = null; data.ingreso_constancia = null;
+  data.ingreso_mensual_estimado = null; data.monto_maximo_viable = null;
+
+  const titulos = {
+    empleado_nomina: 'Cuéntanos sobre tu empleo',
+    comercio_local:  'Cuéntanos sobre tu negocio',
+    comercio_ambulante: 'Cuéntanos sobre tu actividad',
+    servicios_domicilio: 'Cuéntanos sobre tus servicios',
+    ventas_comisiones: 'Cuéntanos sobre tus ventas',
+    ventas_internet: 'Cuéntanos sobre tu actividad en línea',
+    freelance: 'Cuéntanos sobre tu actividad profesional',
+    jubilado: 'Cuéntanos sobre tu pensión',
+    otro: 'Cuéntanos un poco más',
+  };
+  const hints = {
+    empleado_nomina: 'Solo unos datos sobre tu empleo y sector.',
+    comercio_local:  'Queremos conocer tu giro y flujo de ingresos.',
+    comercio_ambulante: 'Cuéntanos dónde trabajas y cómo generas ingresos.',
+    servicios_domicilio: 'Queremos entender tu actividad y frecuencia de ingresos.',
+    ventas_comisiones: 'Cuéntanos sobre tu actividad de ventas.',
+    ventas_internet: 'Queremos conocer el alcance y regularidad de tu negocio en línea.',
+    freelance: 'Cuéntanos sobre tu área y clientela.',
+    jubilado: 'Solo una confirmación de tu institución.',
+    otro: 'Ayúdanos a entender tu fuente de ingresos.',
+  };
+
+  document.getElementById('step3b-titulo').textContent = titulos[act] || 'Cuéntanos más';
+  document.getElementById('step3b-hint').textContent   = hints[act] || '';
+
+  const content = document.getElementById('step3b-content');
+  content.innerHTML = '';
+  document.getElementById('btn3b').disabled = true;
+
+  if (act === 'empleado_nomina') {
+    content.innerHTML = buildSectorEmpleado() + buildIngresosGrid() + buildFrecuenciaGrid() + buildFormaPago();
+
+  } else if (act === 'comercio_local') {
+    content.innerHTML = buildGiroNegocio() + buildLugarLocal() + buildIngresosGrid() + buildFrecuenciaGrid();
+
+  } else if (act === 'comercio_ambulante') {
+    content.innerHTML = buildLugarAmbulante() + buildGiroNegocio() + buildIngresosGrid() + buildFrecuenciaGrid();
+
+  } else if (act === 'servicios_domicilio') {
+    content.innerHTML = buildTipoServicio() + buildIngresosGrid() + buildFrecuenciaGrid();
+
+  } else if (act === 'ventas_comisiones') {
+    content.innerHTML = buildTipoVentaComision() + buildContratoEmpresa() + buildIngresosGrid() + buildFrecuenciaGrid();
+
+  } else if (act === 'ventas_internet') {
+    content.innerHTML = buildVentasInternet();
+
+  } else if (act === 'freelance') {
+    content.innerHTML = buildSectorFreelance() + buildIngresosGrid() + buildFrecuenciaGrid();
+
+  } else if (act === 'jubilado') {
+    content.innerHTML = buildInstitucionJubilado() + buildIngresosGrid();
+
+  } else {
+    content.innerHTML = buildIngresosGrid() + buildFrecuenciaGrid();
+  }
+
+  // Habilitar botón cuando hay al menos ingreso seleccionado
+  setTimeout(() => {
+    // btn3b habilitación manejada exclusivamente por checkBtn3b()
+    content.querySelectorAll('.grid-btn').forEach(btn => {
+      btn.addEventListener('click', () => { checkBtn3b(); });
+    });
+    content.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', () => { checkBtn3b(); });
+    });
+  }, 50);
+}
+
+function buildSectorEmpleado() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿En qué sector trabajas?</div>
+  <select class="input-field" id="sector_empleo" onchange="
+    const v=this.value; data.sector=v;
+    if(v==='seguridad_publica'||v==='seguridad_privada'||v==='servicios_legales'){
+      data.es_riesgo=true;
+    } else { data.es_riesgo=false; }
+    checkBtn3b();">
+    <option value="">Selecciona un sector...</option>
+    <option value="salud">Salud y educación</option>
+    <option value="comercio_ventas">Comercio y ventas</option>
+    <option value="construccion">Construcción y manufactura</option>
+    <option value="transporte">Transporte y logística</option>
+    <option value="restaurantes">Restaurantes y hospitalidad</option>
+    <option value="administrativo">Servicios administrativos / oficina</option>
+    <option value="gobierno">Gobierno o dependencia pública</option>
+    <option value="seguridad_publica">Seguridad pública (policía, militar)</option>
+    <option value="seguridad_privada">Seguridad privada (guardia, custodio)</option>
+    <option value="servicios_legales">Servicios legales (abogado, notario)</option>
+    <option value="otro_empleo">Otro sector</option>
+  </select>`;
+}
+
+function buildSectorFreelance() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿En qué área trabajas?</div>
+  <select class="input-field" id="sector_freelance" onchange="
+    const v=this.value; data.sector=v;
+    if(v==='servicios_legales'){ data.es_riesgo=true; } else { data.es_riesgo=false; }
+    checkBtn3b();">
+    <option value="">Selecciona tu área...</option>
+    <option value="tecnologia">Tecnología y diseño</option>
+    <option value="contabilidad">Contabilidad y finanzas</option>
+    <option value="salud_ind">Salud (médico, psicólogo, nutriólogo)</option>
+    <option value="consultoria">Consultoría y negocios</option>
+    <option value="comunicacion">Comunicación, marketing y medios</option>
+    <option value="educacion_ind">Educación / tutoría</option>
+    <option value="servicios_legales">Servicios legales (abogado, notario)</option>
+    <option value="otro_freelance">Otra área</option>
+  </select>`;
+}
+
+function buildGiroNegocio() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Qué vendes o en qué giro estás?</div>
+  <select class="input-field" id="giro_negocio" onchange="data.giro=this.value; checkBtn3b();">
+    <option value="">Selecciona un giro...</option>
+    <option value="alimentos">Alimentos y bebidas</option>
+    <option value="ropa">Ropa, accesorios y calzado</option>
+    <option value="belleza">Belleza y cuidado personal</option>
+    <option value="electronica">Electrónica y celulares</option>
+    <option value="hogar">Artículos del hogar</option>
+    <option value="ferreteria">Ferretería y materiales</option>
+    <option value="papeleria">Papelería y útiles</option>
+    <option value="juguetes">Juguetes y regalos</option>
+    <option value="otro_giro">Otro giro</option>
+  </select>`;
+}
+
+function buildLugarLocal() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Pagas renta por el local?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'local_renta','no'); data.local_renta='no'">No, es propio o sin costo</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'local_renta','si'); data.local_renta='si'">Sí, pago renta</button>
+  </div>`;
+}
+
+function buildLugarAmbulante() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Dónde realizas tu actividad?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'lugar_trabajo','tianguis'); data.lugar_trabajo='tianguis'">Tianguis o mercado ambulante</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'lugar_trabajo','calle'); data.lugar_trabajo='calle'">Puesto ambulante en calle o afuera de mi domicilio</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'lugar_trabajo','casa'); data.lugar_trabajo='casa'">Desde mi casa (sin atención al público)</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'lugar_trabajo','domicilio'); data.lugar_trabajo='domicilio'">De puerta en puerta</button>
+  </div>`;
+}
+
+function buildTipoServicio() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Qué tipo de servicio ofreces?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','construccion'); data.tipo_servicio='construccion'">Construcción y remodelación</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','belleza'); data.tipo_servicio='belleza'">Belleza y cuidado personal</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','comida'); data.tipo_servicio='comida'">Comida y catering</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','limpieza'); data.tipo_servicio='limpieza'">Limpieza del hogar</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','transporte'); data.tipo_servicio='transporte'">Transporte / chofer</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','cuidados'); data.tipo_servicio='cuidados'">Cuidado de personas</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_servicio','otro_serv'); data.tipo_servicio='otro_serv'">Otro oficio</button>
+  </div>`;
+}
+
+function buildTipoVentaComision() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Qué tipo de ventas realizas?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_venta','seguros'); data.tipo_venta='seguros'">Seguros</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_venta','bienes_raices'); data.tipo_venta='bienes_raices'">Bienes raíces</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_venta','multinivel'); data.tipo_venta='multinivel'">Multinivel o catálogo</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_venta','comisionista'); data.tipo_venta='comisionista'">Comisionista para empresa</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'tipo_venta','otro_venta'); data.tipo_venta='otro_venta'">Otro tipo</button>
+  </div>`;
+}
+
+function buildContratoEmpresa() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Tienes contrato o constancia con la empresa?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'contrato','si'); data.contrato='si'">Sí</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'contrato','no'); data.contrato='no'">No</button>
+  </div>`;
+}
+
+function buildVentasInternet() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿Cómo describirías mejor tu actividad en línea?</div>
+  <div class="options" style="margin-bottom:1rem;">
+    <button class="opt" onclick="selectVentaInternet(this,'tienda_activa')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Tengo una tienda online activa con cuenta de vendedor establecida
+        <div class="opt-sub">Mercado Libre, Amazon, Shopify, tienda con dominio propio</div>
+      </div>
+    </button>
+    <button class="opt" onclick="selectVentaInternet(this,'social_activa')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Vendo regularmente por redes sociales o WhatsApp Business como actividad principal
+        <div class="opt-sub">Facebook, Instagram, TikTok Shop, WhatsApp Business</div>
+      </div>
+    </button>
+    <button class="opt" onclick="selectVentaInternet(this,'esporadica')">
+      <div class="opt-check"></div>
+      <div class="opt-label">Subo artículos de vez en cuando a Marketplace o grupos de Facebook
+        <div class="opt-sub">Es un ingreso adicional, no mi actividad principal</div>
+      </div>
+    </button>
+  </div>
+  <div id="internet-extra"></div>`;
+}
+
+function selectVentaInternet(btn, tipo) {
+  document.querySelectorAll('#step3b-content .opt').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  data.tipo_venta_internet = tipo;
+  const extra = document.getElementById('internet-extra');
+  checkBtn3b();
+
+  if (tipo === 'tienda_activa' || tipo === 'social_activa') {
+    data.es_riesgo = false;
+    extra.innerHTML = buildIngresosGrid() + buildFrecuenciaGrid() +
+      `<div class="alert alert-amber" style="margin-top:0.5rem;">
+        <strong>Nota:</strong> Para validar esta actividad solicitaremos evidencia de tu perfil, tienda o plataforma de ventas en la videollamada.
+      </div>`;
+  } else {
+    // Esporádica = riesgo alto, se marca internamente pero no se descarta
+    data.es_riesgo_ventas_esp = true;
+    extra.innerHTML = buildIngresosGrid() +
+      `<div class="alert alert-amber" style="margin-top:0.5rem;">
+        <strong>Nota:</strong> Para este tipo de actividad necesitaremos ver estados de cuenta que muestren los ingresos por ventas.
+      </div>`;
+  }
+  checkBtn3b();
+}
+
+function buildInstitucionJubilado() {
+  return `<div class="field-label" style="margin-top:1rem;margin-bottom:0.4rem;">¿De qué institución es tu pensión?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'inst_jubilado','imss'); data.inst_jubilado='imss'">IMSS</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'inst_jubilado','issste'); data.inst_jubilado='issste'">ISSSTE</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'inst_jubilado','pemex'); data.inst_jubilado='pemex'">Pemex / CFE</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'inst_jubilado','otra'); data.inst_jubilado='otra'">Otra institución</button>
+  </div>`;
+}
+
+// ── CONSTANTES INGRESOS DINÁMICOS
+const ING_RANGOS = {
+  diario:    [['Menos de $200','menos',100],['$200 – $500','bajo',350],['$500 – $1,000','medio',750],['Más de $1,000','alto',1200]],
+  semanal:   [['Menos de $1,000','menos',700],['$1,000 – $2,500','bajo',1750],['$2,500 – $5,000','medio',3750],['Más de $5,000','alto',6000]],
+  quincenal: [['Menos de $2,500','menos',1800],['$2,500 – $5,000','bajo',3750],['$5,000 – $10,000','medio',7500],['Más de $10,000','alto',13000]],
+  mensual:   [['Menos de $5,000','menos',3500],['$5,000 – $8,000','bajo',6500],['$8,000 – $15,000','medio',11500],['Más de $15,000','alto',18000]],
+};
+const ING_MULT = { diario:26, semanal:4.33, quincenal:2, mensual:1 };
+const ING_PREGUNTA = {
+  diario:    '¿Cuánto recibes aproximadamente en un día de trabajo?',
+  semanal:   '¿Cuánto recibes aproximadamente en una semana?',
+  quincenal: '¿Cuánto recibes aproximadamente cada quincena?',
+  mensual:   '¿Cuánto recibes aproximadamente al mes?',
+};
+const ING_UNIDAD = { diario:'al día', semanal:'por semana', quincenal:'por quincena', mensual:'al mes' };
+const ING_SCORE  = { menos:3, bajo:10, medio:18, alto:25 };
+const CAP_MAX_PCT = 0.34;
+let ingFreqActual = null, ingMontoVal = null, ingMontoKey = null, ingConstancia = null;
+
+function buildIngresosGrid() {
+  return `<hr class="section-sep">
+  <div class="field-label" style="margin-bottom:0.4rem;">¿Con qué frecuencia recibes ingresos?</div>
+  <div class="btn-grid" id="ing-freq-grid">
+    <button class="grid-btn" onclick="setIngFreq('diario',this)">Diario</button>
+    <button class="grid-btn" onclick="setIngFreq('semanal',this)">Semanal</button>
+    <button class="grid-btn" onclick="setIngFreq('quincenal',this)">Quincenal</button>
+    <button class="grid-btn" onclick="setIngFreq('mensual',this)">Mensual</button>
+  </div>
+  <div id="ing-monto-wrap" style="display:none;">
+    <div class="field-label" id="ing-monto-label" style="margin-bottom:0.4rem;"></div>
+    <div class="btn-grid" id="ing-monto-grid"></div>
+    <div class="field-label" style="margin-top:0.75rem;margin-bottom:0.4rem;">¿Es un ingreso constante?</div>
+    <div style="display:flex;flex-direction:column;gap:8px;" id="ing-const-opts">
+      <button class="opt" style="font-size:0.88rem;" onclick="setIngConst('si',this)">
+        <div class="opt-check"></div>
+        <div class="opt-label">Sí, lo recibo de forma regular
+          <div class="opt-sub">Puedo demostrarlo con documentos</div>
+        </div>
+      </button>
+      <button class="opt" style="font-size:0.88rem;" onclick="setIngConst('variable',this)">
+        <div class="opt-check"></div>
+        <div class="opt-label">Varía según la temporada o los clientes
+          <div class="opt-sub">Ese es un ingreso típico para mí</div>
+        </div>
+      </button>
+    </div>
+    <div class="ing-resumen" id="ing-resumen">
+      <div class="ing-resumen-title">Lo que estás declarando</div>
+      <div class="ing-resumen-valor" id="ing-resumen-valor"></div>
+      <div class="ing-resumen-sub" id="ing-resumen-sub"></div>
+    </div>
+    <div class="sug-box" id="ing-sug-box">
+      <div class="sug-tag">Sugerencia personalizada</div>
+      <div class="sug-monto" id="ing-sug-monto"></div>
+      <div class="sug-texto" id="ing-sug-texto"></div>
+      <div class="sug-algoritmo" id="ing-sug-alg"></div>
+    </div>
+  </div>`;
+}
+
+function setIngFreq(freq, btn) {
+  document.querySelectorAll('#ing-freq-grid .grid-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ingFreqActual = freq; ingMontoVal = null; ingMontoKey = null; ingConstancia = null;
+  data.frec_ingreso = freq;
+  document.querySelectorAll('#ing-const-opts .opt').forEach(o=>o.classList.remove('selected'));
+  document.getElementById('ing-resumen').classList.remove('show');
+  document.getElementById('ing-sug-box').classList.remove('show');
+  document.getElementById('btn3b').disabled = true;
+  document.getElementById('ing-monto-label').textContent = ING_PREGUNTA[freq];
+  const grid = document.getElementById('ing-monto-grid');
+  grid.innerHTML = '';
+  ING_RANGOS[freq].forEach(([label,key,val]) => {
+    const b = document.createElement('button');
+    b.className = 'grid-btn'; b.textContent = label;
+    b.onclick = () => setIngMonto(key, val, label, b);
+    grid.appendChild(b);
+  });
+  document.getElementById('ing-monto-wrap').style.display = 'block';
+  document.getElementById('btn3b').disabled = true;
+}
+
+function setIngMonto(key, val, label, btn) {
+  document.querySelectorAll('#ing-monto-grid .grid-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ingMontoKey = key; ingMontoVal = val;
+  data.ingreso_monto = key;
+  updateIngResumen();
+  checkBtn3b();
+}
+
+function setIngConst(tipo, el) {
+  document.querySelectorAll('#ing-const-opts .opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  ingConstancia = tipo; data.ingreso_constancia = tipo;
+  updateIngResumen();
+  checkBtn3b();
+}
+
+function checkBtn3b() {
+  const btn = document.getElementById('btn3b');
+  if (!btn) return;
+
+  const act = actividadSeleccionada;
+
+  // Los tres campos de ingreso son SIEMPRE obligatorios para todas las actividades
+  const tieneFreq      = !!ingFreqActual;
+  const tieneMonto     = !!ingMontoVal;
+  const tieneConstancia = !!ingConstancia;
+  const ingresosOK = tieneFreq && tieneMonto && tieneConstancia;
+
+  // Campos adicionales obligatorios según actividad
+  let extrasOK = true;
+  if (act === 'empleado_nomina') {
+    extrasOK = !!data.sector;
+  } else if (act === 'comercio_local') {
+    extrasOK = !!data.giro && data.local_renta !== undefined && data.local_renta !== null;
+  } else if (act === 'comercio_ambulante') {
+    extrasOK = !!data.lugar_trabajo && !!data.giro;
+  } else if (act === 'servicios_domicilio') {
+    extrasOK = !!data.tipo_servicio;
+  } else if (act === 'ventas_comisiones') {
+    extrasOK = !!data.tipo_venta;
+  } else if (act === 'ventas_internet') {
+    extrasOK = !!data.tipo_venta_internet;
+  } else if (act === 'freelance') {
+    extrasOK = !!data.sector;
+  } else if (act === 'jubilado') {
+    extrasOK = !!data.inst_jubilado;
+  }
+
+  btn.disabled = !(ingresosOK && extrasOK);
+  syncFloatBtn();
+}
+
+function updateIngResumen() {
+  if (!ingMontoVal || !ingFreqActual) return;
+  const mensual = Math.round(ingMontoVal * ING_MULT[ingFreqActual]);
+  const ingQnal = mensual / 2;
+  const cuotaSolicitada = simMonto * 0.1273;
+  const pct = Math.round((cuotaSolicitada / ingQnal) * 100);
+  const capMaxQnal = Math.round(ingQnal * CAP_MAX_PCT);
+  const montoMaxBruto = Math.round(capMaxQnal / 0.1273);
+  const montoMaxFinal = Math.min(Math.max(Math.round(montoMaxBruto/500)*500, 5000), 15000);
+  const cuotaMax = Math.round(montoMaxFinal * 0.1273);
+
+  // Guardar en data para Sheets
+  data.ingreso_mensual_estimado = mensual;
+  data.pct_cuota_ingreso = pct;
+  data.monto_maximo_viable = montoMaxFinal;
+  data.capacidad_pago = pct<=34 ? 'HOLGADA' : pct<=50 ? 'AJUSTADA' : 'INSUFICIENTE';
+
+  // Resumen visible al cliente
+  const resumen = document.getElementById('ing-resumen');
+  const constTexto = ingConstancia === 'si' ? ' · Ingreso constante' : ingConstancia === 'variable' ? ' · Ingreso variable' : '';
+  document.getElementById('ing-resumen-valor').textContent =
+    (ingMontoKey === 'menos' ? 'Menos de ' : '') + fmt(ingMontoVal) + ' ' + ING_UNIDAD[ingFreqActual];
+  document.getElementById('ing-resumen-sub').textContent =
+    '≈ ' + fmt(mensual) + ' al mes' + constTexto;
+  resumen.classList.add('show');
+
+  // Sugerencia solo si ya eligió constancia
+  if (!ingConstancia) return;
+  const sugBox = document.getElementById('ing-sug-box');
+  const sugMonto = document.getElementById('ing-sug-monto');
+  const sugTexto = document.getElementById('ing-sug-texto');
+  const sugAlg   = document.getElementById('ing-sug-alg');
+  sugBox.classList.add('show');
+
+  if (pct <= 34) {
+    sugBox.classList.remove('warn');
+    sugMonto.textContent = 'Tu solicitud encaja bien con tus ingresos';
+    sugTexto.textContent = 'Con lo que ganas puedes solicitar hasta ' + fmt(montoMaxFinal) +
+      ' cómodamente — una cuota quincenal de ' + fmt(cuotaMax) + '.';
+    sugAlg.textContent = 'Calculado con base en el perfil de nuestros clientes con ingresos similares.';
+  } else {
+    sugBox.classList.add('warn');
+    sugMonto.textContent = 'Monto sugerido: ' + fmt(montoMaxFinal);
+    sugTexto.textContent = 'Con tus ingresos actuales, el monto más cómodo para ti sería ' +
+      fmt(montoMaxFinal) + ' — cuota quincenal de ' + fmt(cuotaMax) +
+      '. Pedir más podría generar presión en tu presupuesto.';
+    sugAlg.textContent = 'Calculado por nuestro sistema con base en clientes con ingresos similares.';
+  }
+}
+
+function buildFrecuenciaGrid() {
+  return '';
+}
+
+function buildFormaPago() {
+  return `<div class="field-label" style="margin-top:0.5rem;margin-bottom:0.4rem;">¿Cómo recibes tu pago?</div>
+  <div class="btn-grid">
+    <button class="grid-btn" onclick="selectGridBtn(this,'forma_pago','deposito'); data.forma_pago='deposito'">Depósito a cuenta</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'forma_pago','efectivo_recibo'); data.forma_pago='efectivo_recibo'">Efectivo con recibo</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'forma_pago','efectivo'); data.forma_pago='efectivo'">Efectivo sin recibo</button>
+    <button class="grid-btn" onclick="selectGridBtn(this,'forma_pago','cheque'); data.forma_pago='cheque'">Cheque</button>
+  </div>`;
+}
+
+function selectGridBtn(btn, grupo, val) {
+  btn.closest('.btn-grid')?.querySelectorAll('.grid-btn')
+    .forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  data[grupo] = val;
+  // NO habilita btn3b directamente — checkBtn3b lo evalúa
+  checkBtn3b();
+}
+
+function validarPaso3b() {
+  // Verificar si la actividad es de riesgo
+  if (data.es_riesgo) {
+    // Registrar en data pero continuar con flujo normal hasta el final
+    data.prioridad = 'DESCARTADO_RIESGO';
+    // Continuar al siguiente paso (descarte ocurrirá al enviar)
+  }
+  step4Ready = false;
+  stepHistory.push(4);
+  goStep(4);
+}
+
+// ══════════════════════════════════════════════
+// PASO 4 — INGRESOS
+// ══════════════════════════════════════════════
+function selectIngreso(btn, val) {
+  document.querySelectorAll('#ing-options .opt').forEach(o => o.classList.remove('selected'));
+  if (typeof btn === 'object' && btn.classList) btn.classList.add('selected');
+  data.ing = val;
+  document.getElementById('ing-no-confirm').style.display = 'none';
+
+  if (val === 'no_nada') {
+    document.getElementById('ing-no-confirm').style.display = 'block';
+    step4Ready = false;
+    syncFloatBtn();
+    return;
+  }
+  // Habilitar botón flotante para continuar al paso 5
+  // Guardamos la acción en el estado para que syncFloatBtn la use
+  step4Ready = true;
+  syncFloatBtn();
+}
+
+function confirmarSinIngreso() {
+  step4Ready = false;
+  data.ing = 'no_nada';
+  showDescarte('Comprobamos ingresos de muchas formas, pero necesitamos que el solicitante pueda mostrar al menos alguna evidencia de sus ingresos. Si en el futuro tienes forma de demostrarlos, con gusto retomamos tu solicitud. ¡Mucho éxito!');
+}
+
+// ══════════════════════════════════════════════
+// PASO 5 — DOMICILIO
+// ══════════════════════════════════════════════
+function selectDom(btn, val) {
+  document.querySelectorAll('#dom-options .opt').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  data.dom = val;
+
+  const avalWrap = document.getElementById('aval-wrap');
+  if (val === 'rentado') {
+    avalWrap.style.display = 'block';
+    document.getElementById('btn5').disabled = true; // esperar respuesta aval
+  } else {
+    avalWrap.style.display = 'none';
+    data.aval = 'na';
+    document.getElementById('btn5').disabled = false;
+  }
+}
+
+function habilitarSiguiente5() {
+  document.getElementById('btn5').disabled = false;
+  syncFloatBtn();
+}
+
+// ══════════════════════════════════════════════
+// PASO 6 — SIMULADOR
+// ══════════════════════════════════════════════
+function calcSim() {
+  const cap = simMonto / PLAZO_FIJO;
+  let total = 0, s = simMonto;
+  for (let i = 0; i < PLAZO_FIJO; i++) { total += s * TASA; s -= cap; }
+  const intProm = total / PLAZO_FIJO;
+  const ivaProm = intProm * IVA_TASA;
+  const totalPer = cap + intProm + ivaProm;
+  const cuota = Math.round(totalPer / 2); // siempre quincenal
+  const nPagos = PLAZO_FIJO * 2;
+  return { cuota, nPagos, totalPagar: cuota * nPagos };
+}
+
+function calcCAT() {
+  // CAT simplificado: TIR de los flujos anualizados
+  // Desembolso neto = monto - comisión apertura (4%)
+  const comision = simMonto * 0.04;
+  const neto = simMonto - comision;
+  const r = calcSim();
+  // Newton-Raphson para TIR quincenal
+  let tasa = 0.05;
+  for (let i = 0; i < 50; i++) {
+    let f = -neto, df = 0;
+    for (let k = 1; k <= r.nPagos; k++) {
+      f  += r.cuota / Math.pow(1+tasa, k);
+      df -= k * r.cuota / Math.pow(1+tasa, k+1);
+    }
+    tasa -= f/df;
+    if (Math.abs(f) < 0.01) break;
+  }
+  // Anualizar desde tasa quincenal (26 quincenas/año)
+  const catAnual = (Math.pow(1+tasa, 26) - 1) * 100;
+  return Math.round(catAnual);
+}
+
+function renderSim() {
+  const r = calcSim();
+  document.getElementById('simDisplay').textContent = fmt(simMonto);
+  document.getElementById('rCuota').textContent     = fmt(r.cuota);
+  document.getElementById('rPagos').textContent     = r.nPagos;
+  document.getElementById('rTotal').textContent     = fmt(r.totalPagar);
+  data.monto          = simMonto;
+  data.plazo          = PLAZO_FIJO;
+  data.frecuencia     = FREQ_FIJA;
+  data.cuota_estimada = fmt(r.cuota);
+
+  // Mostrar sugerencia si hay monto_maximo_viable calculado en paso 3b
+  const maxViable = data.monto_maximo_viable;
+  const sugWrap = document.getElementById('sim-sug-wrap');
+  if (maxViable && sugWrap) {
+    sugWrap.style.display = 'block';
+    const cuotaMax = Math.round(maxViable * 0.1273);
+    if (simMonto <= maxViable) {
+      sugWrap.classList.remove('warn');
+      document.getElementById('sim-sug-monto').textContent =
+        'Este monto es cómodo para tus ingresos';
+      document.getElementById('sim-sug-texto').textContent =
+        'Con lo que ganas puedes solicitar hasta ' + fmt(maxViable) +
+        ' — cuota quincenal de ' + fmt(cuotaMax) + '. Vas bien.';
+    } else {
+      sugWrap.classList.add('warn');
+      document.getElementById('sim-sug-monto').textContent =
+        'Monto sugerido: ' + fmt(maxViable);
+      document.getElementById('sim-sug-texto').textContent =
+        'Con tus ingresos, el monto más cómodo sería ' + fmt(maxViable) +
+        ' — cuota quincenal de ' + fmt(cuotaMax) +
+        '. Puedes solicitar más, pero tu asesor lo evaluará en la videollamada.';
+    }
+  }
+}
+
+// ══════════════════════════════════════════════
+// PASO 7 — ESTADO CIVIL
+// ══════════════════════════════════════════════
+function mostrarPareja(show) {
+  document.getElementById('pareja-wrap').style.display = show ? 'block' : 'none';
+  document.getElementById('btn7').disabled = false;
+  syncFloatBtn();
+}
+
+// ══════════════════════════════════════════════
+// SELECCIÓN GENÉRICA
+// ══════════════════════════════════════════════
+function selectOpt(btn, key, val) {
+  const parent = btn.closest('.options');
+  if (parent) parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  data[key] = val;
+  // Habilitar btn-next del step actual si existe
+  const nextBtn = btn.closest('.step')?.querySelector('.btn-next');
+  if (nextBtn) nextBtn.disabled = false;
+}
+
+// ══════════════════════════════════════════════
+// ENVÍO DEL FORMULARIO
+// ══════════════════════════════════════════════
+async function submitForm() {
+  // Verificar actividades de riesgo — descarte invisible ANTES de enviar
+  if (data.prioridad === 'DESCARTADO_RIESGO') {
+    // Enviar igualmente a Sheets para registro, luego mostrar pantalla de riesgo
+    data.timestamp = new Date().toISOString();
+    data.fuente = document.referrer || window.location.href;
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+    } catch(e) { console.warn('n8n error:', e); }
+    showRiesgo();
+    return;
+  }
+
+  // Calcular score final
+  const score = calcScore();
+  data.score        = score;
+  data.prioridad    = etiquetaScore(score);
+  data.timestamp    = new Date().toISOString();
+  data.fuente       = document.referrer || window.location.href;
+  data.clic_whatsapp = 'no';
+
+  // Ocultar botón flotante en pantallas finales
+  document.getElementById('floatingBtn').style.display = 'none';
+  // Mostrar pantalla pendiente
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('screenPending').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('pendingNombre').textContent =
+    (data.nombre || '').split(' ')[0];
+  window.scrollTo({top:0,behavior:'smooth'});
 
-  // Número de fallback mientras n8n responde
+  // Enviar a n8n
   let asesorNumero = '525654681806';
-  let asesorNombre = 'un asesor';
+  let asesorNombre = 'tu asesor';
 
-  if (N8N_WEBHOOK && N8N_WEBHOOK !== 'TU_WEBHOOK_N8N_AQUI') {
-    try {
-      const res = await fetch(N8N_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      const json = await res.json();
-      if (json.asesor_numero) asesorNumero = json.asesor_numero;
-      if (json.asesor_nombre) asesorNombre = json.asesor_nombre;
-    } catch (e) {
-      console.warn('n8n error', e);
-    }
-  }
+  try {
+    const res = await fetch(N8N_WEBHOOK, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    const json = await res.json();
+    if (json.asesor_numero) asesorNumero = json.asesor_numero;
+    if (json.asesor_nombre) asesorNombre = json.asesor_nombre;
+  } catch(e) { console.warn('n8n error:', e); }
 
-  // Construir botón WhatsApp con asesor real
+  // Actualizar botón WA con asesor real
+  const primer = (data.nombre||'').split(' ')[0];
   const waMsg = encodeURIComponent(
-    'Hola ' + asesorNombre + ', acabo de llenar la solicitud de Crédito Rosa.\n' +
-    'Nombre: ' + (data.nombre || '') + '\n' +
-    'Monto: ' + fmt(simMonto) + ' · Plazo: ' + simPlazo + ' meses\n' +
-    'Actividad: ' + (data.act || '') + ' · CP: '+(data.cp||'')+' · '+(data.colonia||'')+' · '+(data.municipio||'')
+    'Hola ' + asesorNombre + ', acabo de enviar mi solicitud de Crédito Rosa.\n' +
+    'Soy ' + (data.nombre||'') + '.\n' +
+    'Monto: ' + fmt(simMonto) + ' · Cuota quincenal: ' + (data.cuota_estimada||'') + '\n' +
+    'CP: ' + (data.cp||'') + ' · ' + (data.municipio||'') + '\n' +
+    'Actividad: ' + (data.act||'')
   );
   const waBtn = document.getElementById('waBtn');
   waBtn.href = 'https://wa.me/' + asesorNumero + '?text=' + waMsg;
-  const waSpan = document.getElementById('waAsesorNombre');
-  if (waSpan) waSpan.textContent = asesorNombre;
+  document.getElementById('waAsesorNombre').textContent = asesorNombre;
+  document.getElementById('wa-loading-msg').style.display = 'none';
+  waBtn.classList.remove('wa-loading');
 }
 
-// ── INIT
+function trackWaClick() {
+  if (waClicRegistrado) return;
+  waClicRegistrado = true;
+  data.clic_whatsapp = 'si';
+  // Enviar actualización a n8n
+  if (N8N_WEBHOOK) {
+    fetch(N8N_WEBHOOK + '-wa-click', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ whatsapp: data.whatsapp, clic_whatsapp:'si', timestamp: new Date().toISOString() })
+    }).catch(()=>{});
+  }
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════
+// BOTÓN FLOTANTE — sistema central
+// ══════════════════════════════════════════════════════
+function setFloatBtn(text, enabled, onclickFn, isLoading) {
+  const btn = document.getElementById('floatBtnEl');
+  if (!btn) return;
+  btn.textContent = text || 'Continuar →';
+  btn.disabled = !enabled;
+  btn.className = isLoading ? 'loading' : '';
+  btn._action = onclickFn || null;
+}
+
+function floatBtnClick() {
+  const btn = document.getElementById('floatBtnEl');
+  if (!btn || btn.disabled || btn.className === 'loading') return;
+  if (btn._action) btn._action();
+}
+
+function syncFloatBtn() {
+  const step = document.querySelector('.step.active');
+  if (!step) { document.getElementById('floatingBtn').style.display = 'none'; return; }
+  document.getElementById('floatingBtn').style.display = 'block';
+  const id = step.id;
+  if (id === 'step1') {
+    const loading = document.getElementById('cp-loading').style.display !== 'none';
+    if (loading) { setFloatBtn('Verificando tu zona...', false, null, true); }
+    else { setFloatBtn('Continuar →', true, checkCP); }
+  } else if (id === 'step2') {
+    setFloatBtn('Continuar →', true, validarPaso2);
+  } else if (id === 'step3') {
+    setFloatBtn('Continuar →', !document.getElementById('btn3')?.disabled, irPaso3b);
+  } else if (id === 'step3b') {
+    setFloatBtn('Continuar →', !document.getElementById('btn3b')?.disabled, validarPaso3b);
+  } else if (id === 'step4') {
+    setFloatBtn('Continuar →', step4Ready, function(){ stepHistory.push(5); goStep(5); });
+  } else if (id === 'step5') {
+    setFloatBtn('Continuar →', !document.getElementById('btn5')?.disabled, function(){ goStep(6); });
+  } else if (id === 'step6') {
+    // Inicializar simulador con monto sugerido al entrar al paso
+    if (data.monto_maximo_viable) {
+      simMonto = data.monto_maximo_viable;
+      const slider = document.getElementById('simSlider');
+      if (slider) slider.value = simMonto;
+      renderSim();
+    }
+    setFloatBtn('Así quiero mi crédito →', true, function(){ goStep(7); });
+  } else if (id === 'step7') {
+    setFloatBtn('Continuar →', !document.getElementById('btn7')?.disabled, function(){ goStep(8); });
+  } else if (id === 'step8') {
+    setFloatBtn('Enviar mi solicitud →', true, submitForm);
+  } else {
+    document.getElementById('floatingBtn').style.display = 'none';
+  }
+}
+
+const _mutObs = new MutationObserver(function() {
+  syncFloatBtn();
+});
+
 renderSim();
 updateProgress();
-document.getElementById('cp').addEventListener('input', function() {
-  if (this.value.length === 5) lookupCP(this.value);
-  else document.getElementById('cp-result').style.display = 'none';
-});
+
+// ── BARRA DE PUNTOS DE PROGRESO
+const STEP_ORDER_ARR = [1,2,3,'3b',4,5,6,7,8];
+function renderDots(current) {
+  document.querySelectorAll('.step.active .progress-dots').forEach(function(container) {
+    container.innerHTML = '';
+    var idx = STEP_ORDER_ARR.indexOf(current);
+    STEP_ORDER_ARR.forEach(function(s, i) {
+      var d = document.createElement('div');
+      d.className = 'progress-dot' + (i < idx ? ' done' : i === idx ? ' current' : '');
+      container.appendChild(d);
+    });
+  });
+}
+var _origGoStep = goStep;
+goStep = function(n) {
+  _origGoStep(n);
+  setTimeout(function(){
+    renderDots(n);
+    syncFloatBtn();
+    // Observar cambios en el paso activo (para btn3b, btn5, etc.)
+    _mutObs.disconnect();
+    const activeStep = document.querySelector('.step.active');
+    if (activeStep) _mutObs.observe(activeStep, { attributes:true, subtree:true, attributeFilter:['disabled','style'] });
+  }, 60);
+};
+renderDots(1);
+syncFloatBtn();
+const _initStep = document.getElementById("step1");
+if(_initStep) _mutObs.observe(_initStep, {attributes:true,subtree:true,attributeFilter:["disabled","style"]});
+
 </script>
 </body>
 </html>
