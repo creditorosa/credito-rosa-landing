@@ -625,7 +625,7 @@ footer{
     </button>
     <button class="opt" onclick="selectIngreso(this,'notas')">
       <div class="opt-check"></div>
-      <div class="opt-label">Sí — notas de venta, tickets o fotos del negocio</div>
+      <div class="opt-label">Sí — notas de venta, y fotos del negocio</div>
     </button>
     <button class="opt" onclick="selectIngreso(this,'carta')">
       <div class="opt-check"></div>
@@ -726,7 +726,7 @@ footer{
 
   <div class="sim-wrap">
     <div class="sim-amount-display" id="simDisplay">$10,000</div>
-    <input type="range" id="simSlider" min="5000" max="15000" step="1000" value="10000"
+    <input type="range" id="simSlider" min="5000" max="15000" step="500" value="10000"
            oninput="simMonto=+this.value; renderSim()">
     <div class="range-labels"><span>$5,000</span><span>$15,000</span></div>
 
@@ -1536,7 +1536,7 @@ const ING_PREGUNTA = {
 };
 const ING_UNIDAD = { diario:'al día', semanal:'por semana', quincenal:'por quincena', mensual:'al mes' };
 const ING_SCORE  = { menos:3, bajo:10, medio:18, alto:25 };
-const CAP_MAX_PCT = 0.34;
+const CAP_MAX_PCT = 0.15;
 let ingFreqActual = null, ingMontoVal = null, ingMontoKey = null, ingConstancia = null;
 
 function buildIngresosGrid() {
@@ -1571,7 +1571,7 @@ function buildIngresosGrid() {
       <div class="ing-resumen-valor" id="ing-resumen-valor"></div>
       <div class="ing-resumen-sub" id="ing-resumen-sub"></div>
     </div>
-    <div class="sug-box" id="ing-sug-box">
+    <div class="sug-box" id="ing-sug-box" style="display:none!important;">
       <div class="sug-tag">Sugerencia personalizada</div>
       <div class="sug-monto" id="ing-sug-monto"></div>
       <div class="sug-texto" id="ing-sug-texto"></div>
@@ -1670,7 +1670,7 @@ function updateIngResumen() {
   data.ingreso_mensual_estimado = mensual;
   data.pct_cuota_ingreso = pct;
   data.monto_maximo_viable = montoMaxFinal;
-  data.capacidad_pago = pct<=34 ? 'HOLGADA' : pct<=50 ? 'AJUSTADA' : 'INSUFICIENTE';
+  data.capacidad_pago = pct<=15 ? 'HOLGADA' : pct<=30 ? 'AJUSTADA' : 'INSUFICIENTE';
 
   // Resumen visible al cliente
   const resumen = document.getElementById('ing-resumen');
@@ -1689,19 +1689,21 @@ function updateIngResumen() {
   const sugAlg   = document.getElementById('ing-sug-alg');
   sugBox.classList.add('show');
 
-  if (pct <= 34) {
+  if (pct <= 15) {
     sugBox.classList.remove('warn');
-    sugMonto.textContent = 'Tu solicitud encaja bien con tus ingresos';
-    sugTexto.textContent = 'Con lo que ganas puedes solicitar hasta ' + fmt(montoMaxFinal) +
-      ' cómodamente — una cuota quincenal de ' + fmt(cuotaMax) + '.';
+    sugMonto.textContent = '';
+    sugTexto.textContent = 'Monto adecuado para cumplir con tranquilidad y construir tu historial con nosotros.';
+    sugAlg.textContent = 'Calculado con base en el perfil de nuestros clientes con ingresos similares.';
+  } else if (pct <= 30) {
+    sugBox.classList.remove('warn');
+    sugMonto.textContent = '';
+    sugTexto.textContent = 'Monto accesible de acuerdo con tu perfil para iniciar con Crédito Rosa.';
     sugAlg.textContent = 'Calculado con base en el perfil de nuestros clientes con ingresos similares.';
   } else {
     sugBox.classList.add('warn');
-    sugMonto.textContent = 'Monto sugerido: ' + fmt(montoMaxFinal);
-    sugTexto.textContent = 'Con tus ingresos actuales, el monto más cómodo para ti sería ' +
-      fmt(montoMaxFinal) + ' — cuota quincenal de ' + fmt(cuotaMax) +
-      '. Pedir más podría generar presión en tu presupuesto.';
-    sugAlg.textContent = 'Calculado por nuestro sistema con base en clientes con ingresos similares.';
+    sugMonto.textContent = '';
+    sugTexto.textContent = 'Crédito sujeto a aprobación según la validación de tu información.';
+    sugAlg.textContent = 'Calculado con base en el perfil de nuestros clientes con ingresos similares.';
   }
 }
 
@@ -1839,27 +1841,38 @@ function renderSim() {
   data.frecuencia     = FREQ_FIJA;
   data.cuota_estimada = fmt(r.cuota);
 
-  // Mostrar sugerencia si hay monto_maximo_viable calculado en paso 3b
-  const maxViable = data.monto_maximo_viable;
+  // Mostrar sugerencia basada en capacidad de pago calculada en paso 3b
+  const cap = data.capacidad_pago;
   const sugWrap = document.getElementById('sim-sug-wrap');
-  if (maxViable && sugWrap) {
+  if (cap && sugWrap) {
+    const montoSugerido = cap === 'HOLGADA' ? 7000 : cap === 'AJUSTADA' ? 6000 : 5000;
+    if (!sugWrap._inicializado) {
+      simMonto = montoSugerido;
+      document.getElementById('simSlider').value = montoSugerido;
+      document.getElementById('simDisplay').textContent = fmt(simMonto);
+      const rNew = calcSim();
+      document.getElementById('rCuota').textContent  = fmt(rNew.cuota);
+      document.getElementById('rPagos').textContent  = rNew.nPagos;
+      document.getElementById('rTotal').textContent  = fmt(rNew.totalPagar);
+      data.monto          = simMonto;
+      data.cuota_estimada = fmt(rNew.cuota);
+      sugWrap._inicializado = true;
+    }
     sugWrap.style.display = 'block';
-    const cuotaMax = Math.round(maxViable * 0.1273);
-    if (simMonto <= maxViable) {
+    if (simMonto <= montoSugerido) {
       sugWrap.classList.remove('warn');
-      document.getElementById('sim-sug-monto').textContent =
-        'Este monto es cómodo para tus ingresos';
-      document.getElementById('sim-sug-texto').textContent =
-        'Con lo que ganas puedes solicitar hasta ' + fmt(maxViable) +
-        ' — cuota quincenal de ' + fmt(cuotaMax) + '. Vas bien.';
+      const frases = {
+        HOLGADA:      'Monto adecuado para cumplir con tranquilidad y construir tu historial con nosotros.',
+        AJUSTADA:     'Monto accesible de acuerdo con tu perfil para iniciar con Crédito Rosa.',
+        INSUFICIENTE: 'Monto accesible para comenzar tu historial crediticio con nosotros.',
+      };
+      document.getElementById('sim-sug-monto').textContent = '';
+      document.getElementById('sim-sug-texto').textContent = frases[cap] || frases.AJUSTADA;
     } else {
       sugWrap.classList.add('warn');
-      document.getElementById('sim-sug-monto').textContent =
-        'Monto sugerido: ' + fmt(maxViable);
+      document.getElementById('sim-sug-monto').textContent = '';
       document.getElementById('sim-sug-texto').textContent =
-        'Con tus ingresos, el monto más cómodo sería ' + fmt(maxViable) +
-        ' — cuota quincenal de ' + fmt(cuotaMax) +
-        '. Puedes solicitar más, pero tu asesor lo evaluará en la videollamada.';
+        'Crédito sujeto a aprobación según la validación de tu información.';
     }
   }
 }
@@ -1959,20 +1972,28 @@ function trackWaClick() {
   if (waClicRegistrado) return;
   waClicRegistrado = true;
   data.clic_whatsapp = 'si';
-  // Actualizar columna Clic Whatsapp en Sheets via n8n
-  // Usamos el mismo webhook principal con flag de actualización
+  // Usar sendBeacon para garantizar entrega aunque el usuario salga de la página
+  // fetch normal falla en mobile cuando el usuario abre WhatsApp y la página queda en background
   if (N8N_WEBHOOK && data.whatsapp) {
-    fetch(N8N_WEBHOOK, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        _tipo: 'clic_whatsapp',
-        whatsapp: data.whatsapp,
-        nombre: data.nombre,
-        clic_whatsapp: 'si',
-        timestamp: new Date().toISOString()
-      })
-    }).catch(()=>{});
+    const payload = JSON.stringify({
+      _tipo: 'clic_whatsapp',
+      whatsapp: data.whatsapp,
+      nombre: data.nombre,
+      clic_whatsapp: 'si',
+      timestamp: new Date().toISOString()
+    });
+    const enviado = navigator.sendBeacon
+      ? navigator.sendBeacon(N8N_WEBHOOK, new Blob([payload], {type:'application/json'}))
+      : false;
+    // Fallback a fetch si sendBeacon no está disponible
+    if (!enviado) {
+      fetch(N8N_WEBHOOK, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: payload,
+        keepalive: true
+      }).catch(()=>{});
+    }
   }
 }
 
