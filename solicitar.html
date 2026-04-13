@@ -625,7 +625,7 @@ footer{
     </button>
     <button class="opt" onclick="selectIngreso(this,'notas')">
       <div class="opt-check"></div>
-      <div class="opt-label">Sí — notas de venta, y fotos del negocio</div>
+      <div class="opt-label">Sí — notas de venta, tickets o fotos del negocio</div>
     </button>
     <button class="opt" onclick="selectIngreso(this,'carta')">
       <div class="opt-check"></div>
@@ -866,6 +866,20 @@ footer{
 <!-- ══════════════════════════════════
      PANTALLA: DESCARTE RIESGO (invisible)
 ══════════════════════════════════ -->
+<!-- ══════════════════════════════════
+     PANTALLA: FUERA DE ZONA
+══════════════════════════════════ -->
+<div class="screen-riesgo" id="screenFueraZona">
+  <div class="screen-icon soft">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 3l13 24H3L16 3z" stroke="#9A7888" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M16 13v6M16 22v1" stroke="#9A7888" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="screen-title">Por ahora no llegamos a tu zona</div>
+  <div class="screen-body">Crédito Rosa opera actualmente en CDMX y municipios cercanos a la Zona Metropolitana norte. Tu código postal está fuera de nuestra área de atención por el momento.<br><br>¡Gracias por tu interés! Si en el futuro ampliamos nuestra cobertura, te encantará conocernos.</div>
+</div>
+
 <div class="screen-riesgo" id="screenRiesgo">
   <div class="screen-icon soft">
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -929,13 +943,9 @@ const PLAZO_FIJO = 6, FREQ_FIJA = 'QNAL';
 const REF_LAT = 19.5731, REF_LNG = -99.2647;
 
 // Zonas válidas por rango de CP (validación local)
-const CP_VALIDOS = [
-  [1000,16999],   // CDMX
-  [50000,57999],[53000,53999],[54000,54999],[52000,52999],
-  [55000,55999],[57000,57999],[56000,56999],[54400,54499],
-  [54700,54799],[54900,54999],[54500,54599],[55700,55799],
-  [54600,54699],[52100,52199],[53200,53299],
-];
+// CP_VALIDOS ya no es el portero — la distancia calculada es el filtro real.
+// Aceptamos cualquier CP de 5 dígitos; si el municipio está fuera de 28km se descarta.
+const CP_VALIDOS = [[1000, 99999]];
 
 // Actividades de alto riesgo (descarte invisible)
 const SECTORES_RIESGO = ['seguridad_publica','seguridad_privada','servicios_legales'];
@@ -969,7 +979,7 @@ function haversineKm(lat1, lng1, lat2, lng2) {
 
 function zonaDesdeKm(km) {
   if (km <= 15) return 'PREFERENTE';
-  if (km <= 25) return 'ACEPTABLE';
+  if (km <= 28) return 'ACEPTABLE';
   return 'LEJANA';
 }
 
@@ -1015,7 +1025,7 @@ function updateProgress() {
 }
 
 function goStep(n) {
-  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo,#screenFueraZona')
     .forEach(s => s.classList.remove('active'));
   const el = document.getElementById('step'+n);
   if (el) {
@@ -1031,13 +1041,14 @@ function navBack() {
   // Si estamos en pantalla final, no hacer nada
   if (document.getElementById('screenPending').classList.contains('active') ||
       document.getElementById('screenDescarte').classList.contains('active') ||
-      document.getElementById('screenRiesgo').classList.contains('active')) return;
+      document.getElementById('screenRiesgo').classList.contains('active') ||
+      document.getElementById('screenFueraZona').classList.contains('active')) return;
 
   // Remover paso actual del historial y ir al anterior
   stepHistory.pop();
   const prev = stepHistory[stepHistory.length - 1];
   if (prev) {
-    document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+    document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo,#screenFueraZona')
       .forEach(s => s.classList.remove('active'));
     const el = document.getElementById('step'+prev);
     if (el) {
@@ -1052,7 +1063,7 @@ function navBack() {
 }
 
 function showDescarte(msg) {
-  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo,#screenFueraZona')
     .forEach(s => s.classList.remove('active'));
   document.getElementById('progressFill').style.width='100%';
   document.getElementById('descarteMsg').textContent = msg ||
@@ -1062,7 +1073,7 @@ function showDescarte(msg) {
 }
 
 function showRiesgo() {
-  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo')
+  document.querySelectorAll('.step,.screen-descarte,.screen-pending,.screen-riesgo,#screenFueraZona')
     .forEach(s => s.classList.remove('active'));
   document.getElementById('progressFill').style.width='100%';
   document.getElementById('screenRiesgo').classList.add('active');
@@ -1126,7 +1137,7 @@ async function lookupCP(cp) {
 
     // Calcular distancia con coordenadas aproximadas por municipio
     // Usamos geocodificación por nombre de municipio via nominatim (gratuito, sin key)
-    calcularDistancia(municipio + ', Estado de Mexico, Mexico');
+    calcularDistancia(municipio);
 
   } catch(e) {
     loadingEl.style.display = 'none';
@@ -1135,25 +1146,86 @@ async function lookupCP(cp) {
   }
 }
 
-async function calcularDistancia(lugarStr) {
-  try {
-    const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' +
-                encodeURIComponent(lugarStr);
-    const res = await fetch(url, { headers:{'Accept-Language':'es'} });
-    const json = await res.json();
-    if (!json || json.length === 0) return;
-    const lat = parseFloat(json[0].lat);
-    const lng = parseFloat(json[0].lon);
-    const km  = haversineKm(REF_LAT, REF_LNG, lat, lng);
-    const zona = zonaDesdeKm(km);
-    data.distancia_km = Math.round(km * 10) / 10;
-    data.zona = zona;
+// Coordenadas por municipio — elimina llamada a Nominatim (lenta, hasta 4s)
+// Referencia: Unitec Atizapán (REF_LAT, REF_LNG)
+const COORDS_MUNICIPIO = {
+  'atizapán de zaragoza': [19.5731, -99.2647],
+  'atizapán':             [19.5731, -99.2647],
+  'nicolás romero':       [19.6333, -99.3167],
+  'tlalnepantla de baz':       [19.5400, -99.2050],
+  'tlalnepantla':              [19.5400, -99.2050],
+  'cuautitlán izcalli':   [19.6500, -99.2167],
+  'cuautitlán':           [19.6667, -99.1833],
+  'tultitlán':            [19.6450, -99.1730],
+  'naucalpan de juárez':  [19.4800, -99.2400],
+  'naucalpan':                 [19.4800, -99.2400],
+  'huixquilucan':              [19.3600, -99.3500],
+  'ecatepec de morelos':       [19.6010, -99.0500],
+  'ecatepec':                  [19.6010, -99.0500],
+  'nezahualcóyotl':       [19.4010, -99.0150],
+  'texcoco':                   [19.5120, -98.8820],
+  'gustavo a. madero':         [19.4870, -99.1200],
+  'azcapotzalco':              [19.4870, -99.1850],
+  'miguel hidalgo':            [19.4340, -99.2040],
+  'cuauhtémoc':           [19.4270, -99.1450],
+  'benito juárez':        [19.3984, -99.1578],
+  'iztapalapa':                [19.3570, -99.0600],
+  'venustiano carranza':       [19.4320, -99.1100],
+  'iztacalco':                 [19.3950, -99.1100],
+  'coyoacán':             [19.3390, -99.1620],
+  'álvaro obregón':  [19.3600, -99.2040],
+  'tlalpan':                   [19.2990, -99.1730],
+  'xochimilco':                [19.2640, -99.1040],
+  'tlahuac':                   [19.2900, -99.0040],
+  'magdalena contreras':       [19.3260, -99.2430],
+  'milpa alta':                [19.1930, -99.0220],
+  'cuajimalpa':                [19.3600, -99.2960],
+  // EdoMex fuera de cobertura — incluidos para descartar correctamente
+  'toluca':                    [19.2826, -99.6557],
+  'metepec':                   [19.2576, -99.6043],
+  'zinacantepec':              [19.2833, -99.7333],
+  'lerma':                     [19.2833, -99.5167],
+  'ocoyoacac':                 [19.2667, -99.4500],
+  'tianguistenco':             [19.1833, -99.4667],
+  'tenango del valle':         [18.9667, -99.5833],
+  'ixtlahuaca':                [19.5667, -99.7667],
+  'jilotepec':                 [19.9667, -99.5333],
+  'atlacomulco':               [19.7833, -99.8667],
+  'el oro':                    [19.8000, -100.1333],
+  'temascalcingo':             [19.9167, -100.0000],
+  // Morelos
+  'cuernavaca':                [18.9242, -99.2216],
+  'jiutepec':                  [18.8833, -99.1667],
+  'temixco':                   [18.8500, -99.2333],
+  'cuautla':                   [18.8167, -98.9500],
+  // Hidalgo
+  'pachuca':                   [20.1011, -98.7591],
+  'tizayuca':                  [19.8333, -98.9833],
+  'tula de allende':           [20.0500, -99.3333],
+  // Puebla
+  'puebla':                    [19.0414, -98.2063],
+  // Querétaro
+  'querétaro':                 [20.5888, -100.3899],
+};
 
-    // Zona calculada internamente para Sheets — no visible al usuario
-  } catch(e) {
-    console.warn('Distancia no calculada:', e);
+function calcularDistancia(municipioNombre) {
+  // Búsqueda insensible a mayúsculas/acentos
+  const key = municipioNombre.toLowerCase().trim();
+  let coords = null;
+  for (const [nombre, coord] of Object.entries(COORDS_MUNICIPIO)) {
+    if (key.includes(nombre) || nombre.includes(key)) {
+      coords = coord; break;
+    }
   }
-  // Lookup terminó — habilitar botón flotante
+  if (coords) {
+    const km = haversineKm(REF_LAT, REF_LNG, coords[0], coords[1]);
+    data.distancia_km = Math.round(km * 10) / 10;
+    data.zona = zonaDesdeKm(km);
+  } else {
+    // Municipio no reconocido — fuera de cobertura, descartar
+    data.distancia_km = null;
+    data.zona = 'LEJANA';
+  }
   document.getElementById('cp-loading').style.display = 'none';
   setFloatBtn('Continuar →', true, checkCP);
 }
@@ -1169,7 +1241,7 @@ function checkCP() {
   }
   if (!cpValido(cp)) {
     err.style.display='block';
-    err.textContent='Por el momento no tenemos cobertura en esa zona. Solo atendemos CDMX y Zona Metropolitana.';
+    err.textContent='Ingresa un código postal válido de 5 dígitos.';
     return;
   }
   // Validar que haya seleccionado colonia si el selector está visible
@@ -1186,9 +1258,14 @@ function checkCP() {
   data.cp = cp;
   if (coloniaSelect && coloniaSelect.value) data.colonia = coloniaSelect.value;
 
-  // Descarte si zona lejana (>25km) — pasa pero marcado
+  // Descarte si zona lejana (>28km desde Unitec Atizapán)
   if (data.zona === 'LEJANA') {
-    data.prioridad_zona = 'LEJANA';
+    // Mostrar pantalla de zona fuera de cobertura
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('floatingBtn').style.display = 'none';
+    document.getElementById('screenFueraZona').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
   }
   stepHistory.push(2);
   goStep(2);
