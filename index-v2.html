@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crédito Rosa — Si el banco te dijo que no, nosotros evaluamos diferente</title>
+  <meta name="description" content="Crédito para comerciantes, trabajadores por cuenta propia e informales. Sin nómina, sin historial limpio. De $5,000 a $80,000 MXN. CDMX y Zona Metropolitana." />
+
+  <!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "w4h2d6tp2i");
+</script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Tokens ─── */
+    :root {
+      --magenta: #ed1477;
+      --magenta-dark: #c4105f;
+      --magenta-light: #fde8f2;
+      --negro: #080a0a;
+      --gris: #6b7280;
+      --gris-claro: #f5f5f7;
+      --blanco: #ffffff;
+      --radio: 16px;
+      --radio-lg: 24px;
+      --sombra: 0 4px 24px rgba(237,20,119,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--negro);
+      background: var(--blanco);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Header ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #f0f0f0;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: block;
+      height: auto;
+      max-height: 40px;
+    }
+
+    .btn-header {
+      background: var(--magenta);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-header:hover { background: var(--magenta-dark); }
+
+    /* ─── Pill badge ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--magenta-light);
+      color: var(--magenta-dark);
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--magenta);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      padding: 36px 20px 0;
+      background: linear-gradient(160deg, #fff 60%, var(--magenta-light) 100%);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 8vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--magenta);
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+
+    /* ─── Simulador en hero ─── */
+    .sim-card {
+      width: 100%;
+    }
+
+    .sim-monto-display {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--magenta);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .sim-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, var(--magenta) 0%, var(--magenta) 30%, rgba(255,255,255,0.2) 30%);
+      outline: none;
+      margin-bottom: 8px;
+    }
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--magenta);
+      cursor: pointer;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .sim-range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    .sim-freq {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .sim-freq button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+    }
+    .sim-freq button.active {
+      background: var(--magenta);
+      color: #fff;
+    }
+
+    .sim-plazo label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sim-plazo-opciones {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .sim-plazo-opciones button {
+      padding: 10px 4px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+    }
+    .sim-plazo-opciones button.active {
+      background: var(--magenta);
+      color: #fff;
+    }
+
+    .sim-resultado {
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .sim-resultado-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .sim-resultado-valor {
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .sim-resultado-freq {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    .btn-califica {
+      width: 100%;
+      background: var(--magenta);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-califica:hover { background: var(--magenta-dark); transform: translateY(-1px); }
+    .btn-califica svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* ─── Stats strip ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #e5e7eb;
+      border-top: 1px solid #e5e7eb;
+      margin-top: auto;
+    }
+    .stat {
+      background: var(--blanco);
+      padding: 18px 12px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--magenta);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--gris);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ─── Sección: ¿Quiénes aplican? ─── */
+    section { padding: 56px 20px; }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--magenta);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 6vw, 38px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--gris);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .perfiles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .perfil-card {
+      background: var(--gris-claro);
+      border-radius: var(--radio);
+      padding: 18px 16px;
+      transition: background 0.2s;
+    }
+    .perfil-card:hover { background: var(--magenta-light); }
+    .perfil-icon { font-size: 28px; margin-bottom: 8px; }
+    .perfil-nombre {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 4px;
+    }
+    .perfil-desc {
+      font-size: 12px;
+      color: var(--gris);
+      line-height: 1.4;
+    }
+
+    /* ─── Sección: Casos reales ─── */
+    .casos-section {
+      background: var(--negro);
+      color: #fff;
+    }
+    .casos-section .section-eyebrow { color: var(--magenta); }
+    .casos-section .section-title { color: #fff; }
+    .casos-section .section-sub { color: rgba(255,255,255,0.5); }
+
+    .casos-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .caso-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radio-lg);
+      padding: 24px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .caso-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 120px;
+      font-family: 'Playfair Display', serif;
+      color: var(--magenta);
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .caso-perfil {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .caso-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--magenta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .caso-nombre {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .caso-actividad {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    .caso-quote {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .caso-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      background: rgba(237,20,119,0.15);
+      border: 1px solid rgba(237,20,119,0.3);
+      color: var(--magenta);
+      border-radius: 50px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .chip.white {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ─── Sección: Proceso ─── */
+    .proceso-section { background: #F7F0F4; }
+
+    .pasos {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .pasos::before {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 48px;
+      bottom: 48px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--magenta), transparent);
+    }
+
+    .paso {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+    }
+    .paso-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--magenta);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .paso-content {}
+    .paso-titulo {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .paso-desc {
+      font-size: 14px;
+      color: var(--gris);
+      line-height: 1.5;
+    }
+
+    /* ─── Sección: Quiénes somos ─── */
+    .quienes-section { background: var(--blanco); }
+
+    .asesor-card {
+      background: var(--gris-claro);
+      border-radius: var(--radio-lg);
+      padding: 28px 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .asesor-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--magenta), #ff6db2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .asesor-nombre {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+    .asesor-rol {
+      font-size: 13px;
+      color: var(--magenta);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .asesor-bio {
+      font-size: 14px;
+      color: var(--gris);
+      line-height: 1.5;
+    }
+
+    .trust-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .trust-icon {
+      width: 32px; height: 32px;
+      background: var(--magenta-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ─── CTA final ─── */
+    .cta-final {
+      background: linear-gradient(135deg, var(--magenta) 0%, #c4105f 100%);
+      color: #fff;
+      text-align: center;
+      padding: 56px 20px;
+    }
+    .cta-final h2 {
+      font-size: clamp(28px, 7vw, 42px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .cta-final p {
+      font-size: 16px;
+      opacity: 0.85;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .btn-cta-final {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: var(--magenta);
+      border: none;
+      border-radius: 50px;
+      padding: 18px 32px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .btn-cta-final:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: var(--negro);
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      line-height: 1.8;
+    }
+    footer a { color: rgba(255,255,255,0.4); }
+
+    /* ─── Modal ¿Califico? ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,10,10,0.7);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--blanco);
+      border-radius: 24px 24px 0 0;
+      padding: 32px 24px 48px;
+      width: 100%;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+    .modal h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .modal-sub {
+      font-size: 14px;
+      color: var(--gris);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .modal-step { display: none; }
+    .modal-step.active { display: block; }
+
+    .modal-pregunta {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--negro);
+    }
+
+    .opciones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .opcion-btn {
+      padding: 16px 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: var(--radio);
+      background: var(--blanco);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.18s;
+      line-height: 1.3;
+    }
+    .opcion-btn:hover, .opcion-btn.selected {
+      border-color: var(--magenta);
+      background: var(--magenta-light);
+      color: var(--magenta-dark);
+    }
+
+    .modal-resultado {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .resultado-icon { font-size: 56px; margin-bottom: 12px; }
+    .resultado-titulo {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .resultado-desc {
+      font-size: 15px;
+      color: var(--gris);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-wa:hover { background: #1ebe5d; }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: var(--gris-claro);
+      color: var(--negro);
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: #e5e7eb; }
+
+    /* ─── WhatsApp flotante ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 20px;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .wa-bubble {
+      background: var(--negro);
+      color: #fff;
+      border-radius: 12px 12px 0 12px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      animation: floatIn 0.5s ease forwards;
+      opacity: 0;
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wa-btn {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      animation: bounce 2.5s ease infinite;
+    }
+    .wa-btn svg { width: 30px; height: 30px; fill: #fff; }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+      margin: 0 20px;
+    }
+
+    /* ─── Section bases ─── */
+    .section-light { background: #fff; color: var(--negro); }
+    .section-mid { background: #F7F0F4; color: var(--negro); }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 0.8rem;
+    }
+    .section-intro {
+      font-size: 1rem; color: var(--gris); margin-top: 0.8rem;
+      max-width: 480px; line-height: 1.7;
+    }
+
+    /* ─── Simulador ─── */
+    .simulator-wrap {
+      max-width: 760px; margin: 2.5rem auto 0;
+      background: #fff;
+      border: 1px solid rgba(232,25,122,0.15);
+      border-radius: 20px; padding: 2.5rem;
+      box-shadow: 0 4px 40px rgba(232,25,122,0.08);
+    }
+    .section-light .simulator-wrap {
+      background: #fff; border: 1px solid rgba(232,25,122,0.15);
+      box-shadow: 0 4px 40px rgba(232,25,122,0.08);
+    }
+
+    .sim-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    @media(max-width:600px){ .sim-row { grid-template-columns: 1fr; } }
+
+    .sim-field label {
+      display: block; font-size: 0.78rem; font-weight: 500;
+      color: var(--gris); margin-bottom: 0.5rem; letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .monto-display {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--magenta), var(--magenta-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+
+    input[type=range] {
+      width: 100%; -webkit-appearance: none; appearance: none;
+      height: 4px; border-radius: 2px;
+      background: rgba(232,25,122,0.15); outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--magenta); cursor: pointer;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--magenta);
+    }
+    .range-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+    .range-labels span { font-size: 0.72rem; color: var(--gris); }
+
+    .plazo-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .plazo-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+      padding: 0.5rem 0; border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(232,25,122,0.2);
+      background: transparent; color: var(--gris);
+      transition: all 0.15s;
+    }
+    .plazo-btn:hover { border-color: var(--magenta); color: var(--magenta); }
+    .plazo-btn.active {
+      background: linear-gradient(135deg, var(--magenta), var(--magenta-light));
+      border-color: var(--magenta); color: #fff;
+    }
+
+    .freq-toggle { display: flex; gap: 6px; margin-top: 0.5rem; }
+    .freq-btn {
+      flex: 1; font-size: 0.82rem; font-weight: 500; padding: 0.6rem;
+      border-radius: 8px; cursor: pointer;
+      border: 1px solid rgba(232,25,122,0.2);
+      background: transparent; color: var(--gris); transition: all 0.15s;
+    }
+    .freq-btn.active { background: linear-gradient(135deg, var(--magenta), var(--magenta-light)); border-color: var(--magenta); color: #fff; }
+
+    .sim-divider { border: none; border-top: 1px solid rgba(232,25,122,0.1); margin: 1.5rem 0; }
+
+    .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    @media(max-width:500px){ .results-grid { grid-template-columns: 1fr 1fr; } }
+
+    .result-card {
+      background: #FAF0F5; border: 1px solid rgba(232,25,122,0.12);
+      border-radius: 12px; padding: 1rem;
+    }
+    .result-card .r-label { font-size: 0.72rem; color: var(--gris); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .result-card .r-value {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 700;
+      color: var(--negro);
+    }
+    .result-card.highlight { background: linear-gradient(135deg, var(--magenta), var(--magenta-light)); border-color: var(--magenta); }
+    .result-card.highlight .r-label { color: rgba(255,255,255,0.75); }
+    .result-card.highlight .r-value { color: #fff; font-size: 1.5rem; }
+
+    .sim-disclaimer {
+      font-size: 0.75rem; color: var(--gris); line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+    .sim-cta {
+      width: 100%; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 600;
+      background: linear-gradient(135deg, var(--magenta) 0%, var(--magenta-light) 100%);
+      color: #fff; border: none;
+      padding: 1rem; border-radius: 12px; cursor: pointer;
+      transition: all 0.2s; letter-spacing: 0.01em;
+    }
+    .sim-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .hero-copy { flex: 1; }
+
+    @media (min-width: 768px) {
+      .hero { padding: 56px 40px; max-width: 1100px; margin: 0 auto; }
+      .hero-inner { flex-direction: row; align-items: flex-start; gap: 48px; }
+      .sim-card { flex: 0 0 440px; position: sticky; top: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <img src="img/CR nombre.svg" alt="Crédito Rosa" class="logo" height="40">
+  <button class="btn-header" onclick="abrirModal()">Solicitar crédito</button>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="badge">CDMX y Zona Metropolitana · +300 familias apoyadas</div>
+
+      <h1>¿El banco te dijo que no?<br><em>Nosotros evaluamos diferente.</em></h1>
+
+      <p class="hero-sub">
+        Si eres comerciante, trabajas por tu cuenta o tus ingresos son informales —
+        eso nos basta. Sin nómina, sin historial limpio.
+        De <strong>$5,000 a $80,000 MXN</strong>.
+      </p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">+300</div>
+          <div class="stat-label">familias apoyadas</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">$5k–80k</div>
+          <div class="stat-label">monto disponible</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">13%</div>
+          <div class="stat-label">tasa mensual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-card">
+      <p class="section-label">Simulador de crédito</p>
+      <h2>¿Cuánto necesitas y cuánto pagarías?</h2>
+      <p class="section-intro">Ajusta el monto y plazo. Los resultados son una estimación basada en nuestras condiciones reales.</p>
+
+      <div class="simulator-wrap">
+        <div class="sim-row">
+          <div class="sim-field">
+            <label>Monto del crédito</label>
+            <div class="monto-display" id="montoDisplay">$20,000</div>
+            <input type="range" id="montoSlider" min="5000" max="80000" step="1000" value="10000">
+            <div class="range-labels"><span>$5,000</span><span>$80,000</span></div>
+          </div>
+          <div class="sim-field">
+            <label>Frecuencia de pago</label>
+            <div class="freq-toggle">
+              <button class="freq-btn active" data-freq="QNAL">Quincenal</button>
+              <button class="freq-btn" data-freq="MENS">Mensual</button>
+            </div>
+            <div style="margin-top:1rem;">
+              <label style="font-size:0.78rem;font-weight:500;color:#6a8a7e;text-transform:uppercase;letter-spacing:0.03em;display:block;margin-bottom:0.5rem;">Plazo (meses)</label>
+              <div class="plazo-grid">
+                <button class="plazo-btn" data-p="1">1</button>
+                <button class="plazo-btn" data-p="2">2</button>
+                <button class="plazo-btn" data-p="3">3</button>
+                <button class="plazo-btn" data-p="4">4</button>
+                <button class="plazo-btn" data-p="5">5</button>
+                <button class="plazo-btn active" data-p="6">6</button>
+                <button class="plazo-btn" data-p="12">12</button>
+                <button class="plazo-btn" data-p="18">18</button>
+                <button class="plazo-btn" data-p="24">24</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="sim-divider">
+
+        <div class="results-grid">
+          <div class="result-card highlight">
+            <div class="r-label">Pago por periodo</div>
+            <div class="r-value" id="cuotaDisplay">$2,139</div>
+          </div>
+          <div class="result-card">
+            <div class="r-label">Capital por periodo</div>
+            <div class="r-value" id="capDisplay">$1,667</div>
+          </div>
+          <div class="result-card">
+            <div class="r-label">Interés + IVA promedio</div>
+            <div class="r-value" id="intDisplay">$473</div>
+          </div>
+          <div class="result-card">
+            <div class="r-label">Total de pagos</div>
+            <div class="r-value" id="totalPagosDisplay">12</div>
+          </div>
+          <div class="result-card">
+            <div class="r-label">Total a pagar</div>
+            <div class="r-value" id="totalPagarDisplay">$25,668</div>
+          </div>
+          <div class="result-card">
+            <div class="r-label">Tasa mensual</div>
+            <div class="r-value">13%</div>
+          </div>
+        </div>
+
+        <p class="sim-disclaimer">Los clientes nuevos suelen aperturarse con montos entre $5,000 y $10,000 MXN. Cada caso se evalúa de forma individual para determinar el monto aprobado. Estimación basada en tasa del 13% mensual + IVA (16%). Comisión de apertura del 4% descontada del depósito.</p>
+        <button class="sim-cta" onclick="window.location.href='solicitar.html'">Quiero este crédito →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ¿QUIÉNES APLICAN? ══════════════ -->
+<section class="section-mid">
+  <div class="section-eyebrow">Para quién es</div>
+  <h2 class="section-title">Si el banco no te entiende,<br>nosotros sí.</h2>
+  <p class="section-sub">No importa si no tienes recibo de nómina. Evaluamos cómo realmente ganas tu dinero.</p>
+
+  <div class="perfiles-grid">
+    <div class="perfil-card">
+      <div class="perfil-icon">🛒</div>
+      <div class="perfil-nombre">Comerciante</div>
+      <div class="perfil-desc">Tienda, mercado, puesto. Notas de venta o compra nos bastan.</div>
+    </div>
+    <div class="perfil-card">
+      <div class="perfil-icon">🔧</div>
+      <div class="perfil-nombre">Oficio propio</div>
+      <div class="perfil-desc">Plomero, mecánico, estilista, costurera. Tu trabajo es tu comprobante.</div>
+    </div>
+    <div class="perfil-card">
+      <div class="perfil-icon">🎵</div>
+      <div class="perfil-nombre">Artista / creativo</div>
+      <div class="perfil-desc">Cantante, músico, fotógrafo. Contratos y actividad digital cuentan.</div>
+    </div>
+    <div class="perfil-card">
+      <div class="perfil-icon">🏪</div>
+      <div class="perfil-nombre">Negocio informal</div>
+      <div class="perfil-desc">Revendedor, catálogo, renta de local. Visitamos y verificamos.</div>
+    </div>
+    <div class="perfil-card">
+      <div class="perfil-icon">📋</div>
+      <div class="perfil-nombre">Buró con manchas</div>
+      <div class="perfil-desc">No te descartamos por el historial. Evaluamos tu situación actual.</div>
+    </div>
+    <div class="perfil-card">
+      <div class="perfil-icon">💵</div>
+      <div class="perfil-nombre">Ingresos en efectivo</div>
+      <div class="perfil-desc">Si recibes efectivo, tenemos formas de medirlo y tomarlo en cuenta.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ CASOS REALES ══════════════ -->
+<section class="casos-section">
+  <div class="section-eyebrow">Casos reales</div>
+  <h2 class="section-title">Gente como tú ya lo logró.</h2>
+  <p class="section-sub">Nombres cambiados para proteger su privacidad. Datos reales de nuestra cartera.</p>
+
+  <div class="casos-grid">
+
+    <!-- Caso 1 — Luz María -->
+    <div class="caso-card">
+      <div class="caso-perfil">
+        <div class="caso-avatar">L</div>
+        <div>
+          <div class="caso-nombre">Luz María</div>
+          <div class="caso-actividad">Venta de dulces y snacks · Primer crédito</div>
+        </div>
+      </div>
+      <p class="caso-quote">
+        "Solo había tenido créditos grupales. Comprobé mis ingresos con notas de compra de insumos
+        y estados de cuenta. Usé el dinero para surtir mi local antes de la temporada alta."
+      </p>
+      <div class="caso-chips">
+        <span class="chip">$7,000 MXN</span>
+        <span class="chip">$891 / quincena</span>
+        <span class="chip">6 meses</span>
+        <span class="chip white">Sin nómina</span>
+        <span class="chip white">Primer crédito individual</span>
+      </div>
+    </div>
+
+    <!-- Caso 2 — Guillermo -->
+    <div class="caso-card">
+      <div class="caso-perfil">
+        <div class="caso-avatar">G</div>
+        <div>
+          <div class="caso-nombre">Guillermo</div>
+          <div class="caso-actividad">Cantante profesional · 2do crédito</div>
+        </div>
+      </div>
+      <p class="caso-quote">
+        "Tenía retrasos en buró pero una oportunidad real: comprar una moto que necesitaba para llegar
+        a mis eventos. Comprobé ingresos con estados de cuenta y mi actividad en redes."
+      </p>
+      <div class="caso-chips">
+        <span class="chip">$20,000 MXN</span>
+        <span class="chip">$5,810 / mes</span>
+        <span class="chip">5 meses</span>
+        <span class="chip white">Con retrasos en buró</span>
+        <span class="chip white">Ingresos variables</span>
+      </div>
+    </div>
+
+    <!-- Caso 3 — Adrián -->
+    <div class="caso-card">
+      <div class="caso-perfil">
+        <div class="caso-avatar">A</div>
+        <div>
+          <div class="caso-nombre">Adrián</div>
+          <div class="caso-actividad">Carnicero · 2da renovación</div>
+        </div>
+      </div>
+      <p class="caso-quote">
+        "Poco historial en buró y mi zona no es de fácil acceso a créditos. Pero visitaron mi negocio,
+        hablaron con mis proveedores y vieron cómo trabajo. En la segunda renovación ya pude pedir $40,000."
+      </p>
+      <div class="caso-chips">
+        <span class="chip">$40,000 MXN</span>
+        <span class="chip">$5,093 / quincena</span>
+        <span class="chip">6 meses</span>
+        <span class="chip white">Poco historial</span>
+        <span class="chip white">Verificación en negocio</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ PROCESO ══════════════ -->
+<section class="proceso-section">
+  <div class="section-eyebrow">Cómo funciona</div>
+  <h2 class="section-title">Simple, personal y sin rodeos.</h2>
+  <p class="section-sub">No somos una app. Somos personas reales que te conocen y te acompañan.</p>
+
+  <div class="pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-content">
+        <div class="paso-titulo">Simula y solicita</div>
+        <div class="paso-desc">Usa el simulador, elige tu monto y plazo. Llena el formulario o escríbenos directo por WhatsApp. Sin compromiso.</div>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-content">
+        <div class="paso-titulo">Videollamada con tu asesor</div>
+        <div class="paso-desc">Un asesor real te contacta. Te conocemos, entendemos tu situación y te decimos si calificas — sin burócracia y sin rechazarte por el buró.</div>
+      </div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-content">
+        <div class="paso-titulo">Firma presencial y recibe tu dinero</div>
+        <div class="paso-desc">Firmamos contrato y pagaré en persona. Eso te da seguridad a ti y a nosotros. Una vez firmado, el dinero es tuyo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ QUIÉNES SOMOS ══════════════ -->
+<section class="quienes-section">
+  <div class="section-eyebrow">Quiénes somos</div>
+  <h2 class="section-title">Una persona real responde.</h2>
+  <p class="section-sub">No hay chatbots ni call centers. Tu asesor tiene nombre y número.</p>
+
+  <div class="asesor-card">
+    <div class="asesor-avatar">J</div>
+    <div>
+      <div class="asesor-nombre">Jorge</div>
+      <div class="asesor-rol">Asesor de crédito · Crédito Rosa</div>
+      <div class="asesor-bio">
+        Conozco de cerca la realidad de quienes trabajan por su cuenta.
+        Me especializé en créditos para perfiles que los bancos ignoran —
+        comerciantes, artistas, trabajadores informales.
+        Escríbeme directo, sin intermediarios.
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-items">
+    <div class="trust-item">
+      <div class="trust-icon">📋</div>
+      <div>Operamos con <strong>contrato y pagaré</strong> firmados en persona. Transparencia total desde el primer día.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📍</div>
+      <div>Atendemos en <strong>CDMX y Zona Metropolitana</strong>. Podemos visitar tu negocio o domicilio.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🔒</div>
+      <div>Aviso de privacidad disponible. Tus datos solo se usan para evaluar tu crédito.</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🤝</div>
+      <div>Más de <strong>300 créditos otorgados</strong> desde que empezamos. Clientes que nos recomiendan.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA FINAL ══════════════ -->
+<section class="cta-final">
+  <h2>El banco te dijo que no.<br>Escríbenos hoy.</h2>
+  <p>Sin costo, sin compromiso. Un asesor real te responde.</p>
+  <a href="https://wa.me/5215654681806?text=Hola%2C+vi+el+anuncio+de+Cr%C3%A9dito+Rosa+y+quiero+saber+si+califico+para+un+cr%C3%A9dito." class="btn-cta-final">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Quiero saber si califico
+  </a>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <p><strong style="color:rgba(255,255,255,0.7)">Crédito Rosa S.A. de C.V.</strong> · Financiando tus sueños</p>
+  <p>CDMX y Zona Metropolitana · creditorosa.com</p>
+  <p style="margin-top:12px;font-size:11px;line-height:1.8;color:rgba(255,255,255,0.3)">
+    Créditos sujetos a aprobación previa. El otorgamiento del crédito depende de la evaluación de cada solicitante.
+    Tasa de interés ordinaria: 13% mensual + 16% de IVA sobre intereses. Mora: 1% diario sobre capital original.
+    Comisión por apertura: 4% sobre el monto del crédito. Todos los créditos se formalizan mediante contrato
+    y pagaré firmados de forma presencial. Montos de $5,000 a $80,000 MXN. Plazos de 1 a 24 meses.
+    Zona de operación: Ciudad de México y Zona Metropolitana (~25 km).
+  </p>
+  <p style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.3)">
+    El simulador muestra una cuota estimada. Las condiciones finales pueden variar según el perfil del solicitante.
+  </p>
+  <p style="margin-top:10px"><a href="#aviso-privacidad">Aviso de privacidad</a></p>
+</footer>
+
+<!-- ══════════════ AVISO DE PRIVACIDAD ══════════════ -->
+<section id="aviso-privacidad" style="background:#111;color:rgba(255,255,255,0.4);font-size:12px;padding:32px 20px;line-height:1.8;">
+  <p style="font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:8px">Aviso de Privacidad Simplificado</p>
+  <p>
+    <strong style="color:rgba(255,255,255,0.5)">Crédito Rosa S.A. de C.V.</strong> es responsable del tratamiento
+    de los datos personales que nos proporcione a través de este sitio o cualquier otro medio. Sus datos se utilizan
+    exclusivamente para: (i) evaluar su solicitud de crédito, (ii) contactarle por el medio indicado, y
+    (iii) administrar la relación crediticia en caso de ser aprobado. No compartimos su información con terceros
+    salvo requerimiento de autoridad competente. Puede ejercer sus derechos ARCO (Acceso, Rectificación,
+    Cancelación y Oposición) escribiéndonos al +52 56 5468 1806 vía WhatsApp. El aviso integral está disponible
+    bajo petición.
+  </p>
+</section>
+
+<!-- ══════════════ MODAL ¿CALIFICO? ══════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-handle"></div>
+
+    <div class="modal-step active" id="step1">
+      <h2>¿Califico para un crédito?</h2>
+      <p class="modal-sub">Dos preguntas rápidas — te decimos si podemos ayudarte.</p>
+
+      <div class="modal-pregunta">¿En qué zona vives o trabajas?</div>
+      <div class="opciones-grid">
+        <button class="opcion-btn" onclick="seleccionarZona('cdmx', this)">CDMX</button>
+        <button class="opcion-btn" onclick="seleccionarZona('edomex', this)">Estado de México</button>
+        <button class="opcion-btn" onclick="seleccionarZona('otro', this)">Otra zona</button>
+        <button class="opcion-btn" onclick="seleccionarZona('noSe', this)">No estoy seguro</button>
+      </div>
+    </div>
+
+    <div class="modal-step" id="step2">
+      <h2>¿Cómo generas tus ingresos?</h2>
+      <p class="modal-sub">Selecciona el que más se acerque a tu situación.</p>
+      <div class="opciones-grid">
+        <button class="opcion-btn" onclick="seleccionarActividad('comerciante', this)">🛒 Comerciante o tienda</button>
+        <button class="opcion-btn" onclick="seleccionarActividad('oficio', this)">🔧 Oficio o servicio propio</button>
+        <button class="opcion-btn" onclick="seleccionarActividad('nomina', this)">💼 Tengo nómina formal</button>
+        <button class="opcion-btn" onclick="seleccionarActividad('otro', this)">🤔 Otro / no sé cómo clasificarlo</button>
+      </div>
+    </div>
+
+    <div class="modal-step" id="stepResultado">
+      <div class="modal-resultado" id="resultadoContent"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ WHATSAPP FLOTANTE ══════════════ -->
+<div class="wa-float" id="waFloat">
+  <div class="wa-bubble" id="waBubble" style="animation-delay:2s">¿Necesitas ayuda? 👋</div>
+  <a
+    href="https://wa.me/5215654681806?text=Hola%2C+vi+el+anuncio+de+Cr%C3%A9dito+Rosa+y+quiero+saber+si+califico+para+un+cr%C3%A9dito."
+    class="wa-btn"
+    target="_blank"
+    rel="noopener"
+    aria-label="Contactar por WhatsApp"
+  >
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script>
+// ─── LÓGICA DEL SIMULADOR (misma fórmula que Crédito Rosa MVP) ───
+const TASA = 0.13; // 13% mensual
+const IVA  = 0.16;
+
+let monto  = 10000;
+let plazo  = 6;      // meses
+let freq   = 'QNAL'; // QNAL | MENS
+
+function calcular() {
+  // Amortización constante de capital
+  const capitalMensual = monto / plazo;
+
+  // Interés promedio sobre saldos decrecientes (fórmula validada en producción)
+  let saldo = monto;
+  let totalInteres = 0;
+  for (let i = 0; i < plazo; i++) {
+    totalInteres += saldo * TASA;
+    saldo -= capitalMensual;
+  }
+  const interesMensual  = totalInteres / plazo;
+  const ivaMensual      = interesMensual * IVA;
+  const totalPorPeriodo = capitalMensual + interesMensual + ivaMensual;
+
+  // Ajuste por frecuencia
+  const totalPagos = freq === 'QNAL' ? plazo * 2 : plazo;
+  const cuotaFija  = freq === 'QNAL'
+    ? Math.round(totalPorPeriodo / 2)
+    : Math.round(totalPorPeriodo);
+  const capPeriodo = freq === 'QNAL'
+    ? Math.round(capitalMensual / 2)
+    : Math.round(capitalMensual);
+  const intPeriodo = freq === 'QNAL'
+    ? Math.round((interesMensual + ivaMensual) / 2)
+    : Math.round(interesMensual + ivaMensual);
+
+  return { cuotaFija, capPeriodo, intPeriodo, totalPagos, totalPagar: cuotaFija * totalPagos };
+}
+
+function fmt(n) {
+  return '$' + n.toLocaleString('es-MX');
+}
+
+function render() {
+  const r = calcular();
+  document.getElementById('cuotaDisplay').textContent   = fmt(r.cuotaFija);
+  document.getElementById('capDisplay').textContent     = fmt(r.capPeriodo);
+  document.getElementById('intDisplay').textContent     = fmt(r.intPeriodo);
+  document.getElementById('totalPagosDisplay').textContent = r.totalPagos;
+  document.getElementById('totalPagarDisplay').textContent = fmt(r.totalPagar);
+  document.getElementById('montoDisplay').textContent   = fmt(monto);
+
+  // Sync monto en formulario
+  const fi = document.getElementById('formMonto');
+  if (fi && !fi.dataset.touched) fi.placeholder = fmt(monto) + ' MXN';
+}
+
+// Slider monto
+document.getElementById('montoSlider').addEventListener('input', function() {
+  monto = +this.value;
+  render();
+});
+
+// Plazo buttons
+document.querySelectorAll('.plazo-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.plazo-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    plazo = +this.dataset.p;
+    render();
+  });
+});
+
+// Frecuencia
+document.querySelectorAll('.freq-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    freq = this.dataset.freq;
+    render();
+  });
+});
+
+// Marcar form monto como tocado si el usuario escribe
+const fi = document.getElementById('formMonto');
+if (fi) fi.addEventListener('input', () => fi.dataset.touched = '1');
+
+// Formulario → WhatsApp
+document.getElementById('formBtn').addEventListener('click', function() {
+  const nombre = document.querySelector('input[type=text]').value.trim();
+  const tel    = document.querySelector('input[type=tel]').value.trim();
+  const monto  = document.getElementById('formMonto').value.trim();
+  const activ  = document.querySelector('textarea').value.trim();
+  if (!nombre || !tel) {
+    alert('Por favor ingresa tu nombre y WhatsApp para continuar.');
+    return;
+  }
+  const msg = `Hola, me interesa solicitar un crédito con Crédito Rosa.\n\n*Nombre:* ${nombre}\n*WhatsApp:* ${tel}${monto ? '\n*Monto:* ' + monto : ''}${activ ? '\n*Actividad:* ' + activ : ''}`;
+  window.open('https://wa.me/525654681806?text=' + encodeURIComponent(msg), '_blank');
+});
+
+render();
+
+  /* ─── WhatsApp bubble auto-hide ─── */
+  setTimeout(() => {
+    const bubble = document.getElementById('waBubble');
+    if (bubble) {
+      bubble.style.animation = 'floatIn 0.5s ease forwards';
+      setTimeout(() => {
+        bubble.style.transition = 'opacity 0.5s';
+        bubble.style.opacity = '0';
+        setTimeout(() => bubble.remove(), 500);
+      }, 5000);
+    }
+  }, 2500);
+
+  /* ─── Modal ─── */
+  let zonaSeleccionada = null;
+
+  function abrirModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function cerrarModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    // Reset
+    setTimeout(() => {
+      mostrarStep('step1');
+      zonaSeleccionada = null;
+      document.querySelectorAll('.opcion-btn').forEach(b => b.classList.remove('selected'));
+    }, 400);
+  }
+
+  function cerrarModalOverlay(e) {
+    if (e.target === document.getElementById('modalOverlay')) cerrarModal();
+  }
+
+  function mostrarStep(id) {
+    document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function seleccionarZona(zona, btn) {
+    document.querySelectorAll('#step1 .opcion-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    zonaSeleccionada = zona;
+
+    setTimeout(() => {
+      if (zona === 'otro') {
+        mostrarResultado('fuera');
+      } else {
+        mostrarStep('step2');
+      }
+    }, 300);
+  }
+
+  function seleccionarActividad(actividad, btn) {
+    document.querySelectorAll('#step2 .opcion-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    setTimeout(() => {
+      mostrarResultado(actividad);
+    }, 300);
+  }
+
+  const WA_URL = 'https://wa.me/5215654681806?text=Hola%2C+vi+el+anuncio+de+Cr%C3%A9dito+Rosa+y+quiero+saber+si+califico+para+un+cr%C3%A9dito.';
+  const FORM_URL = 'solicitar.html';
+
+  function mostrarResultado(tipo) {
+    mostrarStep('stepResultado');
+    const container = document.getElementById('resultadoContent');
+
+    const configs = {
+      fuera: {
+        icon: '📍',
+        titulo: 'Por ahora solo atendemos CDMX y ZM',
+        desc: 'Nuestra operación es presencial. Si estás cerca de la Zona Metropolitana escríbenos — a veces podemos hacer excepciones.',
+        btnPrimario: { texto: 'Escríbenos de todas formas', href: WA_URL, color: '#25d366' },
+        btnSecundario: null
+      },
+      comerciante: {
+        icon: '✅',
+        titulo: '¡Muy probablemente calificas!',
+        desc: 'Los comerciantes son exactamente el perfil que atendemos. Aceptamos notas de venta, compra de insumos y estados de cuenta.',
+        btnPrimario: { texto: '💬 Hablar con Jorge (WhatsApp)', href: WA_URL, color: '#25d366' },
+        btnSecundario: { texto: 'Llenar solicitud completa', href: FORM_URL }
+      },
+      oficio: {
+        icon: '✅',
+        titulo: '¡Muy probablemente calificas!',
+        desc: 'Tu oficio es tu comprobante. Lo verificamos directamente contigo. Escríbenos hoy.',
+        btnPrimario: { texto: '💬 Hablar con Jorge (WhatsApp)', href: WA_URL, color: '#25d366' },
+        btnSecundario: { texto: 'Llenar solicitud completa', href: FORM_URL }
+      },
+      nomina: {
+        icon: '👍',
+        titulo: 'Perfil sólido',
+        desc: 'Con nómina formal tienes más opciones. Podemos ofrecerte condiciones competitivas. Simula tu crédito y platiquemos.',
+        btnPrimario: { texto: '💬 Hablar con Jorge (WhatsApp)', href: WA_URL, color: '#25d366' },
+        btnSecundario: { texto: 'Llenar solicitud completa', href: FORM_URL }
+      },
+      otro: {
+        icon: '🤝',
+        titulo: 'Cuéntanos tu caso',
+        desc: 'Cada situación es diferente. Escríbenos y un asesor real te dice si podemos ayudarte — sin compromiso.',
+        btnPrimario: { texto: '💬 Hablar con Jorge (WhatsApp)', href: WA_URL, color: '#25d366' },
+        btnSecundario: null
+      }
+    };
+
+    const c = configs[tipo] || configs.otro;
+
+    container.innerHTML = `
+      <div class="resultado-icon">${c.icon}</div>
+      <div class="resultado-titulo">${c.titulo}</div>
+      <div class="resultado-desc">${c.desc}</div>
+      <a href="${c.btnPrimario.href}" class="btn-wa" target="_blank" rel="noopener"
+         style="background:${c.btnPrimario.color || '#25d366'}" onclick="cerrarModal()">
+        ${c.btnPrimario.texto}
+      </a>
+      ${c.btnSecundario ? `
+        <a href="${c.btnSecundario.href}" class="btn-secondary" onclick="cerrarModal()">
+          ${c.btnSecundario.texto}
+        </a>
+      ` : `
+        <button class="btn-secondary" onclick="cerrarModal()">Cerrar</button>
+      `}
+    `;
+  }
+</script>
+
+</body>
+</html>
