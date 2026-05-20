@@ -1984,7 +1984,9 @@ async function submitForm() {
   if (data.prioridad === 'DESCARTADO_RIESGO') {
     // Enviar igualmente a Sheets para registro, luego mostrar pantalla de riesgo
     data.timestamp = new Date().toISOString();
-    data.fuente = document.referrer || window.location.href;
+    const params = new URLSearchParams(window.location.search);
+    const utmSource = params.get('utm_source') || '';
+    data.fuente = utmSource || data.fuente || 'directo';
     try {
       await fetch(N8N_WEBHOOK, {
         method:'POST',
@@ -2001,7 +2003,9 @@ async function submitForm() {
   data.score        = score;
   data.prioridad    = etiquetaScore(score);
   data.timestamp    = new Date().toISOString();
-  data.fuente       = document.referrer || window.location.href;
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = params.get('utm_source') || '';
+  data.fuente = utmSource || data.fuente || 'directo';
   data.clic_whatsapp = 'no';
 
   // Ocultar botón flotante en pantallas finales
