@@ -935,7 +935,8 @@ footer{
 // CONSTANTES
 // ══════════════════════════════════════════════
 const N8N_WEBHOOK   = 'https://creditorosa.app.n8n.cloud/webhook/credito-rosa-solicitud';
-const MEXICO_API    = 'https://mexico-api.devaleff.com/api/codigo-postal/';
+const SUPABASE_URL       = 'https://mnysjnvsctypdgwokntg.supabase.co';
+const SUPABASE_ANON_KEY  = 'sb_publishable_Pu04Hy4eQ8Tjnni3_cx9BQ_AoqyVML7';
 const TASA = 0.13, IVA_TASA = 0.16;
 const PLAZO_FIJO = 6, FREQ_FIJA = 'QNAL';
 
@@ -1098,21 +1099,39 @@ async function onCpInput(val) {
 async function lookupCP(cp) {
   const loadingEl = document.getElementById('cp-loading');
   const resultDiv = document.getElementById('cp-result');
+  const errEl = document.getElementById('cp-error');
   loadingEl.style.display = 'block';
+  errEl.style.display = 'none';
   setFloatBtn('Verificando tu zona...', false, null, true);
 
   try {
-    const res = await fetch(MEXICO_API + cp);
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/catalogo_cp?cp=eq.${encodeURIComponent(cp)}&select=municipio,estado,colonia`,
+      { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
     loadingEl.style.display = 'none';
 
-    if (!res.ok) { resultDiv.style.display='none'; return; }
-    const json = await res.json();
-    if (!json || !json.data || json.data.length === 0) { resultDiv.style.display='none'; return; }
+    if (!res.ok) {
+      resultDiv.style.display = 'none';
+      errEl.style.display = 'block';
+      errEl.textContent = 'No pudimos verificar tu código postal. Intenta de nuevo en unos segundos.';
+      setFloatBtn('Continuar →', false, checkCP);
+      return;
+    }
 
-    const primer = json.data[0];
-    const municipio = primer.D_mnpio || primer.d_ciudad || '';
-    const estado    = primer.d_estado || '';
-    const colonias  = [...new Set(json.data.map(d => d.d_asenta).filter(Boolean))];
+    const rows = await res.json();
+    if (!rows || rows.length === 0) {
+      resultDiv.style.display = 'none';
+      errEl.style.display = 'block';
+      errEl.textContent = 'No encontramos ese código postal. Verifica que esté correcto.';
+      setFloatBtn('Continuar →', false, checkCP);
+      return;
+    }
+
+    const primer = rows[0];
+    const municipio = primer.municipio || '';
+    const estado    = primer.estado || '';
+    const colonias  = [...new Set(rows.map(d => d.colonia).filter(Boolean))];
 
     document.getElementById('cp-municipio').textContent = municipio;
     document.getElementById('cp-estado').textContent    = estado;
@@ -1136,12 +1155,13 @@ async function lookupCP(cp) {
     resultDiv.style.display = 'block';
 
     // Calcular distancia con coordenadas aproximadas por municipio
-    // Usamos geocodificación por nombre de municipio via nominatim (gratuito, sin key)
     calcularDistancia(municipio);
 
   } catch(e) {
     loadingEl.style.display = 'none';
-    setFloatBtn('Continuar →', true, checkCP);
+    errEl.style.display = 'block';
+    errEl.textContent = 'Hubo un problema de conexión. Verifica tu internet e intenta de nuevo.';
+    setFloatBtn('Continuar →', false, checkCP);
     console.error('CP lookup error:', e);
   }
 }
