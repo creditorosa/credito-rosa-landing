@@ -1316,13 +1316,13 @@ function validarPaso2() {
     return;
   }
 
-  // Anti-duplicado por WhatsApp en sesión
-  const prevWa = sessionStorage.getItem('cr_wa');
+  // Anti-duplicado por WhatsApp — solo bloquea si este número YA completó
+  // un envío real en esta sesión (la marca se guarda en submitForm(), no aquí).
+  const prevWa = sessionStorage.getItem('cr_wa_submitted');
   if (prevWa && prevWa === wa) {
     document.getElementById('wa-dup-warning').style.display = 'block';
     return;
   }
-  sessionStorage.setItem('cr_wa', wa);
 
   // Validar que haya respondido si su número recibe llamadas
   if (!data.recibe_llamadas) {
@@ -2014,6 +2014,7 @@ async function submitForm() {
         body: JSON.stringify(data)
       });
     } catch(e) { console.warn('n8n error:', e); }
+    if (data.whatsapp) sessionStorage.setItem('cr_wa_submitted', data.whatsapp);
     showRiesgo();
     return;
   }
@@ -2052,6 +2053,7 @@ async function submitForm() {
     if (json.asesor_numero) asesorNumero = json.asesor_numero;
     if (json.asesor_nombre) asesorNombre = json.asesor_nombre;
   } catch(e) { console.warn('n8n error:', e); }
+  if (data.whatsapp) sessionStorage.setItem('cr_wa_submitted', data.whatsapp);
 
   // Actualizar botón WA con asesor real
   const primer = (data.nombre||'').split(' ')[0];
